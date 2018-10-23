@@ -20,14 +20,14 @@
 </template>
 
 <script>
-import DateField from './components/DateField'
-import IntegerField from './components/IntegerField'
+import Vue from 'vue'
+import Fields from './components'
+
+Vue.use(Fields, {
+  // defaultClass: 'form-control form-control-sm'
+})
 
 export default {
-  components: {
-    DateField,
-    IntegerField,
-  },
   data(){
     return {
       dateFieldValue: '',

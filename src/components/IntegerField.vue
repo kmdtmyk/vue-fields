@@ -1,5 +1,6 @@
 <template lang='pug'>
   input(
+    :class='defaultClass'
     type='text'
     v-on='listeners'
     v-model='inputValue'
@@ -13,6 +14,7 @@
 export default {
   props: [
     'value',
+    'defaultClass',
   ],
   data(){
     return {

@@ -1,5 +1,6 @@
 <template lang='pug'>
   input(
+    :class='defaultClass'
     type='text'
     v-on='listeners'
     :value='value'
@@ -21,6 +22,7 @@ const datePicker = instance.$mount().$el
 export default {
   props: [
     'value',
+    'defaultClass',
   ],
   computed: {
     listeners(){
