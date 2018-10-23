@@ -1,10 +1,49 @@
 <template lang='pug'>
-  input(type='date')
+  input(
+    type='text'
+    v-on='listeners'
+    :value='value'
+    @input='input'
+    @focus='focus'
+    @blur='blur'
+  )
 </template>
 
 <script>
-export default {
+import DatePicker from './DatePicker'
+import Vue from 'vue'
 
+// static
+const ComponentClass  = Vue.extend(DatePicker)
+const instance = new ComponentClass()
+const datePicker = instance.$mount().$el
+
+export default {
+  props: [
+    'value',
+  ],
+  computed: {
+    listeners(){
+      return {
+        ...this.$listeners,
+        input: this.input,
+      }
+    },
+    parent(){
+      return this.$el.parentElement
+    },
+  },
+  methods: {
+    input(e){
+      this.$emit('input', e.target.value)
+    },
+    focus(){
+      this.parent.appendChild(datePicker)
+    },
+    blur(){
+      this.parent.removeChild(datePicker)
+    },
+  },
 }
 </script>
 
