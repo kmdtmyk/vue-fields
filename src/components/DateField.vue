@@ -1,5 +1,5 @@
-<template>
-  <input type='date'>
+<template lang='pug'>
+  input(type='date')
 </template>
 
 <script>

@@ -1,7 +1,6 @@
-<template>
-  <div>
-    <date-field/>
-  </div>
+<template lang='pug'>
+  div
+    date-field
 </template>
 
 <script>
