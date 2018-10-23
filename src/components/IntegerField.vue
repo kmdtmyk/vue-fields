@@ -43,13 +43,23 @@ export default {
         return null
       }
     },
+
   },
   methods: {
+    selectedAll(){
+      return this.$el.value === window.getSelection().toString()
+    },
     input(e){
       this.$emit('input', this.actualValue)
     },
     focus(e){
+      const select = this.selectedAll()
       this.inputValue = this.value
+      if(select){
+        setTimeout(() => {
+          this.$el.select()
+        })
+      }
     },
     blur(e){
       this.inputValue = this.format(this.actualValue)
