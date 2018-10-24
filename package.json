@@ -2,8 +2,9 @@
   "name": "@kmdtmyk/vue-fields",
   "version": "0.0.0",
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build --target lib --name index ./src/components/index.js"
+    "start": "vue-cli-service serve",
+    "build": "vue-cli-service build --target lib --name index ./src/components/index.js",
+    "test": "vue-cli-service test:unit"
   },
   "main": "./dist/index.umd.js",
   "license": "MIT",
@@ -12,7 +13,11 @@
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.0.5",
+    "@vue/cli-plugin-unit-jest": "^3.0.5",
     "@vue/cli-service": "^3.0.5",
+    "@vue/test-utils": "^1.0.0-beta.25",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-jest": "^23.6.0",
     "pug": "^2.0.3",
     "pug-plain-loader": "^1.0.0",
     "vue-template-compiler": "^2.5.17"
