@@ -46,7 +46,9 @@ export default {
         return null
       }
     },
-
+    $input(){
+      return this.$el
+    },
   },
   methods: {
     selectedAll(){
@@ -57,10 +59,18 @@ export default {
     },
     focus(e){
       const select = this.selectedAll()
-      this.inputValue = this.value
+      this.$nextTick(() => {
+        const start = this.$input.selectionStart
+        const leftText = this.$input.value.substr(0, start)
+        const offset = leftText.length - this.parseString(leftText).toString().length
+        this.inputValue = this.value
+        this.$nextTick(() => {
+          this.$input.setSelectionRange(start - offset, start - offset)
+        })
+      })
       if(select){
         setTimeout(() => {
-          this.$el.select()
+          this.$input.select()
         })
       }
     },
