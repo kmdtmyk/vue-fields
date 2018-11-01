@@ -52,7 +52,11 @@ export default {
   },
   methods: {
     selectedAll(){
-      return this.$el.value === window.getSelection().toString()
+      const input = this.$input
+      const start = input.selectionStart
+      const end = input.selectionEnd
+      const value = input.value
+      return start === 0 && end === value.length
     },
     input(e){
       this.$emit('input', this.actualValue)
