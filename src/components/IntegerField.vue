@@ -24,7 +24,7 @@ export default {
   },
   watch: {
     value(){
-      if(this.$el !== document.activeElement){
+      if(!this.active){
         this.inputValue = this.format(this.value)
       }
     },
@@ -48,6 +48,9 @@ export default {
     },
     $input(){
       return this.$el
+    },
+    active(){
+      return this.$el === document.activeElement
     },
   },
   methods: {
