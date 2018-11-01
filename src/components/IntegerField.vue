@@ -7,6 +7,7 @@
     @input='input'
     @focus='focus'
     @blur='blur'
+    @drop='drop'
   )
 </template>
 
@@ -65,6 +66,11 @@ export default {
     },
     blur(e){
       this.inputValue = this.format(this.actualValue)
+    },
+    drop(e){
+      setTimeout(() => {
+        this.inputValue = this.value
+      })
     },
     parseString(string){
       if(!string){
