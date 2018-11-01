@@ -60,26 +60,30 @@ export default {
     focus(e){
       const select = this.selectedAll()
       this.$nextTick(() => {
-        const start = this.$input.selectionStart
-        const leftText = this.$input.value.substr(0, start)
-        const offset = leftText.length - this.parseString(leftText).toString().length
         this.inputValue = this.value
-        this.$nextTick(() => {
-          this.$input.setSelectionRange(start - offset, start - offset)
-        })
+        if(select){
+          this.$nextTick(() => {
+            this.$input.select()
+          })
+        }else{
+          const start = this.$input.selectionStart
+          const leftText = this.$input.value.substr(0, start)
+          const offset = leftText.length - this.parseString(leftText).toString().length
+          this.$nextTick(() => {
+            this.$input.setSelectionRange(start - offset, start - offset)
+          })
+        }
       })
-      if(select){
-        setTimeout(() => {
-          this.$input.select()
-        })
-      }
     },
     blur(e){
       this.inputValue = this.format(this.actualValue)
     },
     drop(e){
+      const text = e.dataTransfer.getData('text')
+      this.inputValue = this.value
       setTimeout(() => {
-        this.inputValue = this.value
+        const start = this.$input.selectionStart
+        this.$input.setSelectionRange(start, start + text.length)
       })
     },
     parseString(string){
