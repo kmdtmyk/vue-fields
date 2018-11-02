@@ -1,29 +1,35 @@
 <template lang='pug'>
-  input(
-    :class='defaultClass'
-    type='text'
-    v-on='listeners'
-    :value='value'
-    @input='input'
-    @focus='focus'
-    @blur='blur'
-  )
+  span
+    input(
+      :class='defaultClass'
+      type='text'
+      v-on='listeners'
+      :value='value'
+      @input='input'
+      @click='click'
+      @focus='focus'
+      @blur='blur'
+    )
+    date-picker.picker(v-if='open' @select='select')
 </template>
 
 <script>
+import dateformat from 'dateformat'
 import DatePicker from './DatePicker'
-import Vue from 'vue'
-
-// static
-const ComponentClass  = Vue.extend(DatePicker)
-const instance = new ComponentClass()
-const datePicker = instance.$mount().$el
 
 export default {
   props: [
     'value',
     'defaultClass',
   ],
+  components: {
+    DatePicker,
+  },
+  data(){
+    return {
+      open: false,
+    }
+  },
   computed: {
     listeners(){
       return {
@@ -31,24 +37,31 @@ export default {
         input: this.input,
       }
     },
-    parent(){
-      return this.$el.parentElement
-    },
   },
   methods: {
     input(e){
       this.$emit('input', e.target.value)
     },
+    click(e){
+      this.open = true
+    },
     focus(){
-      this.parent.appendChild(datePicker)
+      this.open = true
     },
     blur(){
-      this.parent.removeChild(datePicker)
+      this.open = false
+    },
+    select(date){
+      this.$emit('input', dateformat(date, 'yyyy-mm-dd'))
+      this.open = false
     },
   },
 }
 </script>
 
-<style scoped>
+<style lang='scss' scoped>
+.picker{
+  position: absolute;
+}
 </style>
 
