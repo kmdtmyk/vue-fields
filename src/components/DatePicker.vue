@@ -18,6 +18,7 @@
             ) {{calendarDates[x + y * 7] | day}}
     footer
       button(type='button' @click='today') 今日
+      button(type='button' @click='clear') クリア
 </template>
 
 <script>
@@ -87,11 +88,14 @@ export default {
       this.year = date.getFullYear()
       this.month = date.getMonth() + 1
     },
+    select(date){
+      this.$emit('select', date)
+    },
     today(){
       this.select(new Date())
     },
-    select(date){
-      this.$emit('select', date)
+    clear(){
+      this.select('')
     },
     wheel(e){
       if(0 < e.deltaY){
@@ -127,6 +131,8 @@ $border-color: #ced4da;
   }
   footer{
     border-top: 1px solid $border-color;
+    display: flex;
+    justify-content: space-between;
   }
 
   table{

@@ -52,7 +52,11 @@ export default {
       this.open = false
     },
     select(date){
-      this.$emit('input', dateformat(date, 'yyyy-mm-dd'))
+      if(!date){
+        this.$emit('input', date)
+      }else{
+        this.$emit('input', dateformat(date, 'yyyy-mm-dd'))
+      }
       this.open = false
     },
   },

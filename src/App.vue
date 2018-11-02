@@ -11,12 +11,12 @@
           td integer-field
           td
             integer-field(v-model='integerFieldValue')
-          td {{integerFieldValue}}
+          td {{integerFieldValue | json}}
         tr
           td date-field
           td
             date-field(v-model='dateFieldValue')
-          td {{dateFieldValue}}
+          td {{dateFieldValue | json}}
 </template>
 
 <script>
@@ -28,6 +28,11 @@ Vue.use(Fields, {
 })
 
 export default {
+  filters: {
+    json(value){
+      return JSON.stringify(value)
+    }
+  },
   data(){
     return {
       dateFieldValue: '',
