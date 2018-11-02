@@ -1,9 +1,9 @@
 <template lang='pug'>
   .date-picker(@mousedown.prevent @wheel='wheel')
     header
-      button(type='button' @click='previous') &lt;
+      button(type='button' @click='previousMonth') &lt;
       label {{year}}/{{month}}
-      button(type='button' @click='next') &gt;
+      button(type='button' @click='nextMonth') &gt;
       button(type='button' @click='currentMonth') 今月
     table
       thead
@@ -60,29 +60,33 @@ export default {
     },
   },
   methods: {
-    today(){
-      this.$emit('select', new Date())
+    previousMonth(){
+      const date = new Date(this.year, this.month - 2)
+      this.year = date.getFullYear()
+      this.month = date.getMonth() + 1
+    },
+    nextMonth(){
+      const date = new Date(this.year, this.month)
+      this.year = date.getFullYear()
+      this.month = date.getMonth() + 1
     },
     currentMonth(){
       const date = new Date()
       this.year = date.getFullYear()
       this.month = date.getMonth() + 1
     },
-    previous(){
-      const date = new Date(this.year, this.month - 2)
-      this.year = date.getFullYear()
-      this.month = date.getMonth() + 1
-    },
-    next(){
-      const date = new Date(this.year, this.month)
-      this.year = date.getFullYear()
-      this.month = date.getMonth() + 1
+    today(){
+      this.select(new Date())
     },
     select(date){
       this.$emit('select', date)
     },
     wheel(e){
-      // console.log(e)
+      if(0 < e.deltaY){
+        this.nextMonth()
+      }else if(e.deltaY < 0){
+        this.previousMonth()
+      }
     },
   },
 }
