@@ -2,7 +2,7 @@
   .date-picker(@mousedown.prevent @wheel='wheel')
     header
       button(type='button' @click='previousMonth') &lt;
-      label {{year}}/{{month}}
+      label {{new Date(year, month - 1) | period}}
       button(type='button' @click='nextMonth') &gt;
       button(type='button' @click='currentMonth') 今月
     table
@@ -10,17 +10,19 @@
         tr
           th(v-for='dayName in dayNames') {{dayName}}
       tbody
-        tr(v-for='x in 6')
-          td(v-for='y in 7')
+        tr(v-for='(_, y) in 6')
+          td(v-for='(_, x) in 7')
             button(
               type='button'
-              @click='select(new Date(startYear, startMonth - 1, startDay + (x - 1) * 7 + y))'
-            ) {{new Date(startYear, startMonth - 1, startDay + (x - 1) * 7 + y) | day}}
+              @click='select(calendarDates[x + y * 7])'
+            ) {{calendarDates[x + y * 7] | day}}
     footer
       button(type='button' @click='today') 今日
 </template>
 
 <script>
+import dateformat from 'dateformat'
+
 export default {
   data(){
     const date = new Date()
@@ -33,6 +35,9 @@ export default {
     }
   },
   filters: {
+    period(date){
+      return dateformat(date, 'yyyy/mm')
+    },
     day(date){
       return date.getDate()
     },
@@ -58,6 +63,13 @@ export default {
     startDay(){
       return this.startDate.getDate()
     },
+    calendarDates(){
+      const result = []
+      for(let i = 0; i < 42; i++){
+        result.push(new Date(this.startYear, this.startMonth - 1, this.startDay + i))
+      }
+      return result
+    }
   },
   methods: {
     previousMonth(){
