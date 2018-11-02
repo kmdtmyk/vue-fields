@@ -11,7 +11,7 @@
           th(v-for='dayName in dayNames') {{dayName}}
       tbody
         tr(v-for='(_, y) in 6')
-          td(v-for='(_, x) in 7')
+          td(v-for='(_, x) in 7' :class='tdClass(calendarDates[x + y * 7])')
             button(
               type='button'
               @click='select(calendarDates[x + y * 7])'
@@ -100,21 +100,58 @@ export default {
         this.previousMonth()
       }
     },
+    tdClass(date){
+      const result = []
+      const month = date.getMonth() + 1
+      if(month === this.month){
+        result.push('current-month')
+      }else if(month < this.month){
+        result.push('previous-month')
+      }else if(this.month < month){
+        result.push('next-month')
+      }
+      return result
+    },
   },
 }
 </script>
 
 <style lang='scss' scoped>
+$border-color: #ced4da;
 .date-picker{
   background-color: white;
-  border: 1px solid #ced4da;
+  border: 1px solid $border-color;
+
+  header{
+    border-bottom: 1px solid $border-color;
+  }
+  footer{
+    border-top: 1px solid $border-color;
+  }
 
   table{
     thead th{
       text-align: center;
     }
-    tbody button{
-      width: 100%;
+    tbody{
+      td{
+        padding: 0;
+        &.current-month{
+          color: black;
+        }
+        &:not(.current-month){
+          color: gray;
+        }
+        button{
+          border: 0;
+          background: none;
+          color: inherit;
+          width: 100%;
+          &:hover{
+            background: #bcd4fd;
+          }
+        }
+      }
     }
   }
 
