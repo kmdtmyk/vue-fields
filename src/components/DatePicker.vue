@@ -1,5 +1,5 @@
 <template lang='pug'>
-  .date-picker(@mousedown.prevent @wheel='wheel')
+  .date-picker(@mousedown.prevent @wheel.prevent='wheel')
     header
       button(type='button' @click='previousMonth') &lt;
       label {{new Date(year, month - 1) | period}}
