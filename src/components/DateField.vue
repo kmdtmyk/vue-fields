@@ -4,13 +4,13 @@
       :class='defaultClass'
       type='text'
       v-on='listeners'
-      :value='value'
+      :value='_value'
       @input='input'
       @click='click'
       @focus='focus'
       @blur='blur'
     )
-    date-picker.picker(v-if='open' @select='select')
+    date-picker.picker(v-if='open' v-model='value')
 </template>
 
 <script>
@@ -18,8 +18,11 @@ import dateformat from 'dateformat'
 import DatePicker from './DatePicker'
 
 export default {
+  model: {
+    prop: '_value',
+  },
   props: [
-    'value',
+    '_value',
     'defaultClass',
   ],
   components: {
@@ -28,7 +31,16 @@ export default {
   data(){
     return {
       open: false,
+      value: this._value,
     }
+  },
+  watch: {
+    _value(){
+      return this.value
+    },
+    value(){
+      this.$emit('input', this.value)
+    },
   },
   computed: {
     listeners(){
@@ -40,7 +52,7 @@ export default {
   },
   methods: {
     input(e){
-      this.$emit('input', e.target.value)
+      // this.$emit('input', e.target.value)
     },
     click(e){
       this.open = true

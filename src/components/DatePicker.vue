@@ -89,7 +89,11 @@ export default {
       this.month = date.getMonth() + 1
     },
     select(date){
-      this.$emit('select', date)
+      if(!date){
+        this.$emit('input', date)
+      }else{
+        this.$emit('input', dateformat(date, 'yyyy-mm-dd'))
+      }
     },
     today(){
       this.select(new Date())
