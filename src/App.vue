@@ -26,7 +26,7 @@
 
 <script>
 import Vue from 'vue'
-import Fields from './components'
+import Fields from './'
 
 Vue.use(Fields, {
   // defaultClass: 'form-control form-control-sm'
