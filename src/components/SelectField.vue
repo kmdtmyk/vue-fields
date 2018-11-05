@@ -4,6 +4,7 @@
       :class='defaultClass'
       type='text'
       ref='input'
+      v-bind='$attrs'
       v-model='inputValue'
       @mousedown='openDropdown = true'
       @keydown.up='keydownUp'
@@ -39,6 +40,7 @@ export default {
     'records',
     // 'filter',
   ],
+  inheritAttrs: false,
   data(){
     return {
       inputValue: '',
