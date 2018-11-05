@@ -1,6 +1,7 @@
 <template lang='pug'>
   .select-field
     input(
+      :class='defaultClass'
       type='text'
       ref='input'
       v-model='inputValue'
@@ -34,6 +35,7 @@ export default {
   },
   props: [
     'value',
+    'defaultClass',
     'records',
     // 'filter',
   ],
