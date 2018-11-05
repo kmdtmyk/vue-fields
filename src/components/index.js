@@ -1,9 +1,11 @@
 import DateField from './DateField'
 import IntegerField from './IntegerField'
+import PercentageField from './PercentageField'
 
 export {
   DateField,
   IntegerField,
+  PercentageField,
 }
 
 export default class{
@@ -11,8 +13,10 @@ export default class{
   static install(Vue, option){
     applyOption(DateField, option)
     applyOption(IntegerField, option)
+    applyOption(PercentageField, option)
     Vue.component('DateField', DateField)
     Vue.component('IntegerField', IntegerField)
+    Vue.component('PercentageField', PercentageField)
   }
 
 }

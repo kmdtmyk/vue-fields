@@ -13,6 +13,11 @@
             integer-field(v-model='integerFieldValue')
           td {{integerFieldValue | json}}
         tr
+          td percentage-field
+          td
+            percentage-field(v-model='percentageFieldValue')
+          td {{percentageFieldValue | json}}
+        tr
           td date-field
           td
             date-field(v-model='dateFieldValue')
@@ -36,6 +41,7 @@ export default {
   data(){
     return {
       dateFieldValue: '',
+      percentageFieldValue: '0.05',
       integerFieldValue: 123456789,
     }
   },
