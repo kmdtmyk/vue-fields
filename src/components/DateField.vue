@@ -10,7 +10,7 @@
       @focus='focus'
       @blur='blur'
     )
-    date-picker.picker(v-if='open' v-model='value')
+    date-picker.date-picker(v-if='open' v-model='value')
 </template>
 
 <script>
@@ -76,8 +76,9 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-.picker{
+.date-picker{
   position: absolute;
+  z-index: 1;
 }
 </style>
 
