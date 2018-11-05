@@ -22,11 +22,17 @@
           td
             date-field(v-model='dateFieldValue')
           td {{dateFieldValue | json}}
+        tr
+          td select-field
+          td
+            select-field(v-model='selectFieldValue' :records='languages')
+          td {{selectFieldValue | json}}
 </template>
 
 <script>
 import Vue from 'vue'
 import Fields from './'
+import languages from './sample/languages'
 
 Vue.use(Fields, {
   // defaultClass: 'form-control form-control-sm'
@@ -43,6 +49,8 @@ export default {
       dateFieldValue: '',
       percentageFieldValue: '0.05',
       integerFieldValue: 123456789,
+      selectFieldValue: '',
+      languages,
     }
   },
 }
