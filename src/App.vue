@@ -25,8 +25,13 @@
         tr
           td select-field
           td
-            select-field(v-model='selectFieldValue' :records='languages')
-          td {{selectFieldValue | json}}
+            select-field(v-model='selectFieldValue1' :records='languages')
+          td {{selectFieldValue1 | json}}
+        tr
+          td select-field (function)
+          td
+            select-field(v-model='selectFieldValue2' :records='recordsFunction')
+          td {{selectFieldValue2 | json}}
 </template>
 
 <script>
@@ -49,10 +54,22 @@ export default {
       dateFieldValue: '',
       percentageFieldValue: '0.05',
       integerFieldValue: 123456789,
-      selectFieldValue: '',
+      selectFieldValue1: '',
+      selectFieldValue2: '',
       languages,
     }
   },
+  computed: {
+    recordsFunction(){
+      return (query) => {
+        const records = ['foo', 'bar', 'hoge']
+        if(!query){
+          return records
+        }
+        return records.filter(record => record.startsWith(query))
+      }
+    },
+  }
 }
 </script>
 

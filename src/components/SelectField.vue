@@ -70,13 +70,16 @@ export default {
       return {width, fontSize}
     },
     filteredRecords(){
+      if(this.records instanceof Function){
+        return this.records(this.inputValue) || []
+      }
+      const records = this.records || []
       if(!this.inputValue){
-        return this.records
+        return records
       }
       return this.records.filter(record => {
         return record.toLowerCase().includes(this.inputValue.toLowerCase())
       })
-      return this.records
     },
   },
   methods: {

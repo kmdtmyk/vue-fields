@@ -24,6 +24,17 @@ describe('select-field-item length', () => {
     expect(subject(records)).toBe(3)
   })
 
+  it('function', () => {
+    const records = () => {
+      return [
+        'foo',
+        'bar',
+        'hoge',
+      ]
+    }
+    expect(subject(records)).toBe(3)
+  })
+
   it('null', () => {
     const records = null
     expect(subject(records)).toBe(0)
