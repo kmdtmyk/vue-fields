@@ -1,0 +1,55 @@
+<template lang='pug'>
+  .input-spinner
+    .circle
+    .circle
+</template>
+
+<script>
+export default {
+}
+</script>
+
+<style lang='scss' scoped>
+.input-spinner{
+
+  position: relative;
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+
+  .circle{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    border-radius: 100%;
+  }
+
+  .circle:nth-child(1){
+    border: 2px solid rgba(0, 0, 0, 0.2);
+  }
+
+  .circle:nth-child(2){
+    border: 2px solid transparent;
+    border-top-color: rgba(0, 0, 0, 0.4);
+    animation-name: spinner;
+    animation-duration: 0.5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: normal;
+  }
+
+}
+
+@keyframes spinner {
+
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+
+}
+</style>
