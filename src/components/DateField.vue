@@ -10,7 +10,7 @@
       @focus='focus'
       @blur='blur'
     )
-    date-picker.date-picker(v-if='open' v-model='value')
+    date-picker.date-picker(v-if='open' v-model='value' @input='open = false')
 </template>
 
 <script>
@@ -61,14 +61,6 @@ export default {
       this.open = true
     },
     blur(){
-      this.open = false
-    },
-    select(date){
-      if(!date){
-        this.$emit('input', date)
-      }else{
-        this.$emit('input', dateformat(date, 'yyyy-mm-dd'))
-      }
       this.open = false
     },
   },

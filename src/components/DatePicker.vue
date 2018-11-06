@@ -1,10 +1,10 @@
 <template lang='pug'>
   .date-picker(@mousedown.prevent @wheel.prevent='wheel')
     header
-      button(type='button' @click='previousMonth') &lt;
+      button(type='button' @click='previousMonth' tabindex='-1') &lt;
       label {{new Date(year, month - 1) | period}}
-      button(type='button' @click='nextMonth') &gt;
-      button(type='button' @click='currentMonth') 今月
+      button(type='button' @click='nextMonth' tabindex='-1') &gt;
+      button(type='button' @click='currentMonth' tabindex='-1') 今月
     table
       thead
         tr
@@ -15,10 +15,11 @@
             button(
               type='button'
               @click='select(calendarDates[x + y * 7])'
+              tabindex='-1'
             ) {{calendarDates[x + y * 7] | day}}
     footer
-      button(type='button' @click='today') 今日
-      button(type='button' @click='clear') クリア
+      button(type='button' @click='today' tabindex='-1') 今日
+      button(type='button' @click='clear' tabindex='-1') クリア
 </template>
 
 <script>
