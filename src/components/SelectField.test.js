@@ -41,4 +41,3 @@ describe('select-field-item length', () => {
   })
 
 })
-

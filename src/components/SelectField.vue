@@ -21,7 +21,7 @@
       class='select-field-items'
       ref='dropdown'
       v-if='openDropdown'
-      :records='filteredRecords'
+      :records='evaluatedRecords'
       :style='dropdownStyle'
       @input='select'
     )
@@ -56,6 +56,23 @@ export default {
     records(){
       this.resetText()
     },
+    inputValue: {
+      async handler(inputValue){
+        this.evaluatedRecords = []
+        if(this.records instanceof Function){
+          const records = this.records(this.inputValue) || []
+          if(records instanceof Promise){
+            this.evaluatedRecords = await records
+            this.$forceUpdate()
+          }else{
+            this.evaluatedRecords = records
+          }
+        }else{
+          this.evaluatedRecords = this.records || []
+        }
+      },
+      immediate: true,
+    },
   },
   computed: {
     record(){
@@ -68,18 +85,6 @@ export default {
       const width = input.offsetWidth + 'px'
       const {fontSize} = window.getComputedStyle(input)
       return {width, fontSize}
-    },
-    filteredRecords(){
-      if(this.records instanceof Function){
-        return this.records(this.inputValue) || []
-      }
-      const records = this.records || []
-      if(!this.inputValue){
-        return records
-      }
-      return this.records.filter(record => {
-        return record.toLowerCase().includes(this.inputValue.toLowerCase())
-      })
     },
   },
   methods: {

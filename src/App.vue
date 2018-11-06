@@ -30,8 +30,13 @@
         tr
           td select-field (function)
           td
-            select-field(v-model='selectFieldValue2' :records='recordsFunction')
+            select-field(v-model='selectFieldValue2' :records='recordsFunction1')
           td {{selectFieldValue2 | json}}
+        tr
+          td select-field (async function)
+          td
+            select-field(v-model='selectFieldValue3' :records='recordsFunction2')
+          td {{selectFieldValue3 | json}}
 </template>
 
 <script>
@@ -56,12 +61,22 @@ export default {
       integerFieldValue: 123456789,
       selectFieldValue1: '',
       selectFieldValue2: '',
+      selectFieldValue3: '',
       languages,
     }
   },
   computed: {
-    recordsFunction(){
+    recordsFunction1(){
       return (query) => {
+        const records = ['foo', 'bar', 'hoge']
+        if(!query){
+          return records
+        }
+        return records.filter(record => record.startsWith(query))
+      }
+    },
+    recordsFunction2(query){
+      return async (query) => {
         const records = ['foo', 'bar', 'hoge']
         if(!query){
           return records
