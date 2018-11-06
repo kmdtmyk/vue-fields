@@ -38,7 +38,6 @@ export default {
     'value',
     'defaultClass',
     'records',
-    // 'filter',
   ],
   inheritAttrs: false,
   data(){
@@ -61,7 +60,7 @@ export default {
   computed: {
     record(){
       return this.records.find((record) => {
-        return record.id === this.value
+        return record === this.value
       })
     },
     dropdownStyle(){
@@ -71,14 +70,14 @@ export default {
       return {width, fontSize}
     },
     filteredRecords(){
+      if(!this.inputValue){
+        return this.records
+      }
+      return this.records.filter(record => {
+        return record.toLowerCase().includes(this.inputValue.toLowerCase())
+      })
       return this.records
     },
-    // filteredRecords(){
-    //   if(this.inputValue === ''){
-    //     return this.records
-    //   }
-    //   return this.filter(this.records, this.inputValue)
-    // },
   },
   methods: {
     focus(e){
