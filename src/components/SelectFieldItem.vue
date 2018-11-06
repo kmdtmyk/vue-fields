@@ -1,6 +1,6 @@
 <template lang='pug'>
   div(
-    class='item'
+    class='select-field-item'
     v-on='$listeners'
   )
     slot
@@ -12,11 +12,13 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-.item{
+.select-field-item{
   cursor: pointer;
   padding: 0.2em 0.4em;
-}
-.item.selected{
-  background-color: #bedcf5;
+
+  &.selected{
+    background-color: #bedcf5;
+  }
+
 }
 </style>

@@ -1,7 +1,7 @@
 <template lang='pug'>
   div(
     ref='dropdown'
-    v-if='records.length'
+    v-if='records && records.length'
     @mouseleave='selectedIndex = null'
   )
     select-field-item(

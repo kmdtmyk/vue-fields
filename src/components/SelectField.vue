@@ -137,42 +137,43 @@ export default {
   display: inline-block;
   position: relative;
   padding: 0;
-}
 
-.select-field-items{
-  border-width: 1px;
-  border-style: solid;
-  box-sizing: border-box;
-  background-color: white;
-  max-height: 15.1em;
-  overflow-y: auto;
-  position: absolute;
-  z-index: 9999;
-}
+  .select-field-items{
+    border-width: 1px;
+    border-style: solid;
+    box-sizing: border-box;
+    background-color: white;
+    max-height: 15.1em;
+    overflow-y: auto;
+    position: absolute;
+    z-index: 9999;
+  }
 
-.remove{
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  width: 1.8em;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  font-family: 'Courier New', Courier, monospace;
-}
+  .remove{
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 1.8em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-family: 'Courier New', Courier, monospace;
+  }
 
-.remove::after{
-  content: '×';
-  font-size: 1.2em;
-}
+  .remove::after{
+    content: '×';
+    font-size: 1.2em;
+  }
 
-.remove:focus{
-  outline: none;
-}
+  .remove:focus{
+    outline: none;
+  }
 
-input{
-  padding-right: 2em;
+  input{
+    padding-right: 2em;
+  }
+
 }
 </style>
