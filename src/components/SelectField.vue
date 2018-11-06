@@ -60,7 +60,7 @@ export default {
       async handler(inputValue){
         this.evaluatedRecords = []
         if(this.records instanceof Function){
-          const records = this.records(this.inputValue) || []
+          const records = this.records(this.inputValue)
           if(records instanceof Promise){
             this.evaluatedRecords = await records
             this.$forceUpdate()
@@ -68,7 +68,7 @@ export default {
             this.evaluatedRecords = records
           }
         }else{
-          this.evaluatedRecords = this.records || []
+          this.evaluatedRecords = this.records
         }
       },
       immediate: true,

@@ -77,11 +77,13 @@ export default {
     },
     recordsFunction2(query){
       return async (query) => {
-        const records = ['foo', 'bar', 'hoge']
         if(!query){
-          return records
+          return
         }
-        return records.filter(record => record.startsWith(query))
+        const result = await fetch(`https://api.github.com/search/repositories?q=${query}`)
+        const text = await result.text()
+        const json = JSON.parse(text)
+        return json.items.map(item => item.name)
       }
     },
   }
