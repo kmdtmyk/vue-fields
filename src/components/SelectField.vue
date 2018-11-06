@@ -68,7 +68,12 @@ export default {
             this.evaluatedRecords = records
           }
         }else{
-          this.evaluatedRecords = this.records
+          const records = this.records || []
+          if(this.inputValue){
+            this.evaluatedRecords = this.defaultFilter(records, this.inputValue)
+          }else{
+            this.evaluatedRecords = records
+          }
         }
       },
       immediate: true,
@@ -135,6 +140,11 @@ export default {
     },
     resetText(){
       this.inputValue = this.value
+    },
+    defaultFilter(records, query){
+      return records.filter(record => {
+        return record.toLowerCase().includes(query.toLowerCase())
+      })
     },
   },
 }
