@@ -2,7 +2,7 @@
   .date-picker(@mousedown.prevent @wheel.prevent='wheel')
     header
       button(type='button' @click='previousMonth' tabindex='-1') &lt;
-      label {{new Date(year, month - 1) | period}}
+      label {{calendarDates[7] | period}}
       button(type='button' @click='nextMonth' tabindex='-1') &gt;
       button(type='button' @click='currentMonth' tabindex='-1') 今月
     table
@@ -24,12 +24,13 @@
 
 <script>
 import dateformat from 'dateformat'
+import Midnight from '@kmdtmyk/midnight'
 
 export default {
   data(){
-    const date = new Date()
-    const year = date.getFullYear()
-    const month = date.getMonth() + 1
+    const date = new Midnight()
+    const year = date.year()
+    const month = date.month()
     return {
       year,
       month,
@@ -41,53 +42,34 @@ export default {
       return dateformat(date, 'yyyy/mm')
     },
     day(date){
-      return date.getDate()
+      return dateformat(date, 'd')
     },
   },
   computed: {
-    startDayOfWeek(){
-      return 0
-    },
-    startDate(){
-      for(let i = 0; i < 7; i++){
-        const date = new Date(this.year, this.month - 1, -i - 1)
-        if(date.getDay() === this.startDayOfWeek){
-          return date
-        }
-      }
-    },
-    startYear(){
-      return this.startDate.getFullYear()
-    },
-    startMonth(){
-      return this.startDate.getMonth() + 1
-    },
-    startDay(){
-      return this.startDate.getDate()
-    },
     calendarDates(){
+      const startDate = new Midnight(this.year, this.month, 1).nextSunday(-1)
       const result = []
       for(let i = 0; i < 42; i++){
-        result.push(new Date(this.startYear, this.startMonth - 1, this.startDay + i))
+        result.push(startDate.nextDay(i - 1))
       }
       return result
-    }
+    },
   },
   methods: {
     previousMonth(){
-      const date = new Date(this.year, this.month - 2)
-      this.year = date.getFullYear()
-      this.month = date.getMonth() + 1
+      const date = new Midnight(this.year, this.month - 1, 1)
+      this.year = date.year()
+      this.month = date.month()
     },
     nextMonth(){
-      const date = new Date(this.year, this.month)
-      this.year = date.getFullYear()
-      this.month = date.getMonth() + 1
+      const date = new Midnight(this.year, this.month + 1, 1)
+      this.year = date.year()
+      this.month = date.month()
     },
     currentMonth(){
-      const date = new Date()
-      this.year = date.getFullYear()
-      this.month = date.getMonth() + 1
+      const date = new Midnight()
+      this.year = date.year()
+      this.month = date.month()
     },
     select(date){
       if(!date){
@@ -111,7 +93,7 @@ export default {
     },
     tdClass(date){
       const result = []
-      const month = date.getMonth() + 1
+      const month = date.month()
       if(month === this.month){
         result.push('current-month')
       }else if(month < this.month){
@@ -127,6 +109,7 @@ export default {
 
 <style lang='scss' scoped>
 $border-color: #ced4da;
+
 .date-picker{
   background-color: white;
   border: 1px solid $border-color;
