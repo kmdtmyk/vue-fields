@@ -11,11 +11,15 @@
 
 <script>
 export default {
-  props: [
-    'value',
-    'recordName',
-    'wrapperTag',
-  ],
+  props: {
+    value: {},
+    recordName: {
+      default: 'record',
+    },
+    wrapperTag: {
+      default: 'div',
+    },
+  },
   watch: {
     value: {
       handler(value){
