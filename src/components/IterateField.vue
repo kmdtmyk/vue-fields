@@ -19,9 +19,6 @@ export default {
       default: 'div',
     },
   },
-  mounted(){
-    this.addInputEvent()
-  },
   watch: {
     value: {
       handler(value){
@@ -31,9 +28,11 @@ export default {
         }
         records.push({})
         this.records = records
-        if(this.$el){
-          this.addInputEvent()
-        }
+        this.$nextTick(() => {
+          this.$el.querySelectorAll('input').forEach(input => {
+            input.addEventListener('input', this.input)
+          })
+        })
       },
       immediate: true,
     },
@@ -51,11 +50,6 @@ export default {
         this.value.splice(index, 1)
       }
     },
-    addInputEvent(){
-      this.$el.querySelectorAll('input').forEach(input => {
-        input.addEventListener('input', this.input)
-      })
-    }
   },
 }
 </script>
