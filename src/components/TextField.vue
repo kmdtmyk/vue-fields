@@ -75,7 +75,7 @@ export default {
     },
     findIndex(node){
       return [...this.$el.childNodes].findIndex(it => it === node)
-    }
+    },
   },
 }
 </script>

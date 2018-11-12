@@ -47,6 +47,27 @@
           td
             select-field(v-model='selectFieldValue3' :records='recordsFunction2')
           td {{selectFieldValue3 | json}}
+    hr
+    table
+      thead
+        tr
+          th name
+          th price
+          th release date
+          th
+          th
+      iterate-field(v-model='books' wrapper-tag='tbody' record-name='book')
+        tr(slot-scope='{book, input, remove}')
+          td
+            text-field(v-model='book.name' @input='input')
+          td
+            integer-field(v-model='book.price' @input='input')
+          td
+            date-field(v-model='book.releaseDate' @input='input')
+          td
+            button(type='button' @click='remove') remove
+          td {{book}}
+    pre {{books}}
 </template>
 
 <script>
@@ -75,6 +96,7 @@ export default {
       selectFieldValue2: '',
       selectFieldValue3: '',
       languages,
+      books: [{name:'book1', price:500}],
     }
   },
   computed: {
