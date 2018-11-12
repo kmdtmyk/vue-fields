@@ -13,6 +13,11 @@
             text-field(v-model='textFieldValue')
           td {{textFieldValue | json}}
         tr
+          td text-field (array)
+          td
+            text-field(v-model='multipleTextFieldValue')
+          td {{multipleTextFieldValue | json}}
+        tr
           td integer-field
           td
             integer-field(v-model='integerFieldValue')
@@ -62,6 +67,7 @@ export default {
   data(){
     return {
       textFieldValue: '',
+      multipleTextFieldValue: ['foo'],
       dateFieldValue: '',
       percentageFieldValue: '0.05',
       integerFieldValue: 123456789,
