@@ -1,7 +1,7 @@
 <template lang='pug'>
   span
     input(
-      :class='defaultClass'
+      :class='[defaultClass, classNames]'
       type='text'
       v-on='listeners'
       v-bind='$attrs'
@@ -18,6 +18,19 @@ export default {
     'defaultClass',
   ],
   inheritAttrs: false,
+  mounted(){
+    const {classList} = this.$el
+    const classNames = [...classList.values()]
+    if(0 < classNames.length){
+      classList.remove(classNames)
+    }
+    this.classNames = classNames
+  },
+  data(){
+    return {
+      classNames: []
+    }
+  },
   watch: {
     value: {
       handler(value){
