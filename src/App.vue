@@ -13,9 +13,9 @@
             text-field(v-model='textFieldValue')
           td {{textFieldValue | json}}
         tr
-          td text-field (array)
+          td text-field (multiple)
           td
-            text-field(v-model='multipleTextFieldValue')
+            text-field(v-model='multipleTextFieldValue' multiple)
           td {{multipleTextFieldValue | json}}
         tr
           td integer-field
