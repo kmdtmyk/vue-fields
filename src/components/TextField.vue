@@ -35,6 +35,7 @@ export default {
       return {
         ...this.$listeners,
         input: this.input,
+        change: this.change,
       }
     },
     multiple(){
@@ -44,7 +45,7 @@ export default {
   methods: {
     input(e){
       if(this.multiple){
-        const index = [...this.$el.childNodes].findIndex(it => it === e.target)
+        const index = this.findIndex(e.target)
         const value = [...this.value]
         value[index] = e.target.value
         this.$emit('input', value)
@@ -52,6 +53,16 @@ export default {
         this.$emit('input', e.target.value)
       }
     },
+    change(e){
+      if(!this.multiple || e.target.value){
+        return
+      }
+      const index = this.findIndex(e.target)
+      this.value.splice(index, 1)
+    },
+    findIndex(node){
+      return [...this.$el.childNodes].findIndex(it => it === node)
+    }
   },
 }
 </script>
