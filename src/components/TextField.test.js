@@ -73,8 +73,9 @@ describe('input', () => {
           multiple: true,
         }
       })
-      const input = wrapper.find('input')
-      input.trigger('input')
+      const inputs = wrapper.findAll('input')
+      expect(inputs.length).toBe(2)
+      inputs.at(0).trigger('input')
       expect(wrapper.emitted('input')[0]).toEqual([['foo']])
     })
 
@@ -85,9 +86,23 @@ describe('input', () => {
           multiple: true,
         }
       })
-      const input = wrapper.find('input')
-      input.trigger('input')
+      const inputs = wrapper.findAll('input')
+      expect(inputs.length).toBe(2)
+      inputs.at(0).trigger('input')
       expect(wrapper.emitted('input')[0]).toEqual([['foo']])
+    })
+
+    it('null', () => {
+      const wrapper = shallowMount(Component, {
+        propsData: {
+          value: null,
+          multiple: true,
+        }
+      })
+      const inputs = wrapper.findAll('input')
+      expect(inputs.length).toBe(1)
+      inputs.at(0).trigger('input')
+      expect(wrapper.emitted('input')[0]).toEqual([[]])
     })
 
   })

@@ -35,13 +35,15 @@ export default {
     value: {
       handler(value){
         const values = []
-        if(Array.isArray(this.value)){
-          values.push(...this.value)
+        if(this.multiple){
+          if(Array.isArray(this.value)){
+            values.push(...this.value)
+          }else if(this.value){
+            values.push(this.value)
+          }
+          values.push('')
         }else{
           values.push(this.value)
-        }
-        if(this.multiple){
-          values.push('')
         }
         this.inputValues = values
       },
