@@ -55,15 +55,16 @@
           th price
           th release date
           th
+            button(type='button' @click='books.push({})') add
           th
       iterate-field(v-model='books' wrapper-tag='tbody' record-name='book')
-        tr(slot-scope='{book, input, remove}')
+        tr(slot-scope='{book, remove}')
           td
-            text-field(v-model='book.name' @input='input')
+            text-field(v-model='book.name')
           td
-            integer-field(v-model='book.price' @input='input')
+            integer-field(v-model='book.price')
           td
-            date-field(v-model='book.releaseDate' @input='input')
+            date-field(v-model='book.releaseDate')
           td
             button(type='button' @click='remove') remove
           td {{book}}
@@ -120,7 +121,7 @@ export default {
         return json.items.map(item => item.name)
       }
     },
-  }
+  },
 }
 </script>
 

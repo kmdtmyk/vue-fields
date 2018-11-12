@@ -4,7 +4,6 @@
       v-for='(record, index) in records'
       v-bind='{[recordName]: record}'
       :index='index'
-      :input='input'
       :remove='remove(index)'
     )
 </template>
@@ -20,6 +19,9 @@ export default {
       default: 'div',
     },
   },
+  mounted(){
+    this.addInputEvent()
+  },
   watch: {
     value: {
       handler(value){
@@ -29,6 +31,9 @@ export default {
         }
         records.push({})
         this.records = records
+        if(this.$el){
+          this.addInputEvent()
+        }
       },
       immediate: true,
     },
@@ -46,6 +51,11 @@ export default {
         this.value.splice(index, 1)
       }
     },
+    addInputEvent(){
+      this.$el.querySelectorAll('input').forEach(input => {
+        input.addEventListener('input', this.input)
+      })
+    }
   },
 }
 </script>
