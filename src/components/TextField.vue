@@ -6,7 +6,7 @@
       v-on='listeners'
       v-bind='$attrs'
       v-for='(inputValue, index) in inputValues'
-      :value='inputValue'
+      v-model='inputValues[index]'
       :key='index'
     )
 </template>
@@ -34,11 +34,16 @@ export default {
   watch: {
     value: {
       handler(value){
+        const values = []
         if(this.multiple){
-          this.inputValues = [...this.value, '']
+          if(this.value){
+            values.push(...this.value)
+          }
+          values.push('')
         }else{
-          this.inputValues = [this.value]
+          values.push(this.value)
         }
+        this.inputValues = values
       },
       immediate: true,
     },
@@ -52,16 +57,17 @@ export default {
       }
     },
     multiple(){
-      return Array.isArray(this.value)
+      return this.$attrs.multiple === '' || !!this.$attrs.multiple
     },
   },
   methods: {
     input(e){
       if(this.multiple){
-        const index = this.findIndex(e.target)
-        const value = [...this.value]
-        value[index] = e.target.value
-        this.$emit('input', value)
+        const {inputValues} = this
+        if(!inputValues[inputValues.length - 1]){
+          inputValues.splice(inputValues.length - 1, 1)
+        }
+        this.$emit('input', inputValues)
       }else{
         this.$emit('input', e.target.value)
       }
@@ -70,8 +76,11 @@ export default {
       if(!this.multiple || e.target.value){
         return
       }
+      const {inputValues} = this
       const index = this.findIndex(e.target)
-      this.value.splice(index, 1)
+      inputValues.splice(index, 1)
+      inputValues.splice(inputValues.length - 1, 1)
+      this.$emit('input', inputValues)
     },
     findIndex(node){
       return [...this.$el.childNodes].findIndex(it => it === node)
