@@ -64,29 +64,35 @@ export default {
   },
   methods: {
     input(e){
-      if(this.multiple){
-        const {inputValues} = this
-        if(!inputValues[inputValues.length - 1]){
-          inputValues.splice(inputValues.length - 1, 1)
-        }
-        this.$emit('input', inputValues)
-      }else{
+      if(!this.multiple){
         this.$emit('input', e.target.value)
+        return
       }
+      const {inputValues} = this
+      if(!inputValues[inputValues.length - 1]){
+        inputValues.splice(inputValues.length - 1, 1)
+      }
+      this.$emit('input', inputValues)
     },
     change(e){
       if(!this.multiple || e.target.value){
         return
       }
-      const {inputValues} = this
       const index = this.findIndex(e.target)
-      inputValues.splice(index, 1)
-      inputValues.splice(inputValues.length - 1, 1)
-      this.$emit('input', inputValues)
+      this.remove(index)
     },
     findIndex(node){
       return [...this.$el.childNodes].findIndex(it => it === node)
     },
+    remove(index){
+      if(!this.multiple){
+        return
+      }
+      const {inputValues} = this
+      inputValues.splice(index, 1)
+      inputValues.splice(inputValues.length - 1, 1)
+      this.$emit('input', inputValues)
+    }
   },
 }
 </script>
