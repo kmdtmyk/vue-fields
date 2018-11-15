@@ -8,6 +8,8 @@
     @focus='focus'
     @blur='blur'
     @drop='drop'
+    @keydown.up='downKeyup'
+    @keydown.down='downKeydown'
   )
 </template>
 
@@ -24,7 +26,9 @@ export default {
   },
   watch: {
     value(){
-      if(!this.active){
+      if(this.active){
+        this.inputValue = this.value
+      }else{
         this.inputValue = this.format(this.value)
       }
     },
@@ -113,7 +117,13 @@ export default {
         return null
       }
       return value.toLocaleString()
-    }
+    },
+    downKeyup(e){
+      this.$emit('input', this.value + 1)
+    },
+    downKeydown(e){
+      this.$emit('input', this.value - 1)
+    },
   },
 }
 </script>
