@@ -119,10 +119,10 @@ export default {
       return value.toLocaleString()
     },
     downKeyup(e){
-      this.$emit('input', this.value + 1)
+      this.$emit('input', this.actualValue + 1)
     },
     downKeydown(e){
-      this.$emit('input', this.value - 1)
+      this.$emit('input', this.actualValue - 1)
     },
   },
 }
