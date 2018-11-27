@@ -12,6 +12,7 @@
       @keydown.down='keydownDown'
       @keydown.enter='keydownEnter'
       @keydown.27='keydownEscape'
+      @keydown.delete='keydownDelete'
       @focus='focus'
       @focusout='focusout'
       @change='change'
@@ -133,6 +134,11 @@ export default {
     },
     keydownEscape(e){
       this.closeDropdown()
+    },
+    keydownDelete(e){
+      if(!e.target.value && this.value){
+        this.remove()
+      }
     },
     change(e){
       if(!e.target.value){
