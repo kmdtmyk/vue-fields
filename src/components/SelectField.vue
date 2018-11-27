@@ -102,9 +102,6 @@ export default {
     focus(e){
       this.openDropdown = true
       this.focused = true
-      this.$nextTick(() => {
-        this.inputValue = ''
-      })
     },
     focusout(e){
       this.openDropdown = false
