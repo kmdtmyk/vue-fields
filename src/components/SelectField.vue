@@ -6,6 +6,7 @@
       ref='input'
       v-bind='$attrs'
       v-model='inputValue'
+      :placeholder='placeholder'
       @mousedown='openDropdown = true'
       @keydown.up='keydownUp'
       @keydown.down='keydownDown'
@@ -15,8 +16,9 @@
       @focusout='focusout'
       @change='change'
       @input='openDropdown = true'
+      :data-empty='empty'
     )
-    .remove(v-if='inputValue' tabIndex='-1' @click='remove')
+    .remove(v-if='!empty' tabIndex='-1' @click='remove')
     select-field-items(
       class='select-field-items'
       ref='dropdown'
@@ -44,15 +46,13 @@ export default {
     return {
       inputValue: '',
       openDropdown: false,
+      focused: false,
     }
   },
   mounted(){
     this.resetText()
   },
   watch: {
-    value(){
-      this.resetText()
-    },
     records(){
       this.resetText()
     },
@@ -91,14 +91,26 @@ export default {
       const {fontSize} = window.getComputedStyle(input)
       return {width, fontSize}
     },
+    placeholder(){
+      return this.value || this.$attrs.placeholder
+    },
+    empty(){
+      return !this.value
+    },
   },
   methods: {
     focus(e){
       this.openDropdown = true
+      this.focused = true
+      this.$nextTick(() => {
+        this.inputValue = ''
+      })
     },
     focusout(e){
       this.openDropdown = false
       this.resetText()
+      this.focused = false
+      this.inputValue = ''
     },
     keydownUp(e){
       this.openDropdown = true
@@ -139,7 +151,7 @@ export default {
       this.$emit('input', null)
     },
     resetText(){
-      this.inputValue = this.value
+      this.inputValue = ''
     },
     defaultFilter(records, query){
       return records.filter(record => {
@@ -155,6 +167,20 @@ export default {
   display: inline-block;
   position: relative;
   padding: 0;
+
+  input{
+    padding-right: 2em;
+
+    &::placeholder{
+      color: inherit;
+      opacity: 0.7;
+    }
+
+    &:not(:focus):not([data-empty='true'])::placeholder{
+      opacity: 1;
+    }
+
+  }
 
   .select-field-items{
     border-width: 1px;
@@ -187,10 +213,6 @@ export default {
 
   .remove:focus{
     outline: none;
-  }
-
-  input{
-    padding-right: 2em;
   }
 
 }

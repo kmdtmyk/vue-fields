@@ -35,7 +35,7 @@
         tr
           td select-field
           td
-            select-field(v-model='selectFieldValue1' :records='languages')
+            select-field(v-model='selectFieldValue1' :records='languages' placeholder='select...')
           td {{selectFieldValue1 | json}}
         tr
           td select-field (function)
