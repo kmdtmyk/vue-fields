@@ -15,7 +15,6 @@
       @keydown.delete='keydownDelete'
       @focus='focus'
       @focusout='focusout'
-      @change='change'
       @input='openDropdown = true'
       :data-empty='empty'
     )
@@ -137,11 +136,6 @@ export default {
     },
     keydownDelete(e){
       if(!e.target.value && this.value){
-        this.remove()
-      }
-    },
-    change(e){
-      if(!e.target.value){
         this.remove()
       }
     },
