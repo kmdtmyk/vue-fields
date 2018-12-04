@@ -51,6 +51,12 @@ export default {
   },
   mounted(){
     this.resetText()
+    let element = this.$el
+    while(element){
+      element.addEventListener('scroll', this.onParentScroll)
+      element = element.parentElement
+    }
+    window.addEventListener('scroll', this.onParentScroll)
   },
   watch: {
     records(){
@@ -78,18 +84,15 @@ export default {
       },
       immediate: true,
     },
+    openDropdown(){
+      this.updateDropdownStyle()
+    },
   },
   computed: {
     record(){
       return this.records.find((record) => {
         return record === this.value
       })
-    },
-    dropdownStyle(){
-      const {input} = this.$refs
-      const width = input.offsetWidth + 'px'
-      const {fontSize} = window.getComputedStyle(input)
-      return {width, fontSize}
     },
     placeholder(){
       return this.value || this.$attrs.placeholder
@@ -155,6 +158,21 @@ export default {
         return record.toLowerCase().includes(query.toLowerCase())
       })
     },
+    onParentScroll(e){
+      this.openDropdown = false
+    },
+    updateDropdownStyle(){
+      if(!this.openDropdown){
+        return
+      }
+      const {input} = this.$refs
+      const {fontSize} = window.getComputedStyle(input)
+      const rect = input.getBoundingClientRect()
+      const left = `${rect.x}px`
+      const top = `${rect.height + rect.y}px`
+      const width = `${rect.width}px`
+      this.dropdownStyle = {fontSize, width, left, top}
+    },
   },
 }
 </script>
@@ -186,7 +204,7 @@ export default {
     background-color: white;
     max-height: 15.1em;
     overflow-y: auto;
-    position: absolute;
+    position: fixed;
     z-index: 9999;
   }
 
