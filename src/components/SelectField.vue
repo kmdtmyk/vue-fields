@@ -85,10 +85,12 @@ export default {
         elements.forEach(element => {
           element.addEventListener('scroll', this.onParentScroll)
         })
+        window.addEventListener('resize', this.onWindowResize)
       }else{
         elements.forEach(element => {
           element.removeEventListener('scroll', this.onParentScroll)
         })
+        window.removeEventListener('resize', this.onWindowResize)
       }
     },
   },
@@ -164,6 +166,13 @@ export default {
     },
     onParentScroll(e){
       this.openDropdown = false
+      // this.updateDropdownStyle()
+      // this.$forceUpdate()
+    },
+    onWindowResize(e){
+      this.openDropdown = false
+      // this.updateDropdownStyle()
+      // this.$forceUpdate()
     },
     updateDropdownStyle(){
       if(!this.openDropdown){
