@@ -51,12 +51,6 @@ export default {
   },
   mounted(){
     this.resetText()
-    let element = this.$el
-    while(element){
-      element.addEventListener('scroll', this.onParentScroll)
-      element = element.parentElement
-    }
-    window.addEventListener('scroll', this.onParentScroll)
   },
   watch: {
     records(){
@@ -86,6 +80,16 @@ export default {
     },
     openDropdown(){
       this.updateDropdownStyle()
+      let elements = getParentElements(this.$el)
+      if(this.openDropdown){
+        elements.forEach(element => {
+          element.addEventListener('scroll', this.onParentScroll)
+        })
+      }else{
+        elements.forEach(element => {
+          element.removeEventListener('scroll', this.onParentScroll)
+        })
+      }
     },
   },
   computed: {
@@ -174,6 +178,17 @@ export default {
       this.dropdownStyle = {fontSize, width, left, top}
     },
   },
+}
+
+function getParentElements(element){
+  const result = []
+  let currentElement = element
+  while(currentElement){
+    result.push(currentElement)
+    currentElement = currentElement.parentElement
+  }
+  result.push(document)
+  return result
 }
 </script>
 
