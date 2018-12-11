@@ -101,7 +101,7 @@ export default {
       integerFieldValue: 123456789,
       selectFieldValue1: '',
       selectFieldValue2: '',
-      selectFieldValue3: '',
+      selectFieldValue3: 1,
       selectFieldValue4: '',
       languages,
       books: [{name:'book1', price:500}],

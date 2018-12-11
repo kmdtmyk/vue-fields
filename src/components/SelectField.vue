@@ -112,6 +112,11 @@ export default {
       })
     },
     placeholder(){
+      const slot = this.$scopedSlots.default
+      const record = this.selectedRecord
+      if(slot && record){
+        return slot({record}).children[0].text
+      }
       return this.selectedRecord || this.$attrs.placeholder
     },
     empty(){
