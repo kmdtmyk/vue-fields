@@ -109,12 +109,10 @@ export default {
       })
     },
     placeholder(){
-      const slot = this.$scopedSlots.default
-      const record = this.selectedRecord
-      if(slot && record){
-        return slot({record}).children[0].text
+      if(this.selectedRecord){
+        return this.recordText(this.selectedRecord)
       }
-      return this.selectedRecord || this.$attrs.placeholder
+      return this.$attrs.placeholder
     },
     empty(){
       return !this.value
@@ -162,7 +160,7 @@ export default {
       this.openDropdown = false
     },
     select(record){
-      this.inputValue = record
+      this.inputValue = this.recordText(record)
       const {recordKey} = this
       if(recordKey){
         this.$emit('input', record[recordKey])
@@ -203,6 +201,13 @@ export default {
       const top = `${rect.height + rect.y}px`
       const width = `${rect.width}px`
       this.dropdownStyle = {fontSize, width, left, top}
+    },
+    recordText(record){
+      const slot = this.$scopedSlots.default
+      if(slot && record){
+        return slot({record}).children[0].text
+      }
+      return record
     },
   },
 }
