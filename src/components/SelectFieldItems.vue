@@ -11,7 +11,8 @@
       :record='record'
       @mousemove='selectedIndex = index'
       @mousedown='select'
-    ) {{record}}
+    )
+      slot(v-bind='{record}') {{record}}
 </template>
 
 <script>

@@ -27,6 +27,8 @@
       :style='dropdownStyle'
       @input='select'
     )
+      template(slot-scope='scope' v-if='$scopedSlots.default')
+        slot(v-bind='scope')
 </template>
 
 <script>
@@ -40,6 +42,7 @@ export default {
     'value',
     'defaultClass',
     'records',
+    'recordKey',
   ],
   inheritAttrs: false,
   data(){
@@ -95,13 +98,21 @@ export default {
     },
   },
   computed: {
-    record(){
-      return this.records.find((record) => {
+    defaultSlotExists(){
+      return this.$slots.default
+    },
+    selectedRecord(){
+      const records = this.evaluatedRecords || []
+      const {recordKey} = this
+      return records.find(record => {
+        if(recordKey){
+          return record[recordKey] === this.value
+        }
         return record === this.value
       })
     },
     placeholder(){
-      return this.value || this.$attrs.placeholder
+      return this.selectedRecord || this.$attrs.placeholder
     },
     empty(){
       return !this.value
@@ -150,7 +161,12 @@ export default {
     },
     select(record){
       this.inputValue = record
-      this.$emit('input', record)
+      const {recordKey} = this
+      if(recordKey){
+        this.$emit('input', record[recordKey])
+      }else{
+        this.$emit('input', record)
+      }
       this.closeDropdown()
     },
     remove(){

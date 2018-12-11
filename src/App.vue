@@ -43,10 +43,16 @@
             select-field(v-model='selectFieldValue2' :records='recordsFunction1')
           td {{selectFieldValue2 | json}}
         tr
+          td select-field (object array)
+          td
+            select-field(v-model='selectFieldValue3' :records='recordsFunction2' record-key='id')
+              span(slot-scope='{record}') {{record.id}}. {{record.name}}
+          td {{selectFieldValue3 | json}}
+        tr
           td select-field (async function)
           td
-            select-field(v-model='selectFieldValue3' :records='recordsFunction2')
-          td {{selectFieldValue3 | json}}
+            select-field(v-model='selectFieldValue4' :records='recordsFunction3')
+          td {{selectFieldValue4 | json}}
     hr
     table
       thead
@@ -96,6 +102,7 @@ export default {
       selectFieldValue1: '',
       selectFieldValue2: '',
       selectFieldValue3: '',
+      selectFieldValue4: '',
       languages,
       books: [{name:'book1', price:500}],
     }
@@ -110,7 +117,20 @@ export default {
         return records.filter(record => record.startsWith(query))
       }
     },
-    recordsFunction2(query){
+    recordsFunction2(){
+      return (query) => {
+        const records = [
+          {id: 1, name: 'foo'},
+          {id: 2, name: 'bar'},
+          {id: 3, name: 'hoge'},
+        ]
+        if(!query){
+          return records
+        }
+        return records.filter(record => record.name.startsWith(query))
+      }
+    },
+    recordsFunction3(query){
       return async (query) => {
         if(!query){
           return
