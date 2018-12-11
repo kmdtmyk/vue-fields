@@ -98,9 +98,6 @@ export default {
     },
   },
   computed: {
-    defaultSlotExists(){
-      return this.$slots.default
-    },
     selectedRecord(){
       const records = this.evaluatedRecords || []
       const {recordKey} = this
