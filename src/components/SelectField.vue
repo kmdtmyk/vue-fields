@@ -61,6 +61,9 @@ export default {
     },
     inputValue: {
       async handler(inputValue){
+        if(this.evaluatedRecords && !this.openDropdown){
+          return
+        }
         this.evaluatedRecords = []
         if(this.records instanceof Function){
           const records = this.records(this.inputValue)
