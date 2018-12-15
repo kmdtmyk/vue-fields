@@ -18,7 +18,9 @@
       @input='openDropdown = true'
       :data-empty='empty'
     )
-    .remove(v-if='!empty' tabIndex='-1' @click='remove')
+    .control
+      loading-spinner(v-if='loading')
+      .remove(v-else-if='!empty' tabIndex='-1' @click='remove')
     select-field-items(
       class='select-field-items'
       ref='dropdown'
@@ -33,10 +35,12 @@
 
 <script>
 import SelectFieldItems from './SelectFieldItems'
+import LoadingSpinner from './LoadingSpinner'
 
 export default {
   components: {
     SelectFieldItems,
+    LoadingSpinner,
   },
   props: [
     'value',
@@ -50,6 +54,7 @@ export default {
       inputValue: '',
       openDropdown: false,
       focused: false,
+      loading: false,
     }
   },
   mounted(){
@@ -68,7 +73,9 @@ export default {
         if(this.records instanceof Function){
           const records = this.records(this.inputValue)
           if(records instanceof Promise){
+            this.loading = true
             this.evaluatedRecords = await records
+            this.loading = false
             this.$forceUpdate()
           }else{
             this.evaluatedRecords = records
@@ -97,6 +104,9 @@ export default {
           element.removeEventListener('scroll', this.onParentScroll)
         })
         window.removeEventListener('resize', this.onWindowResize)
+      }
+      if(!this.openDropdown){
+        this.loading = false
       }
     },
   },
@@ -258,15 +268,19 @@ function getParentElements(element){
     z-index: 9999;
   }
 
-  .remove{
+  .control{
     position: absolute;
     top: 0;
     right: 0;
     bottom: 0;
-    width: 1.8em;
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 1.8em;
+  }
+
+  .remove{
+    text-align: center;
     cursor: pointer;
     font-family: 'Courier New', Courier, monospace;
   }

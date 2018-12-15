@@ -1,5 +1,5 @@
 <template lang='pug'>
-  .input-spinner
+  .loading-spinner
     .circle
     .circle
 </template>
@@ -10,7 +10,7 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-.input-spinner{
+.loading-spinner{
 
   position: relative;
   display: inline-block;
