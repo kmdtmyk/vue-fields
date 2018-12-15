@@ -69,7 +69,9 @@ export default {
         if(this.evaluatedRecords && !this.openDropdown){
           return
         }
-        this.evaluatedRecords = []
+        if(!this.evaluatedRecords){
+          this.evaluatedRecords = []
+        }
         if(this.records instanceof Function){
           const records = this.records(this.inputValue)
           if(records instanceof Promise){
@@ -111,6 +113,10 @@ export default {
     },
   },
   computed: {
+    asyncRecords(){
+      const {records} = this
+      return records instanceof Function && records() instanceof Promise
+    },
     selectedRecord(){
       const records = this.evaluatedRecords || []
       const {recordKey} = this
@@ -122,6 +128,9 @@ export default {
       })
     },
     placeholder(){
+      if(this.asyncRecords){
+        return this.value
+      }
       if(this.selectedRecord){
         return this.recordText(this.selectedRecord)
       }
