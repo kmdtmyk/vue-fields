@@ -32,6 +32,7 @@
     )
       template(slot-scope='scope' v-if='$scopedSlots.default')
         slot(v-bind='scope')
+    input(v-if='$props.name' :name='$props.name' :value='value' type='hidden')
 </template>
 
 <script>
@@ -48,6 +49,7 @@ export default {
     'defaultClass',
     'records',
     'recordKey',
+    'name',
   ],
   inheritAttrs: false,
   data(){
