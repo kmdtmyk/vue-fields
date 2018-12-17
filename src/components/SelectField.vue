@@ -156,7 +156,7 @@ export default {
     },
     keydownUp(e){
       this.openDropdown = true
-      setTimeout(() => {
+      this.$nextTick(() => {
         this.$refs.dropdown.up()
       })
     },
