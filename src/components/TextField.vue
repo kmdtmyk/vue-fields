@@ -2,20 +2,45 @@
   span
     input(
       :class='[defaultClass, classNames]'
+      ref='input'
       type='text'
       v-on='listeners'
       v-bind='$attrs'
       v-for='(inputValue, index) in inputValues'
       v-model='inputValues[index]'
       :key='index'
+      :autocomplete='useDropdown || $props.autocomplete === false ? "off" : $props.autocomplete'
+      @mousedown='mousedown'
+      @focus='focus'
+      @focusout='focusout'
+      @keydown.up='keydownUp'
+      @keydown.down='keydownDown'
+      @keydown.enter='keydownEnter'
+      @keydown.27='keydownEscape'
+    )
+    select-field-items(
+      class='select-field-items'
+      ref='dropdown'
+      v-if='dropdownOpen'
+      :records='dropdownRecords'
+      :style='dropdownStyle'
+      @input='select'
     )
 </template>
 
 <script>
+import SelectFieldItems from './SelectFieldItems'
+import dropdown from './mixins/dropdown'
+
 export default {
+  mixins: [dropdown],
+  components: {
+    SelectFieldItems,
+  },
   props: [
     'value',
     'defaultClass',
+    'autocomplete',
   ],
   inheritAttrs: false,
   mounted(){
@@ -28,7 +53,7 @@ export default {
   },
   data(){
     return {
-      classNames: []
+      classNames: [],
     }
   },
   watch: {
@@ -49,6 +74,9 @@ export default {
       },
       immediate: true,
     },
+    dropdownOpen(){
+      this.dropdownRecords = this.$props.autocomplete
+    },
   },
   computed: {
     listeners(){
@@ -61,6 +89,13 @@ export default {
     multiple(){
       return this.$attrs.multiple === '' || !!this.$attrs.multiple
     },
+    useDropdown(){
+      const {autocomplete} = this.$props
+      if(autocomplete instanceof Array){
+        return true
+      }
+      return false
+    }
   },
   methods: {
     input(e){
@@ -92,11 +127,24 @@ export default {
       inputValues.splice(index, 1)
       inputValues.splice(inputValues.length - 1, 1)
       this.$emit('input', inputValues)
+    },
+    select(record){
+      this.$emit('input', record)
     }
   },
 }
 </script>
 
-<style scoped>
+<style lang='scss' scoped>
+.select-field-items{
+  border-width: 1px;
+  border-style: solid;
+  box-sizing: border-box;
+  background-color: white;
+  max-height: 15.1em;
+  overflow-y: auto;
+  position: fixed;
+  z-index: 9999;
+}
 </style>
 

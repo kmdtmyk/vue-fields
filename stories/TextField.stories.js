@@ -13,7 +13,7 @@ storiesOf('TextField', module)
     const readonly = boolean('readonly', false)
     const disabled = boolean('disabled', false)
     return {
-      components: { TextField },
+      components: {TextField},
       template: `
         <div>
           <text-field v-model='value' :disabled='${disabled}' :readonly='${readonly}'/>
@@ -28,14 +28,30 @@ storiesOf('TextField', module)
     }
   })
   .add('multiple', () => ({
-    components: { TextField },
+    components: {TextField},
     template: `
       <div>
         <text-field v-model='value' multiple/>{{value}}
       </div>
     `,
     data(){
-      return {value: []}
+      return {
+        value: []
+      }
+    },
+  }))
+  .add('autocomplete', () => ({
+    components: {TextField},
+    template: `
+      <div>
+        <text-field name='q' v-model='value' :autocomplete='autocomplete'/>{{value}}
+      </div>
+    `,
+    data(){
+      return {
+        value: '',
+        autocomplete: ['foo', 'bar', 'hoge']
+      }
     },
   }))
 
