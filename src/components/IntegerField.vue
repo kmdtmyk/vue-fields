@@ -79,6 +79,9 @@ export default {
         }else{
           const start = this.$input.selectionStart
           const leftText = this.$input.value.substr(0, start)
+          if(!leftText){
+            return
+          }
           const offset = leftText.length - this.parseString(leftText).toString().length
           this.$nextTick(() => {
             this.$input.setSelectionRange(start - offset, start - offset)
