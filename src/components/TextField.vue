@@ -70,11 +70,12 @@ export default {
           values.push(this.value)
         }
         this.inputValues = values
+        this.updateDropdownRecords()
       },
       immediate: true,
     },
     dropdownOpen(){
-      this.dropdownRecords = this.$props.autocomplete
+      this.updateDropdownRecords()
     },
   },
   computed: {
@@ -129,7 +130,13 @@ export default {
     },
     select(record){
       this.$emit('input', record)
-    }
+    },
+    updateDropdownRecords(){
+      if(!this.useDropdown){
+        return
+      }
+      this.dropdownRecords = this.defaultFilter(this.autocomplete, this.value)
+    },
   },
 }
 </script>

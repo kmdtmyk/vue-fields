@@ -74,6 +74,11 @@ export default {
       const width = `${rect.width}px`
       this.dropdownStyle = {fontSize, width, left, top}
     },
+    defaultFilter(records, query){
+      return records.filter(record => {
+        return record.toLowerCase().includes(query.toLowerCase())
+      })
+    },
   }
 }
 

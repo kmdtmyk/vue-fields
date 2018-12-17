@@ -44,13 +44,12 @@ storiesOf('TextField', module)
     components: {TextField},
     template: `
       <div>
-        <text-field name='q' v-model='value' :autocomplete='autocomplete'/>{{value}}
+        <text-field name='q' v-model='value' :autocomplete='["foo", "bar", "hoge"]'/>{{value}}
       </div>
     `,
     data(){
       return {
         value: '',
-        autocomplete: ['foo', 'bar', 'hoge']
       }
     },
   }))
