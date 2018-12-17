@@ -6,7 +6,7 @@
     "build": "vue-cli-service build --target lib --name index ./src/index.js",
     "test": "vue-cli-service test:unit",
     "storybook": "start-storybook -p 6006 --ci",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook --output-dir docs"
   },
   "main": "./dist/index.umd.js",
   "license": "MIT",
