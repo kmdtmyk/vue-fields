@@ -17,6 +17,7 @@
       @focusout='focusout'
       @input='openDropdown = true'
       :data-empty='empty'
+      autocomplete='off'
     )
     .control
       loading-spinner(v-if='loading')
