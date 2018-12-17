@@ -2,7 +2,7 @@
   "name": "@kmdtmyk/vue-fields",
   "version": "0.0.0",
   "scripts": {
-    "start": "vue-cli-service serve",
+    "serve": "vue-cli-service serve",
     "build": "vue-cli-service build --target lib --name index ./src/index.js",
     "test": "vue-cli-service test:unit",
     "storybook": "start-storybook -p 6006 --ci",
