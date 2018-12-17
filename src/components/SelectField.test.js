@@ -1,7 +1,7 @@
 import {mount} from '@vue/test-utils'
 import Component from './SelectField'
 
-describe('select-field-item length', () => {
+describe('dropdown-list-item length', () => {
 
   function subject(records){
     const wrapper = mount(Component, {
@@ -12,7 +12,7 @@ describe('select-field-item length', () => {
     const input = wrapper.find('input')
     wrapper.setData({inputValue: ''})
     input.trigger('input')
-    return wrapper.findAll('.select-field-item').length
+    return wrapper.findAll('.dropdown-list-item').length
   }
 
   it('array', () => {

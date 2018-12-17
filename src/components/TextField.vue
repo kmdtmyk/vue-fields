@@ -18,8 +18,7 @@
       @keydown.enter='keydownEnter'
       @keydown.27='keydownEscape'
     )
-    select-field-items(
-      class='select-field-items'
+    dropdown-list(
       ref='dropdown'
       v-if='dropdownOpen'
       :records='dropdownRecords'
@@ -29,13 +28,13 @@
 </template>
 
 <script>
-import SelectFieldItems from './SelectFieldItems'
+import DropdownList from './DropdownList'
 import dropdown from './mixins/dropdown'
 
 export default {
   mixins: [dropdown],
   components: {
-    SelectFieldItems,
+    DropdownList,
   },
   props: [
     'value',
@@ -136,7 +135,7 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-.select-field-items{
+.dropdown-list{
   border-width: 1px;
   border-style: solid;
   box-sizing: border-box;

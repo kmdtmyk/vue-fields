@@ -1,6 +1,6 @@
 <template lang='pug'>
   div(
-    class='select-field-item'
+    class='dropdown-list-item'
     v-on='$listeners'
   )
     slot
@@ -12,7 +12,7 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-.select-field-item{
+.dropdown-list-item{
   cursor: pointer;
   padding: 0.2em 0.4em;
 

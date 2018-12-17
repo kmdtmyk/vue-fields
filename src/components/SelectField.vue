@@ -22,8 +22,7 @@
     .control
       loading-spinner(v-if='loading')
       .remove(v-else-if='!empty' tabIndex='-1' @click='remove')
-    select-field-items(
-      class='select-field-items'
+    dropdown-list(
       ref='dropdown'
       v-if='openDropdown'
       :records='evaluatedRecords'
@@ -36,12 +35,12 @@
 </template>
 
 <script>
-import SelectFieldItems from './SelectFieldItems'
+import DropdownList from './DropdownList'
 import LoadingSpinner from './LoadingSpinner'
 
 export default {
   components: {
-    SelectFieldItems,
+    DropdownList,
     LoadingSpinner,
   },
   props: [
@@ -269,7 +268,7 @@ function getParentElements(element){
 
   }
 
-  .select-field-items{
+  .dropdown-list{
     border-width: 1px;
     border-style: solid;
     box-sizing: border-box;

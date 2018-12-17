@@ -1,10 +1,10 @@
 <template lang='pug'>
-  div(
+  .dropdown-list(
     ref='dropdown'
     v-if='records && records.length'
     @mouseleave='selectedIndex = null'
   )
-    select-field-item(
+    dropdown-list-item(
       v-for='(record, index) in records'
       :class='{selected: selectedIndex === index}'
       :key='index'
@@ -16,11 +16,11 @@
 </template>
 
 <script>
-import SelectFieldItem from './SelectFieldItem'
+import DropdownListItem from './DropdownListItem'
 
 export default {
   components: {
-    SelectFieldItem,
+    DropdownListItem,
   },
   props: [
     'records',
