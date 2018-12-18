@@ -7,25 +7,27 @@
       v-bind='$attrs'
       v-model='inputValue'
       :placeholder='placeholder'
-      @mousedown='openDropdown = true'
+      @keydown.delete='keydownDelete'
+      @input='dropdownOpen = true'
+      @focusout='focusout'
+      :data-empty='empty'
+      autocomplete='off'
+      :style='wrapperStyle'
+
+      @mousedown='mousedown'
+      @focus='focus'
+      @blur='blur'
       @keydown.up='keydownUp'
       @keydown.down='keydownDown'
       @keydown.enter='keydownEnter'
       @keydown.27='keydownEscape'
-      @keydown.delete='keydownDelete'
-      @focus='focus'
-      @focusout='focusout'
-      @input='openDropdown = true'
-      :data-empty='empty'
-      autocomplete='off'
-      :style='wrapperStyle'
     )
     .control
       loading-spinner(v-if='loading')
       .remove(v-else-if='!empty' tabIndex='-1' @click='remove')
     dropdown-list(
       ref='dropdown'
-      v-if='openDropdown'
+      v-if='dropdownOpen'
       :records='evaluatedRecords'
       :style='dropdownStyle'
       @input='select'
@@ -37,11 +39,12 @@
 
 <script>
 import wrapper from './mixins/wrapper'
+import dropdown from './mixins/dropdown'
 import DropdownList from './DropdownList'
 import LoadingSpinner from './LoadingSpinner'
 
 export default {
-  mixins: [wrapper],
+  mixins: [wrapper, dropdown],
   components: {
     DropdownList,
     LoadingSpinner,
@@ -51,13 +54,11 @@ export default {
     name: String,
     defaultClass: [String, Array],
     records: [Array, Function],
-    name: String,
+    recordKey: String,
   },
   data(){
     return {
       inputValue: '',
-      openDropdown: false,
-      focused: false,
       loading: false,
     }
   },
@@ -69,50 +70,14 @@ export default {
       this.resetText()
     },
     inputValue: {
-      async handler(inputValue){
-        if(this.evaluatedRecords && !this.openDropdown){
-          return
-        }
-        if(!this.evaluatedRecords){
-          this.evaluatedRecords = []
-        }
-        if(this.records instanceof Function){
-          const records = this.records(this.inputValue)
-          if(records instanceof Promise){
-            this.loading = true
-            this.evaluatedRecords = await records
-            this.loading = false
-            this.$forceUpdate()
-          }else{
-            this.evaluatedRecords = records
-          }
-        }else{
-          const records = this.records || []
-          if(this.inputValue){
-            this.evaluatedRecords = this.defaultFilter(records, this.inputValue)
-          }else{
-            this.evaluatedRecords = records
-          }
-        }
+      handler(inputValue){
+        this.updateDropdownRecords()
       },
       immediate: true,
     },
-    openDropdown(){
-      this.updateDropdownStyle()
-      let elements = getParentElements(this.$el)
-      if(this.openDropdown){
-        elements.forEach(element => {
-          element.addEventListener('scroll', this.onParentScroll)
-        })
-        addEventListener('resize', this.onWindowResize)
-      }else{
-        elements.forEach(element => {
-          element.removeEventListener('scroll', this.onParentScroll)
-        })
-        removeEventListener('resize', this.onWindowResize)
-      }
-      if(!this.openDropdown){
-        this.loading = false
+    dropdownOpen(){
+      if(this.dropdownOpen){
+        this.updateDropdownRecords()
       }
     },
   },
@@ -145,45 +110,13 @@ export default {
     },
   },
   methods: {
-    focus(e){
-      this.openDropdown = true
-      this.focused = true
-    },
     focusout(e){
-      this.openDropdown = false
-      this.resetText()
-      this.focused = false
       this.inputValue = ''
-    },
-    keydownUp(e){
-      this.openDropdown = true
-      this.$nextTick(() => {
-        this.$refs.dropdown.up()
-      })
-    },
-    keydownDown(e){
-      if(!this.openDropdown){
-        this.openDropdown = true
-      }else{
-        this.$refs.dropdown.down()
-      }
-    },
-    keydownEnter(e){
-      e.preventDefault()
-      if(this.$refs.dropdown){
-        this.$refs.dropdown.select()
-      }
-    },
-    keydownEscape(e){
-      this.closeDropdown()
     },
     keydownDelete(e){
       if(!e.target.value && this.value){
         this.remove()
       }
-    },
-    closeDropdown(){
-      this.openDropdown = false
     },
     select(record){
       this.inputValue = this.recordText(record)
@@ -193,40 +126,13 @@ export default {
       }else{
         this.$emit('input', record)
       }
-      this.closeDropdown()
+      this.dropdownOpen = false
     },
     remove(){
       this.$emit('input', null)
     },
     resetText(){
       this.inputValue = ''
-    },
-    defaultFilter(records, query){
-      return records.filter(record => {
-        return record.toLowerCase().includes(query.toLowerCase())
-      })
-    },
-    onParentScroll(e){
-      this.openDropdown = false
-      // this.updateDropdownStyle()
-      // this.$forceUpdate()
-    },
-    onWindowResize(e){
-      this.openDropdown = false
-      // this.updateDropdownStyle()
-      // this.$forceUpdate()
-    },
-    updateDropdownStyle(){
-      if(!this.openDropdown){
-        return
-      }
-      const {input} = this.$refs
-      const {fontSize} = getComputedStyle(input)
-      const rect = input.getBoundingClientRect()
-      const left = `${rect.x}px`
-      const top = `${rect.height + rect.y}px`
-      const width = `${rect.width}px`
-      this.dropdownStyle = {fontSize, width, left, top}
     },
     recordText(record){
       const slot = this.$scopedSlots.default
@@ -235,18 +141,30 @@ export default {
       }
       return record
     },
+    async updateDropdownRecords(){
+      if(!this.evaluatedRecords){
+        this.evaluatedRecords = []
+      }
+      if(this.records instanceof Function){
+        const records = this.records(this.inputValue)
+        if(records instanceof Promise){
+          this.loading = true
+          this.evaluatedRecords = await records
+          this.loading = false
+          this.$forceUpdate()
+        }else{
+          this.evaluatedRecords = records
+        }
+      }else{
+        const records = this.records || []
+        if(this.inputValue){
+          this.evaluatedRecords = this.defaultFilter(records, this.inputValue)
+        }else{
+          this.evaluatedRecords = records
+        }
+      }
+    },
   },
-}
-
-function getParentElements(element){
-  const result = []
-  let currentElement = element
-  while(currentElement){
-    result.push(currentElement)
-    currentElement = currentElement.parentElement
-  }
-  result.push(document)
-  return result
 }
 </script>
 

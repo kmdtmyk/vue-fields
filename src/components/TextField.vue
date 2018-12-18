@@ -10,14 +10,15 @@
       v-model='inputValues[index]'
       :key='index'
       :autocomplete='useDropdown || $props.autocomplete === false ? "off" : $props.autocomplete === true ? "on" : $props.autocomplete'
+      :style='wrapperStyle'
+
       @mousedown='mousedown'
       @focus='focus'
-      @focusout='focusout'
+      @blur='blur'
       @keydown.up='keydownUp'
       @keydown.down='keydownDown'
       @keydown.enter='keydownEnter'
       @keydown.27='keydownEscape'
-      :style='wrapperStyle'
     )
     dropdown-list(
       ref='dropdown'

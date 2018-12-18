@@ -30,7 +30,7 @@ export default {
     focus(e){
       this.dropdownOpen = true
     },
-    focusout(e){
+    blur(e){
       this.dropdownOpen = false
     },
     keydownUp(e){
@@ -63,7 +63,7 @@ export default {
       this.dropdownOpen = false
     },
     updateDropdownStyle(){
-      const input = this.$refs.input[0]
+      const input = this.$refs.input[0] || this.$refs.input
       if(!input){
         return
       }
