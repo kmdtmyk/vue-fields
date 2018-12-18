@@ -1,22 +1,25 @@
 <template lang='pug'>
   .date-picker(@mousedown.prevent @wheel.prevent='wheel')
     header
-      button(type='button' @click='previousMonth' tabindex='-1') &lt;
-      label {{calendarDates[7] | period}}
-      button(type='button' @click='nextMonth' tabindex='-1') &gt;
-      button(type='button' @click='currentMonth' tabindex='-1') 今月
-    table
-      thead
-        tr
-          th(v-for='dayName in dayNames') {{dayName}}
-      tbody
-        tr(v-for='(_, y) in 6')
-          td(v-for='(_, x) in 7' :class='tdClass(calendarDates[x + y * 7])')
-            button(
-              type='button'
-              @click='select(calendarDates[x + y * 7])'
-              tabindex='-1'
-            ) {{calendarDates[x + y * 7] | day}}
+      .month
+        button(type='button' @click='previousMonth' tabindex='-1') &lt;
+        label {{calendarDates[7] | period}}
+        button(type='button' @click='nextMonth' tabindex='-1') &gt;
+      .current
+        button(type='button' @click='currentMonth' tabindex='-1') 今月
+    .calendar
+      table
+        thead
+          tr
+            th(v-for='dayName in dayNames') {{dayName}}
+        tbody
+          tr(v-for='(_, y) in 6')
+            td(v-for='(_, x) in 7' :class='tdClass(calendarDates[x + y * 7])')
+              button(
+                type='button'
+                @click='select(calendarDates[x + y * 7])'
+                tabindex='-1'
+              ) {{calendarDates[x + y * 7] | day}}
     footer
       button(type='button' @click='today' tabindex='-1') 今日
       button(type='button' @click='clear' tabindex='-1') クリア
@@ -114,9 +117,22 @@ $border-color: #ced4da;
   background-color: white;
   border: 1px solid $border-color;
 
+  header, footer, .calendar{
+    padding: 2px;
+  }
+
   header{
     border-bottom: 1px solid $border-color;
+    display: flex;
+    justify-content: space-between;
+    button{
+      min-width: 1.5rem;
+    }
+    label{
+      margin: 0 0.4rem;
+    }
   }
+
   footer{
     border-top: 1px solid $border-color;
     display: flex;
@@ -124,6 +140,7 @@ $border-color: #ced4da;
   }
 
   table{
+    border-collapse: collapse;
     thead th{
       text-align: center;
     }
@@ -137,6 +154,7 @@ $border-color: #ced4da;
           color: gray;
         }
         button{
+          text-align: center;
           border: 0;
           background: none;
           color: inherit;
@@ -149,6 +167,13 @@ $border-color: #ced4da;
     }
   }
 
+}
+
+button{
+  height: 2em;
+  &:hover{
+    cursor: pointer;
+  }
 }
 </style>
 
