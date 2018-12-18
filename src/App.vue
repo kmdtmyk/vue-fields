@@ -13,11 +13,6 @@
             text-field(v-model='textFieldValue')
           td {{textFieldValue | json}}
         tr
-          td text-field (multiple)
-          td
-            text-field(v-model='multipleTextFieldValue' multiple)
-          td {{multipleTextFieldValue | json}}
-        tr
           td integer-field
           td
             integer-field(v-model='integerFieldValue')
@@ -35,24 +30,8 @@
         tr
           td select-field
           td
-            select-field(v-model='selectFieldValue1' :records='languages' placeholder='select...')
-          td {{selectFieldValue1 | json}}
-        tr
-          td select-field (function)
-          td
-            select-field(v-model='selectFieldValue2' :records='recordsFunction1')
-          td {{selectFieldValue2 | json}}
-        tr
-          td select-field (object array)
-          td
-            select-field(v-model='selectFieldValue3' :records='recordsFunction2' record-key='id')
-              span(slot-scope='{record}') {{record.id}}. {{record.name}}
-          td {{selectFieldValue3 | json}}
-        tr
-          td select-field (async function)
-          td
-            select-field(v-model='selectFieldValue4' :records='recordsFunction3')
-          td {{selectFieldValue4 | json}}
+            select-field(v-model='selectFieldValue' :records='languages' placeholder='select...')
+          td {{selectFieldValue | json}}
     hr
     table
       thead
@@ -95,52 +74,13 @@ export default {
   data(){
     return {
       textFieldValue: '',
-      multipleTextFieldValue: ['foo'],
       dateFieldValue: '',
       percentageFieldValue: '0.05',
       integerFieldValue: 123456789,
-      selectFieldValue1: '',
-      selectFieldValue2: '',
-      selectFieldValue3: 1,
-      selectFieldValue4: '',
+      selectFieldValue: '',
       languages,
       books: [{name:'book1', price:500}],
     }
-  },
-  computed: {
-    recordsFunction1(){
-      return (query) => {
-        const records = ['foo', 'bar', 'hoge']
-        if(!query){
-          return records
-        }
-        return records.filter(record => record.startsWith(query))
-      }
-    },
-    recordsFunction2(){
-      return (query) => {
-        const records = [
-          {id: 1, name: 'foo'},
-          {id: 2, name: 'bar'},
-          {id: 3, name: 'hoge'},
-        ]
-        if(!query){
-          return records
-        }
-        return records.filter(record => record.name.startsWith(query))
-      }
-    },
-    recordsFunction3(query){
-      return async (query) => {
-        if(!query){
-          return
-        }
-        const result = await fetch(`https://api.github.com/search/repositories?q=${query}`)
-        const text = await result.text()
-        const json = JSON.parse(text)
-        return json.items.map(item => item.name)
-      }
-    },
   },
 }
 </script>
