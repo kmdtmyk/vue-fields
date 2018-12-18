@@ -82,14 +82,18 @@ export default {
     },
   },
   computed: {
-    asyncRecords(){
-      const {records} = this
-      return records instanceof Function && records() instanceof Promise
+    allRecords(){
+      if(!this.records){
+        return []
+      }
+      if(this.records instanceof Function){
+        return this.records()
+      }
+      return this.records
     },
     selectedRecord(){
-      const records = this.evaluatedRecords || []
       const {recordKey} = this
-      return records.find(record => {
+      return this.allRecords.find(record => {
         if(recordKey){
           return record[recordKey] === this.value
         }
@@ -97,13 +101,10 @@ export default {
       })
     },
     placeholder(){
-      if(this.asyncRecords){
-        return this.value
-      }
       if(this.selectedRecord){
         return this.recordText(this.selectedRecord)
       }
-      return this.$attrs.placeholder
+      return this.value || this.$attrs.placeholder
     },
     empty(){
       return !this.value
@@ -141,20 +142,9 @@ export default {
       }
       return record
     },
-    async updateDropdownRecords(){
-      if(!this.evaluatedRecords){
-        this.evaluatedRecords = []
-      }
+    updateDropdownRecords(){
       if(this.records instanceof Function){
-        const records = this.records(this.inputValue)
-        if(records instanceof Promise){
-          this.loading = true
-          this.evaluatedRecords = await records
-          this.loading = false
-          this.$forceUpdate()
-        }else{
-          this.evaluatedRecords = records
-        }
+        this.evaluatedRecords = this.records(this.inputValue)
       }else{
         const records = this.records || []
         if(this.inputValue){
@@ -162,6 +152,9 @@ export default {
         }else{
           this.evaluatedRecords = records
         }
+      }
+      if(!this.evaluatedRecords){
+        this.evaluatedRecords = []
       }
     },
   },
