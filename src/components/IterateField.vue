@@ -11,11 +11,13 @@
 <script>
 export default {
   props: {
-    value: {},
+    value: Array,
     recordName: {
+      type: String,
       default: 'record',
     },
     wrapperTag: {
+      type: String,
       default: 'div',
     },
   },

@@ -36,11 +36,11 @@ export default {
   components: {
     DropdownList,
   },
-  props: [
-    'value',
-    'defaultClass',
-    'autocomplete',
-  ],
+  props: {
+    value: [String, Array],
+    defaultClass: [String, Array],
+    autocomplete: [String, Boolean, Array, Function],
+  },
   inheritAttrs: false,
   mounted(){
     const {classList} = this.$el

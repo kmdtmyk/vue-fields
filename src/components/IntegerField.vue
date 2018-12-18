@@ -15,10 +15,10 @@
 
 <script>
 export default {
-  props: [
-    'value',
-    'defaultClass',
-  ],
+  props: {
+    value: [Number, String],
+    defaultClass: [String, Array],
+  },
   data(){
     return {
       inputValue: this.format(this.value)

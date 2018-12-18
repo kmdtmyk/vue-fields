@@ -19,11 +19,11 @@
 import Decimal from 'decimal.js'
 
 export default {
-  props: [
-    'value',
-    'defaultClass',
-    'name',
-  ],
+  props: {
+    value: [Number, String],
+    defaultClass: [String, Array],
+    name: String,
+  },
   inheritAttrs: false,
   data(){
     const text = this.encode()

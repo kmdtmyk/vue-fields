@@ -21,10 +21,10 @@ export default {
   model: {
     prop: '_value',
   },
-  props: [
-    '_value',
-    'defaultClass',
-  ],
+  props: {
+    _value: String,
+    defaultClass: [String, Array],
+  },
   components: {
     DatePicker,
   },

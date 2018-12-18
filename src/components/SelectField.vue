@@ -43,13 +43,13 @@ export default {
     DropdownList,
     LoadingSpinner,
   },
-  props: [
-    'value',
-    'defaultClass',
-    'records',
-    'recordKey',
-    'name',
-  ],
+  props: {
+    value: [Number, String],
+    name: String,
+    defaultClass: [String, Array],
+    records: [Array, Function],
+    name: String,
+  },
   inheritAttrs: false,
   data(){
     return {
