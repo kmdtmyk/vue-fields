@@ -2,7 +2,7 @@
 import {storiesOf} from '@storybook/vue'
 import VueInfoAddon from 'storybook-addon-vue-info'
 
-import SelectField from '../src/components/SelectField'
+import SelectField from '../components/SelectField'
 
 storiesOf('SelectField', module).addDecorator(VueInfoAddon)
   .add('basic', () => ({

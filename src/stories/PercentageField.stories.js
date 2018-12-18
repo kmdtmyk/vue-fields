@@ -2,7 +2,7 @@
 import {storiesOf} from '@storybook/vue'
 import VueInfoAddon from 'storybook-addon-vue-info'
 
-import PercentageField from '../src/components/PercentageField'
+import PercentageField from '../components/PercentageField'
 
 storiesOf('PercentageField', module).addDecorator(VueInfoAddon).add('basic', () => ({
   components: { PercentageField },

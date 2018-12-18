@@ -2,7 +2,7 @@
 import {storiesOf} from '@storybook/vue'
 import VueInfoAddon from 'storybook-addon-vue-info'
 
-import IntegerField from '../src/components/IntegerField'
+import IntegerField from '../components/IntegerField'
 
 storiesOf('IntegerField', module).addDecorator(VueInfoAddon).add('basic', () => ({
   components: { IntegerField },

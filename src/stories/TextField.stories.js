@@ -3,7 +3,7 @@ import {storiesOf} from '@storybook/vue'
 import VueInfoAddon from 'storybook-addon-vue-info'
 import {withKnobs, text, boolean} from '@storybook/addon-knobs'
 
-import TextField from '../src/components/TextField'
+import TextField from '../components/TextField'
 
 storiesOf('TextField', module)
   .addDecorator(VueInfoAddon)

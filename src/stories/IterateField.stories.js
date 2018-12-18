@@ -2,7 +2,7 @@
 import {storiesOf} from '@storybook/vue'
 import VueInfoAddon from 'storybook-addon-vue-info'
 
-import IterateField from '../src/components/IterateField'
+import IterateField from '../components/IterateField'
 
 storiesOf('IterateField', module).addDecorator(VueInfoAddon).add('basic', () => ({
   components: { IterateField },
