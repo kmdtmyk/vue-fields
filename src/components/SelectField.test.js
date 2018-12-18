@@ -41,3 +41,24 @@ describe('dropdown-list-item length', () => {
   })
 
 })
+
+describe('placeholder', () => {
+
+  const subject = (records, value) => {
+    const wrapper = mount(Component, {
+      propsData: {
+        records,
+        value,
+      },
+    })
+    const input = wrapper.find('input')
+    return input.attributes().placeholder
+  }
+
+  it('without slot', () => {
+    expect(subject([], 'value')).toBe('value')
+    expect(subject(['foo'], 'value')).toBe('value')
+    expect(subject(() => [], 'value')).toBe('value')
+  })
+
+})
