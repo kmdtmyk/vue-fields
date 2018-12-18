@@ -1,7 +1,7 @@
 
 import {storiesOf} from '@storybook/vue'
 import VueInfoAddon from 'storybook-addon-vue-info'
-import {withKnobs, text, boolean} from '@storybook/addon-knobs'
+import {withKnobs, text, number, boolean} from '@storybook/addon-knobs'
 
 import TextField from '../components/TextField'
 
@@ -10,13 +10,14 @@ storiesOf('TextField', module)
   .addDecorator(withKnobs)
   .add('basic', () => {
     const value = text('value', 'foo')
+    const size = number('size', 10)
     const readonly = boolean('readonly', false)
     const disabled = boolean('disabled', false)
     return {
       components: {TextField},
       template: `
         <div>
-          <text-field v-model='value' :disabled='${disabled}' :readonly='${readonly}'/>
+          <text-field v-model='value' :size='${size}' :disabled='${disabled}' :readonly='${readonly}'/>
           {{value}}
         </div>
       `,

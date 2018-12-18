@@ -1,24 +1,34 @@
 
 import {storiesOf} from '@storybook/vue'
 import VueInfoAddon from 'storybook-addon-vue-info'
+import {withKnobs, text, number, boolean} from '@storybook/addon-knobs'
 
 import SelectField from '../components/SelectField'
 
-storiesOf('SelectField', module).addDecorator(VueInfoAddon)
-  .add('basic', () => ({
-    components: { SelectField },
-    template: `
-      <div>
-        <select-field v-model='value' :records='records'/>{{value}}
-      </div>
-    `,
-    data(){
-      return {
-        value: '',
-        records: ['foo', 'bar', 'hoge']
-      }
-    },
-  }))
+storiesOf('SelectField', module)
+  .addDecorator(VueInfoAddon)
+  .addDecorator(withKnobs)
+  .add('basic', () => {
+    const value = text('value', '')
+    const size = number('size', 10)
+    const readonly = boolean('readonly', false)
+    const disabled = boolean('disabled', false)
+    return {
+      components: { SelectField },
+      template: `
+        <div>
+          <select-field v-model='value' :records='records' :size='${size}' :disabled='${disabled}' :readonly='${readonly}'/>
+          {{value}}
+        </div>
+      `,
+      data(){
+        return {
+          value,
+          records: ['foo', 'bar', 'hoge']
+        }
+      },
+    }
+  })
   .add('function', () => ({
     components: { SelectField },
     template: `
