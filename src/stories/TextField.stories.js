@@ -32,7 +32,8 @@ storiesOf('TextField', module)
     components: {TextField},
     template: `
       <div>
-        <text-field v-model='value' multiple/>{{value}}
+        <text-field v-model='value' multiple/>
+        {{value}}
       </div>
     `,
     data(){
@@ -45,7 +46,8 @@ storiesOf('TextField', module)
     components: {TextField},
     template: `
       <div>
-        <text-field v-model='value' :autocomplete='["foo", "bar", "hoge"]'/>{{value}}
+        <text-field v-model='value' :autocomplete='["foo", "bar", "hoge"]'/>
+        {{value}}
       </div>
     `,
     data(){
@@ -58,7 +60,8 @@ storiesOf('TextField', module)
     components: {TextField},
     template: `
       <div>
-        <text-field v-model='value' :autocomplete='autocomplete'/>{{value}}
+        <text-field v-model='value' :autocomplete='autocomplete'/>
+        {{value}}
       </div>
     `,
     data(){

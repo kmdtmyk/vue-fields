@@ -30,6 +30,7 @@
 <script>
 import DropdownList from './DropdownList'
 import dropdown from './mixins/dropdown'
+import ElementUtil from '../lib/ElementUtil'
 
 export default {
   mixins: [dropdown],
@@ -43,6 +44,7 @@ export default {
   },
   inheritAttrs: false,
   mounted(){
+    ElementUtil.delegateAttribute(this.$el, this.$refs.input, 'style')
     const {classList} = this.$el
     const classNames = [...classList.values()]
     if(0 < classNames.length){

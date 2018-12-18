@@ -1,7 +1,8 @@
 <template lang='pug'>
-  span
+  .date-field
     input(
       :class='defaultClass'
+      ref='input'
       type='text'
       v-on='listeners'
       :value='inputValue'
@@ -16,6 +17,7 @@
 <script>
 import dateformat from 'dateformat'
 import DatePicker from './DatePicker'
+import ElementUtil from '../lib/ElementUtil'
 
 export default {
   model: {
@@ -33,6 +35,9 @@ export default {
       open: false,
       inputValue: this.value,
     }
+  },
+  mounted(){
+    ElementUtil.delegateAttribute(this.$el, this.$refs.input, 'style')
   },
   watch: {
     value(){
@@ -68,6 +73,10 @@ export default {
 </script>
 
 <style lang='scss' scoped>
+.date-field{
+  display: inline-block;
+}
+
 .date-picker{
   position: absolute;
   z-index: 1;

@@ -37,6 +37,7 @@
 <script>
 import DropdownList from './DropdownList'
 import LoadingSpinner from './LoadingSpinner'
+import ElementUtil from '../lib/ElementUtil'
 
 export default {
   components: {
@@ -60,6 +61,7 @@ export default {
     }
   },
   mounted(){
+    ElementUtil.delegateAttribute(this.$el, this.$refs.input, 'style')
     this.resetText()
   },
   watch: {

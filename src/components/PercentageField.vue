@@ -17,6 +17,7 @@
 
 <script>
 import Decimal from 'decimal.js'
+import ElementUtil from '../lib/ElementUtil'
 
 export default {
   props: {
@@ -34,6 +35,7 @@ export default {
     }
   },
   mounted(){
+    ElementUtil.delegateAttribute(this.$el, this.$refs.input, 'style')
     this.updateSuffixStyle()
   },
   watch: {

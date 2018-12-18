@@ -33,7 +33,8 @@ storiesOf('SelectField', module)
     components: { SelectField },
     template: `
       <div>
-        <select-field v-model='value' :records='records'/>{{value}}
+        <select-field v-model='value' :records='records'/>
+        {{value}}
       </div>
     `,
     data(){
@@ -79,7 +80,8 @@ storiesOf('SelectField', module)
     components: { SelectField },
     template: `
       <div>
-        <select-field v-model='value' :records='records'/>{{value}}
+        <select-field v-model='value' :records='records'/>
+        {{value}}
       </div>
     `,
     data(){
