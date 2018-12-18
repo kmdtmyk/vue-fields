@@ -109,5 +109,43 @@ describe('input', () => {
 
 })
 
+describe('autocomplete', () => {
+
+  const subject = (autocomplete) => {
+    const wrapper = shallowMount(Component, {
+      propsData: {
+        value: '',
+        autocomplete,
+      }
+    })
+    const input = wrapper.find('input')
+    return input.attributes().autocomplete
+  }
+
+  it('true', () => {
+    expect(subject(true)).toEqual('on')
+  })
+
+  it('false', () => {
+    expect(subject(false)).toEqual('off')
+  })
+
+  it('on', () => {
+    expect(subject('on')).toEqual('on')
+  })
+
+  it('off', () => {
+    expect(subject('off')).toEqual('off')
+  })
+
+  it('array', () => {
+    expect(subject(['foo', 'bar'])).toEqual('off')
+  })
+
+  it('function', () => {
+    expect(subject(() => ['foo', 'bar'])).toEqual('off')
+  })
+
+})
 
 

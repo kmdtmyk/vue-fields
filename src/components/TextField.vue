@@ -9,7 +9,7 @@
       v-for='(inputValue, index) in inputValues'
       v-model='inputValues[index]'
       :key='index'
-      :autocomplete='useDropdown || $props.autocomplete === false ? "off" : $props.autocomplete'
+      :autocomplete='useDropdown || $props.autocomplete === false ? "off" : $props.autocomplete === true ? "on" : $props.autocomplete'
       @mousedown='mousedown'
       @focus='focus'
       @focusout='focusout'
@@ -98,7 +98,7 @@ export default {
         return true
       }
       return false
-    }
+    },
   },
   methods: {
     input(e){
