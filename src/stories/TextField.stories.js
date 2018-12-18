@@ -40,7 +40,7 @@ storiesOf('TextField', module)
       }
     },
   }))
-  .add('autocomplete', () => ({
+  .add('autocomplete (array)', () => ({
     components: {TextField},
     template: `
       <div>
@@ -50,6 +50,33 @@ storiesOf('TextField', module)
     data(){
       return {
         value: '',
+      }
+    },
+  }))
+  .add('autocomplete (ajax)', () => ({
+    components: {TextField},
+    template: `
+      <div>
+        <text-field v-model='value' :autocomplete='autocomplete'/>{{value}}
+      </div>
+    `,
+    data(){
+      return {
+        value: '',
+        autocomplete: [],
+      }
+    },
+    watch: {
+      async value(){
+        const query = this.value
+        if(!query){
+          this.autocomplete = []
+          return
+        }
+        const result = await fetch(`https://api.github.com/search/repositories?q=${query}`)
+        const text = await result.text()
+        const json = JSON.parse(text)
+        this.autocomplete = () => json.items.map(item => item.name)
       }
     },
   }))

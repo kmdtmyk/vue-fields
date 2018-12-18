@@ -77,6 +77,9 @@ export default {
     dropdownOpen(){
       this.updateDropdownRecords()
     },
+    autocomplete(){
+      this.updateDropdownRecords()
+    },
   },
   computed: {
     listeners(){
@@ -91,7 +94,7 @@ export default {
     },
     useDropdown(){
       const {autocomplete} = this.$props
-      if(autocomplete instanceof Array){
+      if(autocomplete instanceof Array || autocomplete instanceof Function){
         return true
       }
       return false
@@ -133,6 +136,10 @@ export default {
     },
     updateDropdownRecords(){
       if(!this.useDropdown){
+        return
+      }
+      if(this.autocomplete instanceof Function){
+        this.dropdownRecords = this.autocomplete(this.value)
         return
       }
       this.dropdownRecords = this.defaultFilter(this.autocomplete, this.value)
