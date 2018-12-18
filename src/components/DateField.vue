@@ -4,6 +4,7 @@
       :class='defaultClass'
       type='text'
       v-on='listeners'
+      v-bind='$attrs'
       :value='inputValue'
       @input='input'
       @click='click'

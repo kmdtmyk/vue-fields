@@ -27,7 +27,6 @@ export default {
     defaultClass: [String, Array],
     name: String,
   },
-  inheritAttrs: false,
   data(){
     const text = this.encode()
     return {

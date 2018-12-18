@@ -53,7 +53,6 @@ export default {
     records: [Array, Function],
     name: String,
   },
-  inheritAttrs: false,
   data(){
     return {
       inputValue: '',

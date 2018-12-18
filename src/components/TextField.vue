@@ -43,7 +43,6 @@ export default {
     defaultClass: [String, Array],
     autocomplete: [String, Boolean, Array, Function],
   },
-  inheritAttrs: false,
   mounted(){
     const {classList} = this.$el
     const classNames = [...classList.values()]
