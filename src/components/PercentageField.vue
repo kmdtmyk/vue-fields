@@ -1,5 +1,5 @@
 <template lang='pug'>
-  span
+  .percentage-field
     input(
       :class='defaultClass'
       type='text'
@@ -7,12 +7,12 @@
       v-bind='$attrs'
       @input='input'
       v-model.number='text'
+      ref='input'
     )
-    //- input(
-      type='hidden'
-      :name='name'
-      :value='value'
-      )
+    .suffix(
+      :style='suffixStyle'
+    ) {{suffix}}
+    input(v-if='$props.name' :name='$props.name' :value='value' type='hidden')
 </template>
 
 <script>
@@ -29,7 +29,16 @@ export default {
     const text = this.encode()
     return {
       text,
+      suffixStyle: {},
+      suffix: '%',
     }
+  },
+  mounted(){
+    const input = this.$refs.input
+    console.log(input)
+    const style = getComputedStyle(input)
+    this.suffixStyle.fontSize = style.fontSize
+    this.$forceUpdate()
   },
   watch: {
     value(){
@@ -67,28 +76,23 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-$unit-width: 1.2em;
-
-span{
+.percentage-field{
   position: relative;
   display: inline-block;
-  margin-right: -$unit-width;
 }
 
-span::after{
+input{
+  padding-right: 1.5em;
+  box-sizing: border-box;
+}
+
+.suffix{
   position: absolute;
   display: flex;
   top: 0;
   bottom: 0;
-  right: $unit-width;
+  right: 0;
   align-items: center;
   width: 1.2em;
-  content: '%'
-}
-
-input{
-  padding-right: $unit-width;
-  width: calc(100% - #{$unit-width});
-  box-sizing: border-box;
 }
 </style>
