@@ -34,11 +34,7 @@ export default {
     }
   },
   mounted(){
-    const input = this.$refs.input
-    console.log(input)
-    const style = getComputedStyle(input)
-    this.suffixStyle.fontSize = style.fontSize
-    this.$forceUpdate()
+    this.updateSuffixStyle()
   },
   watch: {
     value(){
@@ -70,6 +66,19 @@ export default {
       }catch(e){
         return null
       }
+    },
+    updateSuffixStyle(){
+      const input = this.$refs.input
+      if(!input){
+        return
+      }
+      const style = getComputedStyle(input)
+      const inputRect = input.getBoundingClientRect()
+      const elRect = this.$el.getBoundingClientRect()
+      this.suffixStyle.fontSize = style.fontSize
+      this.suffixStyle.top = `${inputRect.top - elRect.top}px`
+      this.suffixStyle.bottom = `${elRect.bottom - inputRect.bottom}px`
+      this.$forceUpdate()
     },
   },
 }
