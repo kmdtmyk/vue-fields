@@ -37,7 +37,9 @@ export default {
     }
   },
   mounted(){
-    this.updateSuffixStyle()
+    this.$nextTick(() => {
+      this.updateSuffixStyle()
+    })
   },
   watch: {
     value(){
@@ -65,7 +67,7 @@ export default {
     },
     decode(){
       try{
-        return Decimal.div(this.text, 100)
+        return Decimal.div(this.text, 100).toString()
       }catch(e){
         return null
       }
