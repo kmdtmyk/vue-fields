@@ -22,9 +22,10 @@
       @keydown.enter='keydownEnter'
       @keydown.27='keydownEscape'
     )
-    .control
-      loading-spinner(v-if='loading')
-      .remove(v-else-if='!empty' tabIndex='-1' @click='remove')
+    .control(v-if='loading')
+      loading-spinner
+    .control(v-else-if='!empty')
+      .remove(tabIndex='-1' @click='remove')
     dropdown-list(
       ref='dropdown'
       v-if='dropdownOpen'
