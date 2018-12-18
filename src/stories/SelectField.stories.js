@@ -1,7 +1,7 @@
 
 import {storiesOf} from '@storybook/vue'
 import VueInfoAddon from 'storybook-addon-vue-info'
-import {withKnobs, text, number, boolean} from '@storybook/addon-knobs'
+import {withKnobs, text, number, boolean, color} from '@storybook/addon-knobs'
 
 import SelectField from '../components/SelectField'
 
@@ -14,7 +14,7 @@ storiesOf('SelectField', module)
     const readonly = boolean('readonly', false)
     const disabled = boolean('disabled', false)
     return {
-      components: { SelectField },
+      components: {SelectField},
       template: `
         <div>
           <select-field v-model='value' :records='records' :size='${size}' :disabled='${disabled}' :readonly='${readonly}'/>
@@ -29,8 +29,28 @@ storiesOf('SelectField', module)
       },
     }
   })
+  .add('style', () => {
+    const value = text('value', '')
+    const size = number('size', 24)
+    const colour = color('color', 'red')
+    return {
+      components: {SelectField},
+      template: `
+        <div>
+          <select-field v-model='value' :records='records' style='font-size: ${size}px; color: ${colour};'/>
+          {{value}}
+        </div>
+      `,
+      data(){
+        return {
+          value,
+          records: ['foo', 'bar', 'hoge']
+        }
+      },
+    }
+  })
   .add('function', () => ({
-    components: { SelectField },
+    components: {SelectField},
     template: `
       <div>
         <select-field v-model='value' :records='records'/>
@@ -50,7 +70,7 @@ storiesOf('SelectField', module)
     },
   }))
   .add('object array', () => ({
-    components: { SelectField },
+    components: {SelectField},
     template: `
       <div>
         <select-field v-model='value' :records='records' record-key='id'>
@@ -77,7 +97,7 @@ storiesOf('SelectField', module)
     },
   }))
   .add('async function', () => ({
-    components: { SelectField },
+    components: {SelectField},
     template: `
       <div>
         <select-field v-model='value' :records='records'/>

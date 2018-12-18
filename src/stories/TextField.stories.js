@@ -1,7 +1,7 @@
 
 import {storiesOf} from '@storybook/vue'
 import VueInfoAddon from 'storybook-addon-vue-info'
-import {withKnobs, text, number, boolean} from '@storybook/addon-knobs'
+import {withKnobs, text, number, boolean, color} from '@storybook/addon-knobs'
 
 import TextField from '../components/TextField'
 
@@ -25,6 +25,23 @@ storiesOf('TextField', module)
         return {
           value,
         }
+      },
+    }
+  })
+  .add('style', () => {
+    const value = text('value', 'foo')
+    const size = number('size', 24)
+    const colour = color('color', 'red')
+    return {
+      components: {TextField},
+      template: `
+        <div>
+          <text-field v-model='value' style='font-size: ${size}px; color: ${colour};'/>
+          {{value}}
+        </div>
+      `,
+      data(){
+        return {value}
       },
     }
   })

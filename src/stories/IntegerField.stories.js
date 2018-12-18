@@ -1,7 +1,7 @@
 
 import {storiesOf} from '@storybook/vue'
 import VueInfoAddon from 'storybook-addon-vue-info'
-import {withKnobs, text, number, boolean} from '@storybook/addon-knobs'
+import {withKnobs, number, boolean, color} from '@storybook/addon-knobs'
 
 import IntegerField from '../components/IntegerField'
 
@@ -26,3 +26,21 @@ storiesOf('IntegerField', module)
       },
     }
   })
+  .add('style', () => {
+    const value = number('value', 123456789)
+    const size = number('size', 24)
+    const colour = color('color', 'red')
+    return {
+      components: {IntegerField},
+      template: `
+        <div>
+          <integer-field v-model='value' style='font-size: ${size}px; color: ${colour};'/>
+          {{value}}
+        </div>
+      `,
+      data(){
+        return {value}
+      },
+    }
+  })
+
