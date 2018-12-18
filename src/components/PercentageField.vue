@@ -1,13 +1,14 @@
 <template lang='pug'>
   .percentage-field
     input(
+      ref='input'
       :class='defaultClass'
       type='text'
       v-on='listeners'
       v-bind='$attrs'
       @input='input'
       v-model.number='text'
-      ref='input'
+      :style='wrapperStyle'
     )
     .suffix(
       :style='suffixStyle'
@@ -17,9 +18,10 @@
 
 <script>
 import Decimal from 'decimal.js'
-import ElementUtil from '../lib/ElementUtil'
+import wrapper from './mixins/wrapper'
 
 export default {
+  mixins: [wrapper],
   props: {
     value: [Number, String],
     defaultClass: [String, Array],
@@ -35,7 +37,6 @@ export default {
     }
   },
   mounted(){
-    ElementUtil.delegateAttribute(this.$el, this.$refs.input, 'style')
     this.updateSuffixStyle()
   },
   watch: {

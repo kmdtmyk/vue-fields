@@ -2,7 +2,6 @@
   .date-field
     input(
       :class='defaultClass'
-      ref='input'
       type='text'
       v-on='listeners'
       :value='inputValue'
@@ -10,16 +9,18 @@
       @click='click'
       @focus='focus'
       @blur='blur'
+      :style='wrapperStyle'
     )
     date-picker.date-picker(v-if='open' v-model='inputValue' @input='open = false')
 </template>
 
 <script>
 import dateformat from 'dateformat'
+import wrapper from './mixins/wrapper'
 import DatePicker from './DatePicker'
-import ElementUtil from '../lib/ElementUtil'
 
 export default {
+  mixins: [wrapper],
   model: {
     prop: 'value',
   },
@@ -35,9 +36,6 @@ export default {
       open: false,
       inputValue: this.value,
     }
-  },
-  mounted(){
-    ElementUtil.delegateAttribute(this.$el, this.$refs.input, 'style')
   },
   watch: {
     value(){

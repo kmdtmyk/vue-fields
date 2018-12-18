@@ -32,7 +32,6 @@
 import DropdownList from './DropdownList'
 import wrapper from './mixins/wrapper'
 import dropdown from './mixins/dropdown'
-import ElementUtil from '../lib/ElementUtil'
 
 export default {
   mixins: [wrapper, dropdown],

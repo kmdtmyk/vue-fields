@@ -18,6 +18,7 @@
       @input='openDropdown = true'
       :data-empty='empty'
       autocomplete='off'
+      :style='wrapperStyle'
     )
     .control
       loading-spinner(v-if='loading')
@@ -35,11 +36,12 @@
 </template>
 
 <script>
+import wrapper from './mixins/wrapper'
 import DropdownList from './DropdownList'
 import LoadingSpinner from './LoadingSpinner'
-import ElementUtil from '../lib/ElementUtil'
 
 export default {
+  mixins: [wrapper],
   components: {
     DropdownList,
     LoadingSpinner,
@@ -61,7 +63,6 @@ export default {
     }
   },
   mounted(){
-    ElementUtil.delegateAttribute(this.$el, this.$refs.input, 'style')
     this.resetText()
   },
   watch: {
@@ -104,12 +105,12 @@ export default {
         elements.forEach(element => {
           element.addEventListener('scroll', this.onParentScroll)
         })
-        window.addEventListener('resize', this.onWindowResize)
+        addEventListener('resize', this.onWindowResize)
       }else{
         elements.forEach(element => {
           element.removeEventListener('scroll', this.onParentScroll)
         })
-        window.removeEventListener('resize', this.onWindowResize)
+        removeEventListener('resize', this.onWindowResize)
       }
       if(!this.openDropdown){
         this.loading = false
@@ -221,7 +222,7 @@ export default {
         return
       }
       const {input} = this.$refs
-      const {fontSize} = window.getComputedStyle(input)
+      const {fontSize} = getComputedStyle(input)
       const rect = input.getBoundingClientRect()
       const left = `${rect.x}px`
       const top = `${rect.height + rect.y}px`
