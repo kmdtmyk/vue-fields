@@ -14,7 +14,7 @@
     "vue": "^2.5.20"
   },
   "devDependencies": {
-    "@kmdtmyk/midnight": "^0.1.1",
+    "@kmdtmyk/midnight": "^0.1.3",
     "@storybook/addon-actions": "^4.1.2",
     "@storybook/addon-knobs": "^4.1.2",
     "@storybook/addon-links": "^4.1.2",
