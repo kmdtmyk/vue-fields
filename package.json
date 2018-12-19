@@ -1,18 +1,26 @@
 {
   "name": "@kmdtmyk/vue-fields",
   "version": "0.0.0",
+  "description": "Input components for vue.js",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build --target lib --name index ./src/index.js",
     "test": "vue-cli-service test:unit",
     "storybook": "start-storybook -p 6006 --ci",
-    "build-storybook": "build-storybook --output-dir docs"
+    "build-storybook": "build-storybook --output-dir docs",
+    "prepublish": "npm run build"
   },
   "main": "./dist/index.umd.js",
-  "license": "MIT",
-  "dependencies": {
-    "vue": "^2.5.20"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kmdtmyk/vue-fields.git"
   },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kmdtmyk/vue-fields/issues"
+  },
+  "homepage": "https://github.com/kmdtmyk/vue-fields#readme",
   "devDependencies": {
     "@kmdtmyk/midnight": "^0.1.3",
     "@storybook/addon-actions": "^4.1.2",
@@ -20,9 +28,9 @@
     "@storybook/addon-links": "^4.1.2",
     "@storybook/addons": "^4.1.2",
     "@storybook/vue": "4.0.7",
-    "@vue/cli-plugin-babel": "^3.1.1",
-    "@vue/cli-plugin-unit-jest": "^3.1.1",
-    "@vue/cli-service": "^3.1.3",
+    "@vue/cli-plugin-babel": "^3.2.0",
+    "@vue/cli-plugin-unit-jest": "^3.2.0",
+    "@vue/cli-service": "^3.2.0",
     "@vue/test-utils": "^1.0.0-beta.25",
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^23.6.0",
@@ -35,11 +43,18 @@
     "pug-plain-loader": "^1.0.0",
     "sass-loader": "^7.1.0",
     "storybook-addon-vue-info": "^0.7.0",
-    "vue-template-compiler": "^2.5.20"
+    "vue": "^2.5.21",
+    "vue-template-compiler": "^2.5.21"
   },
   "browserslist": [
     "> 1%",
     "last 2 versions",
     "not ie <= 8"
+  ],
+  "files": [
+    "dist/"
+  ],
+  "keywords": [
+    "vue"
   ]
 }
