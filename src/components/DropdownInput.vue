@@ -1,27 +1,27 @@
 <template lang='pug'>
-  span
-    input(
-      @mousedown='mousedown'
-      @focus='focus'
-      @blur='blur'
-      @keydown.up='keydownUp'
-      @keydown.down='keydownDown'
-      @keydown.enter='keydownEnter'
-      @keydown.27='keydownEscape'
-      @input='input'
-      ref='input'
-      v-on='listeners'
-      v-bind='$attrs'
-      v-model='inputValue'
-      :style='wrapperStyle'
-    )
-    .clear(v-if='clearable' @click='clickClear')
-    .dropdown(
-      v-if='editable && dropdownOpen'
-      :style='dropdownStyle'
-      ref='dropdown'
-    )
-      slot
+.dropdown-input
+  input(
+    @mousedown='mousedown'
+    @focus='focus'
+    @blur='blur'
+    @keydown.up='keydownUp'
+    @keydown.down='keydownDown'
+    @keydown.enter='keydownEnter'
+    @keydown.27='keydownEscape'
+    @input='input'
+    ref='input'
+    v-on='listeners'
+    v-bind='$attrs'
+    v-model='inputValue'
+    :style='wrapperStyle'
+  )
+  .clear(v-if='clearable' @click='clickClear')
+  .dropdown(
+    v-if='editable && dropdownOpen'
+    :style='dropdownStyle'
+    ref='dropdown'
+  )
+    slot
 </template>
 
 <script>
@@ -152,7 +152,8 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-span{
+.dropdown-input{
+  display: inline-block;
   position: relative;
 }
 

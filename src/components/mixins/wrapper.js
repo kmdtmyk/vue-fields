@@ -6,8 +6,18 @@ export default {
   },
   inheritAttrs: false,
   mounted(){
-    const style = this.$el.getAttribute('style')
-    this.$el.removeAttribute('style')
-    this.wrapperStyle = style
+    extractWrapperStyle(this)
   },
+  beforeUpdate(){
+    extractWrapperStyle(this)
+  },
+}
+
+const extractWrapperStyle = (component) => {
+  const style = component.$el.getAttribute('style')
+  if(!style){
+    return
+  }
+  component.$el.removeAttribute('style')
+  component.wrapperStyle = style
 }

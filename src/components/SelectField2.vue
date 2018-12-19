@@ -1,5 +1,6 @@
 <template lang='pug'>
-  dropdown-input.select-field(
+.select-field
+  dropdown-input(
     v-model='inputValue'
     @keydown.up='keydownUp'
     @keydown.down='keydownDown'
@@ -10,6 +11,7 @@
     v-bind='$attrs'
     :placeholder='placeholder'
     :clear='!!value'
+    :style='wrapperStyle'
   )
     dropdown-list(
       ref='dropdown'
@@ -21,11 +23,13 @@
 </template>
 
 <script>
+import wrapper from './mixins/wrapper'
 import DropdownList from './DropdownList'
 import Arrays from './lib/Arrays'
 import DropdownInput from './DropdownInput'
 
 export default {
+  mixins: [wrapper],
   components: {
     DropdownList,
     DropdownInput,
@@ -134,5 +138,11 @@ export default {
       opacity: 1;
     }
   }
+}
+</style>
+
+<style lang='scss'>
+.select-field{
+  display: inline-block;
 }
 </style>
