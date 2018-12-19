@@ -33,10 +33,10 @@ export default {
   model: {
     prop: 'value'
   },
-  props: [
-    'value',
-    'clear',
-  ],
+  props: {
+    value: [String],
+    clear: Boolean,
+  },
   data(){
     return {
       isMounted: false,
@@ -66,7 +66,7 @@ export default {
       if(!this.editable){
         return false
       }
-      return this.$props.clear
+      return this.$props.clear || !!this.value
     },
   },
   mounted(){
