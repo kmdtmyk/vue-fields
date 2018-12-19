@@ -3,7 +3,7 @@ import {storiesOf} from '@storybook/vue'
 import VueInfoAddon from 'storybook-addon-vue-info'
 import {withKnobs, text, number, boolean, color} from '@storybook/addon-knobs'
 
-import SelectField from '../components/SelectField'
+import SelectField from '../components/SelectField2'
 
 storiesOf('SelectField', module)
   .addDecorator(VueInfoAddon)
