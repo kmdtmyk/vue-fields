@@ -175,8 +175,6 @@ input{
   border-style: solid;
   box-sizing: border-box;
   background-color: white;
-  max-height: 15.1em;
-  overflow-y: auto;
   position: fixed;
   z-index: 9999;
 }

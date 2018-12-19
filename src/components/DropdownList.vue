@@ -80,4 +80,8 @@ export default {
 </script>
 
 <style lang='scss' scoped>
+.dropdown-list{
+  max-height: 15.1em;
+  overflow-y: auto;
+}
 </style>
