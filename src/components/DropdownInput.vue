@@ -1,5 +1,5 @@
 <template lang='pug'>
-  span.dropdown-input
+  span
     input(
       @mousedown='mousedown'
       @focus='focus'
@@ -15,8 +15,9 @@
       v-model='inputValue'
       :style='wrapperStyle'
     )
+    .clear(v-if='clearable' @click='clickClear')
     .dropdown(
-      v-if='dropdownOpen'
+      v-if='editable && dropdownOpen'
       :style='dropdownStyle'
       ref='dropdown'
     )
@@ -34,9 +35,11 @@ export default {
   },
   props: [
     'value',
+    'clear',
   ],
   data(){
     return {
+      isMounted: false,
       dropdownOpen: false,
       dropdownStyle: {},
       inputValue: this.value,
@@ -49,6 +52,25 @@ export default {
         input: this.input,
       }
     },
+    editable(){
+      if(!this.isMounted){
+        return false
+      }
+      const {input} = this.$refs
+      if(input.readOnly || input.disabled){
+        return false
+      }
+      return true
+    },
+    clearable(){
+      if(!this.editable){
+        return false
+      }
+      return this.$props.clear
+    },
+  },
+  mounted(){
+    this.isMounted = true
   },
   beforeUpdate(){
     this.$nextTick(() => {
@@ -122,11 +144,22 @@ export default {
       const width = `${rect.width}px`
       this.dropdownStyle = {fontSize, width, left, top}
     },
+    clickClear(){
+      this.$emit('clear', null)
+    },
   }
 }
 </script>
 
 <style lang='scss' scoped>
+span{
+  position: relative;
+}
+
+input{
+  padding-right: 2em;
+}
+
 .dropdown{
   border-width: 1px;
   border-style: solid;
@@ -136,5 +169,24 @@ export default {
   overflow-y: auto;
   position: fixed;
   z-index: 9999;
+}
+
+.clear{
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.8em;
+  text-align: center;
+  cursor: pointer;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.clear::after{
+  content: '×';
+  font-size: 1.2em;
 }
 </style>

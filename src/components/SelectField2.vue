@@ -6,8 +6,10 @@
     @keydown.enter='keydownEnter'
     @keydown.delete='keydownDelete'
     @blur='blur'
+    @clear='clear'
     v-bind='$attrs'
     :placeholder='placeholder'
+    :clear='!!value'
   )
     dropdown-list(
       ref='dropdown'
@@ -95,6 +97,9 @@ export default {
     blur(e){
       this.inputValue = ''
     },
+    clear(){
+      this.$emit('input', null)
+    },
     select(record){
       this.inputValue = this.recordText(record)
       const {recordKey} = this
@@ -121,7 +126,6 @@ export default {
 <style lang='scss'>
 .select-field{
   input{
-    padding-right: 2em;
     &::placeholder{
       color: inherit;
       opacity: 0.7;
