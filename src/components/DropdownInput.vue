@@ -15,7 +15,9 @@
     v-model='inputValue'
     :style='wrapperStyle'
   )
-  .clear(v-if='clearable' @click='clickClear')
+  .spinner(v-if='loading')
+    loading-spinner
+  .clear(v-else-if='clearable' @click='clickClear')
   .dropdown(
     v-if='editable && dropdownOpen'
     :style='dropdownStyle'
@@ -27,15 +29,20 @@
 <script>
 import wrapper from './mixins/wrapper'
 import Elements from './lib/Elements'
+import LoadingSpinner from './LoadingSpinner'
 
 export default {
   mixins: [wrapper],
+  components: {
+    LoadingSpinner,
+  },
   model: {
     prop: 'value'
   },
   props: {
     value: [String],
     clear: Boolean,
+    loading: Boolean,
   },
   data(){
     return {
@@ -172,7 +179,7 @@ input{
   z-index: 9999;
 }
 
-.clear{
+.spinner, .clear{
   position: absolute;
   top: 0;
   right: 0;
@@ -180,6 +187,13 @@ input{
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.spinner{
+  width: 1.5em;
+}
+
+.clear{
   width: 1.8em;
   text-align: center;
   cursor: pointer;
