@@ -1,18 +1,18 @@
 <template lang='pug'>
-  .dropdown-list(
-    ref='dropdown'
-    v-if='records && records.length'
-    @mouseleave='selectedIndex = null'
+.dropdown-list(
+  ref='dropdown'
+  v-if='records && records.length'
+  @mouseleave='selectedIndex = null'
+)
+  dropdown-list-item(
+    v-for='(record, index) in records'
+    :class='{selected: selectedIndex === index}'
+    :key='index'
+    :record='record'
+    @mousemove='selectedIndex = index'
+    @mousedown='select'
   )
-    dropdown-list-item(
-      v-for='(record, index) in records'
-      :class='{selected: selectedIndex === index}'
-      :key='index'
-      :record='record'
-      @mousemove='selectedIndex = index'
-      @mousedown='select'
-    )
-      slot(v-bind='{record}') {{record}}
+    slot(v-bind='{record}') {{record}}
 </template>
 
 <script>

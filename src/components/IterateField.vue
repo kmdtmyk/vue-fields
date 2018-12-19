@@ -1,11 +1,11 @@
 <template lang='pug'>
-  component(:is='wrapperTag')
-    slot(
-      v-for='(record, index) in records'
-      v-bind='{[recordName]: record}'
-      :index='index'
-      :remove='remove(index)'
-    )
+component(:is='wrapperTag')
+  slot(
+    v-for='(record, index) in records'
+    v-bind='{[recordName]: record}'
+    :index='index'
+    :remove='remove(index)'
+  )
 </template>
 
 <script>

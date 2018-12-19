@@ -1,19 +1,19 @@
 <template lang='pug'>
-  .percentage-field
-    input(
-      ref='input'
-      :class='defaultClass'
-      type='text'
-      v-on='listeners'
-      v-bind='$attrs'
-      @input='input'
-      v-model.number='text'
-      :style='wrapperStyle'
-    )
-    .suffix(
-      :style='suffixStyle'
-    ) {{suffix}}
-    input(v-if='$props.name' :name='$props.name' :value='value' type='hidden')
+.percentage-field
+  input(
+    ref='input'
+    :class='defaultClass'
+    type='text'
+    v-on='listeners'
+    v-bind='$attrs'
+    @input='input'
+    v-model.number='text'
+    :style='wrapperStyle'
+  )
+  .suffix(
+    :style='suffixStyle'
+  ) {{suffix}}
+  input(v-if='$props.name' :name='$props.name' :value='value' type='hidden')
 </template>
 
 <script>

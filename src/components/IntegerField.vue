@@ -1,20 +1,20 @@
 <template lang='pug'>
-  span
-    input(
-      :class='defaultClass'
-      ref='input'
-      type='text'
-      v-on='listeners'
-      v-bind='$attrs'
-      v-model='inputValue'
-      @input='input'
-      @focus='focus'
-      @blur='blur'
-      @drop='drop'
-      @keydown.up='downKeyup'
-      @keydown.down='downKeydown'
-      :style='wrapperStyle'
-    )
+span
+  input(
+    :class='defaultClass'
+    ref='input'
+    type='text'
+    v-on='listeners'
+    v-bind='$attrs'
+    v-model='inputValue'
+    @input='input'
+    @focus='focus'
+    @blur='blur'
+    @drop='drop'
+    @keydown.up='downKeyup'
+    @keydown.down='downKeydown'
+    :style='wrapperStyle'
+  )
 </template>
 
 <script>

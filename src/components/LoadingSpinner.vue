@@ -1,7 +1,7 @@
 <template lang='pug'>
-  .loading-spinner
-    .circle
-    .circle
+.loading-spinner
+  .circle
+  .circle
 </template>
 
 <script>

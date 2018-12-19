@@ -1,9 +1,9 @@
 <template lang='pug'>
-  div(
-    class='dropdown-list-item'
-    v-on='$listeners'
-  )
-    slot
+div(
+  class='dropdown-list-item'
+  v-on='$listeners'
+)
+  slot
 </template>
 
 <script>

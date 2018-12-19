@@ -1,32 +1,32 @@
 <template lang='pug'>
-  span
-    input(
-      :class='[defaultClass, classNames]'
-      ref='input'
-      type='text'
-      v-on='listeners'
-      v-bind='$attrs'
-      v-for='(inputValue, index) in inputValues'
-      v-model='inputValues[index]'
-      :key='index'
-      :autocomplete='useDropdown || $props.autocomplete === false ? "off" : $props.autocomplete === true ? "on" : $props.autocomplete'
-      :style='wrapperStyle'
+span
+  input(
+    :class='[defaultClass, classNames]'
+    ref='input'
+    type='text'
+    v-on='listeners'
+    v-bind='$attrs'
+    v-for='(inputValue, index) in inputValues'
+    v-model='inputValues[index]'
+    :key='index'
+    :autocomplete='useDropdown || $props.autocomplete === false ? "off" : $props.autocomplete === true ? "on" : $props.autocomplete'
+    :style='wrapperStyle'
 
-      @mousedown='mousedown'
-      @focus='focus'
-      @blur='blur'
-      @keydown.up='keydownUp'
-      @keydown.down='keydownDown'
-      @keydown.enter='keydownEnter'
-      @keydown.27='keydownEscape'
-    )
-    dropdown-list(
-      ref='dropdown'
-      v-if='dropdownOpen'
-      :records='dropdownRecords'
-      :style='dropdownStyle'
-      @input='select'
-    )
+    @mousedown='mousedown'
+    @focus='focus'
+    @blur='blur'
+    @keydown.up='keydownUp'
+    @keydown.down='keydownDown'
+    @keydown.enter='keydownEnter'
+    @keydown.27='keydownEscape'
+  )
+  dropdown-list(
+    ref='dropdown'
+    v-if='dropdownOpen'
+    :records='dropdownRecords'
+    :style='dropdownStyle'
+    @input='select'
+  )
 </template>
 
 <script>

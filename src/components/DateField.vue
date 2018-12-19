@@ -1,18 +1,18 @@
 <template lang='pug'>
-  .date-field
-    input(
-      :class='defaultClass'
-      type='text'
-      v-on='listeners'
-      v-bind='$attrs'
-      :value='inputValue'
-      @input='input'
-      @click='click'
-      @focus='focus'
-      @blur='blur'
-      :style='wrapperStyle'
-    )
-    date-picker.date-picker(v-if='open' v-model='inputValue' @input='open = false')
+.date-field
+  input(
+    :class='defaultClass'
+    type='text'
+    v-on='listeners'
+    v-bind='$attrs'
+    :value='inputValue'
+    @input='input'
+    @click='click'
+    @focus='focus'
+    @blur='blur'
+    :style='wrapperStyle'
+  )
+  date-picker.date-picker(v-if='open' v-model='inputValue' @input='open = false')
 </template>
 
 <script>
