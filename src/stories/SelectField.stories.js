@@ -66,7 +66,7 @@ storiesOf('SelectField', module)
             if(!query){
               return []
             }
-            return query.split('')
+            return query.split('').map((value, index) => value.repeat(index + 1))
           },
         }
       },
