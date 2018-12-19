@@ -5,6 +5,7 @@ component(:is='wrapperTag')
     v-bind='{[recordName]: record}'
     :index='index'
     :remove='remove(index)'
+    :present='!!value[index]'
   )
 </template>
 
