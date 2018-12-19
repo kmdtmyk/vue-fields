@@ -75,7 +75,10 @@ export default {
       if(!this.editable){
         return false
       }
-      return this.$props.clear || !!this.value
+      if(this.$props.clear !== null){
+        return this.$props.clear
+      }
+      return !!this.value
     },
   },
   mounted(){
