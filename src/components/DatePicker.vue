@@ -114,6 +114,8 @@ export default {
 $border-color: #ced4da;
 
 .date-picker{
+  font-size: 14px;
+
   background-color: white;
   border: 1px solid $border-color;
 
@@ -167,13 +169,13 @@ $border-color: #ced4da;
     }
   }
 
-}
-
-button{
-  height: 2em;
-  &:hover{
-    cursor: pointer;
+  button{
+    height: 2em;
+    &:hover{
+      cursor: pointer;
+    }
   }
+
 }
 </style>
 
