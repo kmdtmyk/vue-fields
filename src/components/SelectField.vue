@@ -43,6 +43,7 @@ import wrapper from './mixins/wrapper'
 import dropdown from './mixins/dropdown'
 import DropdownList from './DropdownList'
 import LoadingSpinner from './LoadingSpinner'
+import Arrays from './lib/Arrays'
 
 export default {
   mixins: [wrapper, dropdown],
@@ -149,7 +150,7 @@ export default {
       }else{
         const records = this.records || []
         if(this.inputValue){
-          this.evaluatedRecords = this.defaultFilter(records, this.inputValue)
+          this.evaluatedRecords = Arrays.search(records, this.inputValue)
         }else{
           this.evaluatedRecords = records
         }

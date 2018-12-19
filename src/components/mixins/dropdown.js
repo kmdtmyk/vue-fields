@@ -1,3 +1,5 @@
+import Elements from '../lib/Elements'
+
 export default {
   data(){
     return {
@@ -8,7 +10,7 @@ export default {
   },
   watch: {
     dropdownOpen(){
-      let elements = getParentElements(this.$el)
+      let elements = Elements.getParents(this.$el)
       if(this.dropdownOpen){
         this.updateDropdownStyle()
         elements.forEach(element => {
@@ -74,21 +76,5 @@ export default {
       const width = `${rect.width}px`
       this.dropdownStyle = {fontSize, width, left, top}
     },
-    defaultFilter(records, query){
-      return records.filter(record => {
-        return record.toLowerCase().includes(query.toLowerCase())
-      })
-    },
   }
-}
-
-const getParentElements = (element) => {
-  const result = []
-  let currentElement = element
-  while(currentElement){
-    result.push(currentElement)
-    currentElement = currentElement.parentElement
-  }
-  result.push(document)
-  return result
 }

@@ -33,6 +33,7 @@
 import DropdownList from './DropdownList'
 import wrapper from './mixins/wrapper'
 import dropdown from './mixins/dropdown'
+import Arrays from './lib/Arrays';
 
 export default {
   mixins: [wrapper, dropdown],
@@ -144,7 +145,7 @@ export default {
         this.dropdownRecords = this.autocomplete(this.value)
         return
       }
-      this.dropdownRecords = this.defaultFilter(this.autocomplete, this.value)
+      this.dropdownRecords = Arrays.search(this.autocomplete, this.value)
     },
   },
 }
