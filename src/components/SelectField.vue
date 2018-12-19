@@ -12,6 +12,7 @@
     :placeholder='placeholder'
     :clear='!!value'
     :style='wrapperStyle'
+    :defaultClass='defaultClass'
   )
     dropdown-list(
       ref='dropdown'

@@ -14,8 +14,14 @@ function applyOption(component, option){
   option = option || {}
   extractProps(component)
   const {defaultClass} = option
-  if(defaultClass && component.props.defaultClass){
-    component.props.defaultClass.default = defaultClass
+  const {props} = component
+  if(defaultClass && props.defaultClass){
+    if(Array.isArray(props.defaultClass)){
+      props.defaultClass = {
+        type: props.defaultClass
+      }
+    }
+    props.defaultClass.default = defaultClass
   }
 }
 

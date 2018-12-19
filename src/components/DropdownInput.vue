@@ -1,6 +1,7 @@
 <template lang='pug'>
 .dropdown-input
   input(
+    :class='defaultClass'
     @mousedown='mousedown'
     @focus='focus'
     @blur='blur'
@@ -43,6 +44,7 @@ export default {
     value: [String],
     clear: Boolean,
     loading: Boolean,
+    defaultClass: [String, Array],
   },
   data(){
     return {
