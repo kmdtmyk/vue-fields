@@ -1,20 +1,27 @@
 <template lang='pug'>
-  input(
-    :class='defaultClass'
-    type='text'
-    v-on='listeners'
-    v-model='inputValue'
-    @input='input'
-    @focus='focus'
-    @blur='blur'
-    @drop='drop'
-    @keydown.up='downKeyup'
-    @keydown.down='downKeydown'
-  )
+  span
+    input(
+      :class='defaultClass'
+      ref='input'
+      type='text'
+      v-on='listeners'
+      v-bind='$attrs'
+      v-model='inputValue'
+      @input='input'
+      @focus='focus'
+      @blur='blur'
+      @drop='drop'
+      @keydown.up='downKeyup'
+      @keydown.down='downKeydown'
+      :style='wrapperStyle'
+    )
 </template>
 
 <script>
+import wrapper from './mixins/wrapper'
+
 export default {
+  mixins: [wrapper],
   props: {
     value: [Number, String],
     defaultClass: [String, Array],
@@ -51,10 +58,10 @@ export default {
       }
     },
     $input(){
-      return this.$el
+      return this.$refs.input
     },
     active(){
-      return this.$el === document.activeElement
+      return this.$input === document.activeElement
     },
   },
   methods: {
