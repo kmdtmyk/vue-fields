@@ -11,7 +11,6 @@ export default {
 
 <style lang='scss' scoped>
 .loading-spinner{
-
   position: relative;
   display: inline-block;
   width: 1em;
@@ -19,8 +18,10 @@ export default {
 
   .circle{
     position: absolute;
-    width: 100%;
-    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     background: transparent;
     border-radius: 100%;
   }
