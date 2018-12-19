@@ -7,7 +7,21 @@ import IterateField from '../components/IterateField'
 storiesOf('IterateField', module)
   .addDecorator(VueInfoAddon)
   .add('basic', () => ({
-    components: { IterateField },
+    components: {IterateField},
+    template: `
+      <div>
+        <iterate-field v-model='values'>
+          <input type='text' slot-scope='{index}' v-model='values[index]'>
+        </iterate-field>
+        <pre>{{values}}</pre>
+      </div>
+    `,
+    data(){
+      return {values: []}
+    },
+  }))
+  .add('object array', () => ({
+    components: {IterateField},
     template: `
       <div>
         <table>
@@ -35,4 +49,3 @@ storiesOf('IterateField', module)
       return {books: []}
     },
   }))
-
