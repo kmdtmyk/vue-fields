@@ -21,6 +21,9 @@ export default {
       type: String,
       default: 'div',
     },
+    max: {
+      type: Number,
+    },
   },
   watch: {
     value: {
@@ -29,7 +32,9 @@ export default {
         if(Array.isArray(value)){
           records.push(...value)
         }
-        records.push({})
+        if(!this.$props.max || records.length < this.$props.max){
+          records.push({})
+        }
         this.records = records
         this.$nextTick(() => {
           this.$el.querySelectorAll('input').forEach(input => {
@@ -42,7 +47,10 @@ export default {
   },
   methods: {
     input(e){
-      const records = this.records
+      if(this.$props.max && this.$props.max <= this.value.length){
+        return
+      }
+      const {records} = this
       const lastRecord = records[records.length - 1]
       if(0 < Object.keys(lastRecord).length){
         this.$emit('input', records)

@@ -20,6 +20,20 @@ storiesOf('IterateField', module)
       return {values: []}
     },
   }))
+  .add('max', () => ({
+    components: {IterateField},
+    template: `
+      <div>
+        <iterate-field v-model='values' :max='3'>
+          <input type='text' slot-scope='{index}' v-model='values[index]'>
+        </iterate-field>
+        <pre>{{values}}</pre>
+      </div>
+    `,
+    data(){
+      return {values: []}
+    },
+  }))
   .add('object array', () => ({
     components: {IterateField},
     template: `
