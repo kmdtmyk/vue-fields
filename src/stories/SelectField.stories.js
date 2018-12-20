@@ -1,4 +1,3 @@
-
 import {storiesOf} from '@storybook/vue'
 import VueInfoAddon from 'storybook-addon-vue-info'
 import {withKnobs, text, number, boolean, color} from '@storybook/addon-knobs'
@@ -93,6 +92,31 @@ storiesOf('SelectField', module)
               {id: 2, name: 'bar'},
               {id: 3, name: 'hoge'},
             ]
+            if(!query){
+              return records
+            }
+            return records.filter(record => record.name.startsWith(query))
+          },
+        }
+      },
+    }
+  })
+  .add('performance test', () => {
+    const value = number('value', '')
+    return {
+      components: {SelectField},
+      template: `
+        <div>
+          <select-field v-model='value' :records='records' record-key='id' v-for='i in 100' :key='i'>
+            <span slot-scope='{record}'>{{record.id}}. {{record.name}}</span>
+          </select-field>
+        </div>
+      `,
+      data(){
+        return {
+          value,
+          records: (query) => {
+            const records = [...Array(1000)].map((_, i) => ({id: ++i, name:`name${i}`}))
             if(!query){
               return records
             }

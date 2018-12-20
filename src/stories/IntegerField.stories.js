@@ -1,4 +1,3 @@
-
 import {storiesOf} from '@storybook/vue'
 import VueInfoAddon from 'storybook-addon-vue-info'
 import {withKnobs, number, boolean, color} from '@storybook/addon-knobs'
