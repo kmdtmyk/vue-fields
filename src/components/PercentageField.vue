@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import Decimal from 'decimal.js'
+import Big from 'big.js'
 import wrapper from './mixins/wrapper'
 
 export default {
@@ -59,14 +59,14 @@ export default {
     },
     encode(){
       try{
-        return Decimal.mul(this.value, 100)
+        return new Big(this.value).times(100).toString()
       }catch(e){
         return null
       }
     },
     decode(){
       try{
-        return Decimal.div(this.text, 100).toString()
+        return new Big(this.text).div(100).toString()
       }catch(e){
         return null
       }
