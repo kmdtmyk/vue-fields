@@ -50,7 +50,6 @@ export default {
   data(){
     return {
       inputValue: '',
-      loading: false,
     }
   },
   computed: {
