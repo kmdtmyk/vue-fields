@@ -8,11 +8,10 @@
     v-for='(record, index) in records'
     :class='{selected: selectedIndex === index}'
     :key='index'
-    :record='record'
     @mousemove='selectedIndex = index'
     @mousedown='select'
   )
-    slot(v-bind='{record}') {{record}}
+    slot(v-bind='{record}')
 </template>
 
 <script>

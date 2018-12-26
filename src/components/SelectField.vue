@@ -19,8 +19,9 @@
       :records='filteredRecords'
       @input='select'
     )
-      template(slot-scope='scope' v-if='$scopedSlots.default')
-        slot(v-bind='scope')
+      template(slot-scope='{record}')
+        slot(v-bind='{record}' v-if='$scopedSlots.default')
+        template(v-else) {{record}}
 </template>
 
 <script>
