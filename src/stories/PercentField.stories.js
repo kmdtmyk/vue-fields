@@ -42,3 +42,18 @@ storiesOf('PercentField', module)
       },
     }
   })
+  .add('custom', () => {
+    const value = text('value', '0.5')
+    return {
+      components: {PercentField},
+      template: `
+        <div>
+          <percent-field v-model='value' :unit='1/1000' suffix='‰'/>
+          {{value}}
+        </div>
+      `,
+      data(){
+        return {value}
+      },
+    }
+  })

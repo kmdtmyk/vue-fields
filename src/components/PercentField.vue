@@ -26,13 +26,20 @@ export default {
     value: [Number, String],
     defaultClass: [String, Array],
     name: String,
+    unit: {
+      type: Number,
+      default: 1/100,
+    },
+    suffix: {
+      type: String,
+      default: '%'
+    }
   },
   data(){
     const text = this.encode()
     return {
       text,
       suffixStyle: {},
-      suffix: '%',
     }
   },
   mounted(){
@@ -59,14 +66,14 @@ export default {
     },
     encode(){
       try{
-        return new Big(this.value).times(100).toString()
+        return new Big(this.value).div(this.unit).toString()
       }catch(e){
         return null
       }
     },
     decode(){
       try{
-        return new Big(this.text).div(100).toString()
+        return new Big(this.text).times(this.unit).toString()
       }catch(e){
         return null
       }
