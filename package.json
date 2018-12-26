@@ -38,6 +38,7 @@
     "babel-preset-vue": "^2.0.2",
     "big.js": "^5.2.2",
     "dateformat": "^3.0.3",
+    "lodash": "^4.17.11",
     "node-sass": "^4.10.0",
     "pug": "^2.0.3",
     "pug-plain-loader": "^1.0.0",

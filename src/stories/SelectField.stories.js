@@ -1,6 +1,7 @@
 import {storiesOf} from '@storybook/vue'
 import VueInfoAddon from 'storybook-addon-vue-info'
 import {withKnobs, text, number, boolean, color} from '@storybook/addon-knobs'
+import _ from 'lodash'
 
 import SelectField from '../components/SelectField'
 
@@ -101,6 +102,35 @@ storiesOf('SelectField', module)
       },
     }
   })
+  .add('ajax', () => ({
+    components: {SelectField},
+    template: `
+      <div>
+        <select-field v-model='value' :records='records' :loading='loading' @input.native='input'/>
+        {{value}}
+      </div>
+    `,
+    data(){
+      return {
+        value: '',
+        records: [],
+        loading: false,
+      }
+    },
+    methods: {
+      input(e){
+        this.loading = true
+        this.search(e.target.value)
+      },
+      search: _.debounce(async function(query){
+        const result = await fetch(`https://api.github.com/search/repositories?q=${query}`)
+        const text = await result.text()
+        const json = JSON.parse(text)
+        this.records = () => json.items.map(item => item.name)
+        this.loading = false
+      }, 500),
+    },
+  }))
   .add('performance test', () => {
     const value = number('value', '')
     return {
