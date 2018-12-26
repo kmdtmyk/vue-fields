@@ -1,5 +1,5 @@
 <template lang='pug'>
-.percentage-field
+.percent-field
   input(
     ref='input'
     :class='defaultClass'
@@ -7,7 +7,8 @@
     v-on='listeners'
     v-bind='$attrs'
     @input='input'
-    v-model.number='text'
+    @blur='blur'
+    v-model='inputValue'
     :style='wrapperStyle'
   )
   .suffix(
@@ -19,6 +20,7 @@
 <script>
 import Big from 'big.js'
 import wrapper from './mixins/wrapper'
+import Parser from './lib/Parser'
 
 export default {
   mixins: [wrapper],
@@ -36,9 +38,8 @@ export default {
     }
   },
   data(){
-    const text = this.encode()
     return {
-      text,
+      inputValue: this.encode(this.value),
       suffixStyle: {},
     }
   },
@@ -49,7 +50,9 @@ export default {
   },
   watch: {
     value(){
-      this.text = this.encode()
+      if(!this.active){
+        this.inputValue = this.encode(this.value)
+      }
     },
   },
   computed: {
@@ -59,27 +62,37 @@ export default {
         input: this.input,
       }
     },
+    $input(){
+      return this.$refs.input
+    },
+    active(){
+      return this.$input === document.activeElement
+    },
   },
   methods: {
     input(e){
-      this.$emit('input', this.decode())
+      this.$emit('input', this.decode(e.target.value))
     },
-    encode(){
+    blur(e){
+      this.inputValue = this.encode(this.value)
+    },
+    encode(value){
       try{
-        return new Big(this.value).div(this.unit).toString()
+        return new Big(value).div(this.unit).toString()
       }catch(e){
         return null
       }
     },
-    decode(){
+    decode(value){
       try{
-        return new Big(this.text).times(this.unit).toString()
+        const floatValue = Parser.parseFloat(value)
+        return new Big(floatValue).times(this.unit).toString()
       }catch(e){
         return null
       }
     },
     updateSuffixStyle(){
-      const input = this.$refs.input
+      const input = this.$input
       if(!input){
         return
       }
@@ -96,23 +109,24 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-.percentage-field{
+.percent-field{
   position: relative;
   display: inline-block;
-}
 
-input{
-  padding-right: 1.5em;
-  box-sizing: border-box;
-}
+  input{
+    padding-right: 1.5em;
+    box-sizing: border-box;
+  }
 
-.suffix{
-  position: absolute;
-  display: flex;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  align-items: center;
-  width: 1.2em;
+  .suffix{
+    position: absolute;
+    display: flex;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    align-items: center;
+    width: 1.2em;
+  }
+
 }
 </style>
