@@ -1,7 +1,7 @@
 import {mount} from '@vue/test-utils'
 import Component from './SelectField'
 
-describe('dropdown-list-item length', () => {
+describe.skip('dropdown-list-item length', () => {
 
   function subject(records){
     const wrapper = mount(Component, {
