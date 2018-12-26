@@ -84,14 +84,6 @@ export default {
   mounted(){
     this.isMounted = true
   },
-  beforeUpdate(){
-    this.$nextTick(() => {
-      const {dropdown} = this.$refs
-      if(dropdown && dropdown.childElementCount == 0){
-        this.dropdownOpen = false
-      }
-    })
-  },
   watch: {
     value(){
       this.inputValue = this.value
@@ -180,6 +172,9 @@ input{
   background-color: white;
   position: fixed;
   z-index: 9999;
+  &:empty{
+    display: none;
+  }
 }
 
 .spinner, .clear{
