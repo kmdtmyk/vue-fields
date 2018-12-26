@@ -15,6 +15,7 @@ span
     @keydown.down.prevent='downKeydown'
     :style='wrapperStyle'
   )
+  input(v-if='$props.name' :name='$props.name' :value='value' type='hidden')
 </template>
 
 <script>
@@ -26,6 +27,7 @@ export default {
   props: {
     value: [Number, String],
     defaultClass: [String, Array],
+    name: String,
   },
   data(){
     return {
