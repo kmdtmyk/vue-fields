@@ -24,7 +24,7 @@ storiesOf('SelectField', module)
       data(){
         return {
           value,
-          records: ['foo', 'bar', 'hoge']
+          records: ['foo', 'bar', 'baz', 'hoge', 'piyo']
         }
       },
     }
@@ -44,8 +44,36 @@ storiesOf('SelectField', module)
       data(){
         return {
           value,
-          records: ['foo', 'bar', 'hoge']
+          records: ['foo', 'bar', 'baz', 'hoge', 'piyo']
         }
+      },
+    }
+  })
+  .add('custom filter', () => {
+    const value = text('value', '')
+    return {
+      components: {SelectField},
+      template: `
+        <div>
+          <select-field v-model='value' :records='records' :filter='filter'/>
+          {{value}}
+        </div>
+      `,
+      data(){
+        return {
+          value,
+          records: ['foo', 'bar', 'baz', 'hoge', 'piyo']
+        }
+      },
+      methods: {
+        filter(records, query){
+          if(!query){
+            return records
+          }
+          return records.filter(record => {
+            return record.toLowerCase().startsWith(query.toLowerCase())
+          })
+        },
       },
     }
   })

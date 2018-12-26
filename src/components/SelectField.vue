@@ -40,6 +40,10 @@ export default {
     value: [Number, String],
     name: String,
     defaultClass: [String, Array],
+    filter: {
+      type: Function,
+      default: Arrays.search,
+    },
     records: [Array, Function],
     recordKey: String,
   },
@@ -54,7 +58,7 @@ export default {
       if(this.records instanceof Function){
         return this.records(this.inputValue)
       }
-      return Arrays.search(this.records, this.inputValue)
+      return this.filter(this.records, this.inputValue)
     },
     allRecords(){
       if(this.records instanceof Function){
