@@ -19,6 +19,7 @@ span
 
 <script>
 import wrapper from './mixins/wrapper'
+import Parser from './lib/Parser'
 
 export default {
   mixins: [wrapper],
@@ -52,7 +53,7 @@ export default {
       if(typeof inputValue === 'number'){
         return inputValue
       }else if(typeof inputValue === 'string'){
-        return this.parseString(inputValue)
+        return Parser.parseInt(inputValue)
       }else{
         return null
       }
@@ -89,7 +90,7 @@ export default {
           if(!leftText){
             return
           }
-          const offset = leftText.length - this.parseString(leftText).toString().length
+          const offset = leftText.length - Parser.parseInt(leftText).toString().length
           this.$nextTick(() => {
             this.$input.setSelectionRange(start - offset, start - offset)
           })
@@ -107,21 +108,9 @@ export default {
         this.$input.setSelectionRange(start, start + text.length)
       })
     },
-    parseString(string){
-      if(!string){
-        return null
-      }
-      string = string.normalize('NFKC')
-      string = string.replace(/[^-\d\.]/g, '')
-      const value = parseInt(string)
-      if(isNaN(value)){
-        return null
-      }
-      return value
-    },
     format(value){
       if(typeof value !== 'number'){
-        value = this.parseString(value)
+        value = Parser.parseInt(value)
       }
       if(!value){
         return null
