@@ -39,7 +39,7 @@ export default {
   },
   data(){
     return {
-      inputValue: this.encode(this.value),
+      inputValue: this.toInputValue(this.value),
       suffixStyle: {},
     }
   },
@@ -51,7 +51,7 @@ export default {
   watch: {
     value(){
       if(!this.active){
-        this.inputValue = this.encode(this.value)
+        this.inputValue = this.toInputValue(this.value)
       }
     },
   },
@@ -71,19 +71,19 @@ export default {
   },
   methods: {
     input(e){
-      this.$emit('input', this.decode(e.target.value))
+      this.$emit('input', this.toActualValue(e.target.value))
     },
     blur(e){
-      this.inputValue = this.encode(this.value)
+      this.inputValue = this.toInputValue(this.value)
     },
-    encode(value){
+    toInputValue(value){
       try{
         return new Big(value).div(this.unit).toString()
       }catch(e){
         return null
       }
     },
-    decode(value){
+    toActualValue(value){
       try{
         const floatValue = Parser.parseFloat(value)
         return new Big(floatValue).times(this.unit).toString()
