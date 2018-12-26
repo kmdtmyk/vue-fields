@@ -11,8 +11,8 @@ span
     @focus='focus'
     @blur='blur'
     @drop='drop'
-    @keydown.up='downKeyup'
-    @keydown.down='downKeydown'
+    @keydown.up.prevent='downKeyup'
+    @keydown.down.prevent='downKeydown'
     :style='wrapperStyle'
   )
 </template>
@@ -34,9 +34,7 @@ export default {
   },
   watch: {
     value(){
-      if(this.active){
-        this.inputValue = this.value
-      }else{
+      if(!this.active){
         this.inputValue = this.format(this.value)
       }
     },
@@ -49,14 +47,7 @@ export default {
       }
     },
     actualValue(){
-      let {inputValue} = this
-      if(typeof inputValue === 'number'){
-        return inputValue
-      }else if(typeof inputValue === 'string'){
-        return Parser.parseInt(inputValue)
-      }else{
-        return null
-      }
+      return Parser.parseInt(this.inputValue)
     },
     $input(){
       return this.$refs.input
@@ -109,19 +100,21 @@ export default {
       })
     },
     format(value){
-      if(typeof value !== 'number'){
-        value = Parser.parseInt(value)
-      }
-      if(!value){
+      const intValue = Parser.parseInt(value)
+      if(intValue == null){
         return null
       }
-      return value.toLocaleString()
+      return intValue.toLocaleString()
     },
     downKeyup(e){
-      this.$emit('input', this.actualValue + 1)
+      const nextValue = this.actualValue + 1
+      this.$emit('input', nextValue)
+      this.inputValue = nextValue
     },
     downKeydown(e){
-      this.$emit('input', this.actualValue - 1)
+      const nextValue = this.actualValue - 1
+      this.$emit('input', nextValue)
+      this.inputValue = nextValue
     },
   },
 }
