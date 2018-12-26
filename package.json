@@ -10,7 +10,7 @@
     "build-storybook": "build-storybook --output-dir docs",
     "prepublish": "npm run build"
   },
-  "main": "./dist/index.umd.js",
+  "main": "./dist/index.umd.min.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/kmdtmyk/vue-fields.git"
