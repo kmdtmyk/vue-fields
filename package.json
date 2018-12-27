@@ -1,6 +1,6 @@
 {
   "name": "@kmdtmyk/vue-fields",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Input components for vue.js",
   "scripts": {
     "serve": "vue-cli-service serve",
