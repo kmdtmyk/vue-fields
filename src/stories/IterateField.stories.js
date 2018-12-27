@@ -59,6 +59,41 @@ storiesOf('IterateField', module)
       </div>
     `,
     data(){
-      return {books: []}
+      return {
+        books: []
+      }
+    },
+  }))
+  .add('object array (nest)', () => ({
+    components: {IterateField},
+    template: `
+      <div>
+        <table>
+          <thead>
+            <tr>
+              <th>name</th>
+              <th>comments</th>
+              <th></th>
+            </tr>
+          </thead>
+          <iterate-field v-model='books' wrapper-tag='tbody' record-name='book'>
+            <tr slot-scope='{book, remove, present}'>
+              <td><input type='text' v-model='book.name'></td>
+              <td>
+                <iterate-field v-model='book.comments' record-name='comment'>
+                  <input type='text' slot-scope='{comment}' v-model='comment.body'>
+                </iterate-field>
+              </td>
+              <td><button type='button' v-if='present' @click='remove'>remove</button></td>
+            </tr>
+          </iterate-field>
+        </table>
+        <pre>{{books}}</pre>
+      </div>
+    `,
+    data(){
+      return {
+        books: []
+      }
     },
   }))

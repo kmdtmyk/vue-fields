@@ -12,7 +12,12 @@ component(:is='wrapperTag')
 <script>
 export default {
   props: {
-    value: Array,
+    value: {
+      type: Array,
+      default(){
+        return []
+      },
+    },
     recordName: {
       type: String,
       default: 'record',
