@@ -11,4 +11,11 @@ export default class{
     return result
   }
 
+  static getInputChildren(element){
+    if(element.tagName === 'INPUT'){
+      return [element]
+    }
+    return element.querySelectorAll('input')
+  }
+
 }

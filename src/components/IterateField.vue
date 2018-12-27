@@ -10,9 +10,16 @@ component(:is='wrapperTag')
 </template>
 
 <script>
+import Elements from './lib/Elements'
+
 export default {
   props: {
-    value: Array,
+    value: {
+      type: Array,
+      default(){
+        return []
+      },
+    },
     recordName: {
       type: String,
       default: 'record',
@@ -36,9 +43,15 @@ export default {
           records.push({})
         }
         this.records = records
+
         this.$nextTick(() => {
-          this.$el.querySelectorAll('input').forEach(input => {
-            input.addEventListener('input', this.input)
+          Elements.getInputChildren(this.$el).forEach(input => {
+            input.removeEventListener('input', this.inputLast)
+          })
+          const children = this.$el.children
+          const lastChild = children[children.length - 1]
+          Elements.getInputChildren(lastChild).forEach(input => {
+            input.addEventListener('input', this.inputLast)
           })
         })
       },
@@ -46,15 +59,17 @@ export default {
     },
   },
   methods: {
-    input(e){
+    inputLast(e){
       if(this.$props.max && this.$props.max <= this.value.length){
         return
       }
       const {records} = this
-      const lastRecord = records[records.length - 1]
-      if(0 < Object.keys(lastRecord).length){
+      this.$nextTick(() => {
+        if(records.length < this.records.length){
+          return
+        }
         this.$emit('input', records)
-      }
+      })
     },
     remove(index){
       return e => {

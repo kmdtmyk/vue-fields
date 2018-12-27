@@ -26,9 +26,9 @@
 
 <script>
 import wrapper from './mixins/wrapper'
+import DropdownInput from './DropdownInput'
 import DropdownList from './DropdownList'
 import Arrays from './lib/Arrays'
-import DropdownInput from './DropdownInput'
 
 export default {
   mixins: [wrapper],

@@ -1,7 +1,6 @@
 <template lang='pug'>
-span
-  input(
-    :class='[defaultClass, classNames]'
+.text-field
+  dropdown-input(
     ref='input'
     type='text'
     v-on='listeners'
@@ -9,54 +8,37 @@ span
     v-for='(inputValue, index) in inputValues'
     v-model='inputValues[index]'
     :key='index'
-    :autocomplete='useDropdown || $props.autocomplete === false ? "off" : $props.autocomplete === true ? "on" : $props.autocomplete'
+    :class='defaultClass'
     :style='wrapperStyle'
-
-    @mousedown='mousedown'
-    @focus='focus'
-    @blur='blur'
-    @keydown.up='keydownUp'
-    @keydown.down='keydownDown'
-    @keydown.enter='keydownEnter'
-    @keydown.27='keydownEscape'
+    :autocomplete='useDropdown || $props.autocomplete === false ? "off" : $props.autocomplete === true ? "on" : $props.autocomplete'
+    @keydown.up='keydownUp($event, index)'
+    @keydown.down='keydownDown($event, index)'
+    @keydown.enter='keydownEnter($event, index)'
   )
-  dropdown-list(
-    ref='dropdown'
-    v-if='dropdownOpen'
-    :records='dropdownRecords'
-    :style='dropdownStyle'
-    @input='select'
-  )
+    dropdown-list(
+      v-if='useDropdown'
+      ref='dropdown'
+      :records='getDropdownRecords(inputValues[index])'
+      @input='select'
+    )
 </template>
 
 <script>
-import DropdownList from './DropdownList'
 import wrapper from './mixins/wrapper'
-import dropdown from './mixins/dropdown'
-import Arrays from './lib/Arrays';
+import DropdownInput from './DropdownInput'
+import DropdownList from './DropdownList'
+import Arrays from './lib/Arrays'
 
 export default {
-  mixins: [wrapper, dropdown],
+  mixins: [wrapper],
   components: {
+    DropdownInput,
     DropdownList,
   },
   props: {
     value: [String, Array],
     defaultClass: [String, Array],
     autocomplete: [String, Boolean, Array, Function],
-  },
-  mounted(){
-    const {classList} = this.$el
-    const classNames = [...classList.values()]
-    if(0 < classNames.length){
-      classList.remove(classNames)
-    }
-    this.classNames = classNames
-  },
-  data(){
-    return {
-      classNames: [],
-    }
   },
   watch: {
     value: {
@@ -73,15 +55,8 @@ export default {
           values.push(this.value)
         }
         this.inputValues = values
-        this.updateDropdownRecords()
       },
       immediate: true,
-    },
-    dropdownOpen(){
-      this.updateDropdownRecords()
-    },
-    autocomplete(){
-      this.updateDropdownRecords()
     },
   },
   computed: {
@@ -104,9 +79,43 @@ export default {
     },
   },
   methods: {
+    keydownUp(e, index){
+      if(!this.useDropdown){
+        return
+      }
+      const dropdown = this.$refs.dropdown[index]
+      e.preventDefault()
+      if(dropdown){
+        dropdown.up()
+        return
+      }
+      this.$nextTick(() => {
+        this.$refs.dropdown[index].up()
+      })
+    },
+    keydownDown(e, index){
+      if(!this.useDropdown){
+        return
+      }
+      const dropdown = this.$refs.dropdown[index]
+      e.preventDefault()
+      if(dropdown){
+        dropdown.down()
+      }
+    },
+    keydownEnter(e, index){
+      if(!this.useDropdown){
+        return
+      }
+      const dropdown = this.$refs.dropdown[index]
+      if(dropdown){
+        e.preventDefault()
+        dropdown.select()
+      }
+    },
     input(e){
       if(!this.multiple){
-        this.$emit('input', e.target.value)
+        this.$emit('input', e)
         return
       }
       const {inputValues} = this
@@ -137,30 +146,18 @@ export default {
     select(record){
       this.$emit('input', record)
     },
-    updateDropdownRecords(){
-      if(!this.useDropdown){
-        return
-      }
+    getDropdownRecords(query){
       if(this.autocomplete instanceof Function){
-        this.dropdownRecords = this.autocomplete(this.value)
-        return
+        return this.autocomplete(query)
       }
-      this.dropdownRecords = Arrays.search(this.autocomplete, this.value)
-    },
+      return Arrays.search(this.autocomplete, query)
+    }
   },
 }
 </script>
 
 <style lang='scss' scoped>
-.dropdown-list{
-  border-width: 1px;
-  border-style: solid;
-  box-sizing: border-box;
-  background-color: white;
-  max-height: 15.1em;
-  overflow-y: auto;
-  position: fixed;
-  z-index: 9999;
+.text-field{
+  display: inline-block;
 }
 </style>
-

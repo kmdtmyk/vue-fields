@@ -1,10 +1,11 @@
-import {shallowMount} from '@vue/test-utils'
+import {mount} from '@vue/test-utils'
 import Component from './TextField'
+import Vue from 'vue'
 
 describe('attributes', () => {
 
   it('readonly', () => {
-    const wrapper = shallowMount(Component, {
+    const wrapper = mount(Component, {
       propsData: {
         readonly: true,
       }
@@ -14,7 +15,7 @@ describe('attributes', () => {
   })
 
   it('disabled', () => {
-    const wrapper = shallowMount(Component, {
+    const wrapper = mount(Component, {
       propsData: {
         disabled: true,
       }
@@ -30,7 +31,7 @@ describe('input', () => {
   describe('multiple: false', () => {
 
     it('string', () => {
-      const wrapper = shallowMount(Component, {
+      const wrapper = mount(Component, {
         propsData: {
           value: 'foo',
         }
@@ -41,7 +42,7 @@ describe('input', () => {
     })
 
     it('empty', () => {
-      const wrapper = shallowMount(Component, {
+      const wrapper = mount(Component, {
         propsData: {
           value: '',
         }
@@ -52,7 +53,7 @@ describe('input', () => {
     })
 
     it('null', () => {
-      const wrapper = shallowMount(Component, {
+      const wrapper = mount(Component, {
         propsData: {
           value: null,
         }
@@ -67,7 +68,7 @@ describe('input', () => {
   describe('multiple: true', () => {
 
     it('string', () => {
-      const wrapper = shallowMount(Component, {
+      const wrapper = mount(Component, {
         propsData: {
           value: 'foo',
           multiple: true,
@@ -80,7 +81,7 @@ describe('input', () => {
     })
 
     it('array', () => {
-      const wrapper = shallowMount(Component, {
+      const wrapper = mount(Component, {
         propsData: {
           value: ['foo'],
           multiple: true,
@@ -93,7 +94,7 @@ describe('input', () => {
     })
 
     it('null', () => {
-      const wrapper = shallowMount(Component, {
+      const wrapper = mount(Component, {
         propsData: {
           value: null,
           multiple: true,
@@ -111,41 +112,64 @@ describe('input', () => {
 
 describe('autocomplete', () => {
 
-  const subject = (autocomplete) => {
-    const wrapper = shallowMount(Component, {
-      propsData: {
-        value: '',
-        autocomplete,
-      }
+  describe('attribute', () => {
+
+    const subject = (autocomplete) => {
+      const wrapper = mount(Component, {
+        propsData: {
+          value: '',
+          autocomplete,
+        }
+      })
+      const input = wrapper.find('input')
+      return input.attributes().autocomplete
+    }
+
+    it('true', () => {
+      expect(subject(true)).toEqual('on')
     })
-    const input = wrapper.find('input')
-    return input.attributes().autocomplete
-  }
 
-  it('true', () => {
-    expect(subject(true)).toEqual('on')
+    it('false', () => {
+      expect(subject(false)).toEqual('off')
+    })
+
+    it('on', () => {
+      expect(subject('on')).toEqual('on')
+    })
+
+    it('off', () => {
+      expect(subject('off')).toEqual('off')
+    })
+
+    it('array', () => {
+      expect(subject(['foo', 'bar'])).toEqual('off')
+    })
+
+    it('function', () => {
+      expect(subject(() => ['foo', 'bar'])).toEqual('off')
+    })
+
   })
 
-  it('false', () => {
-    expect(subject(false)).toEqual('off')
-  })
+  describe('dropdown', () => {
 
-  it('on', () => {
-    expect(subject('on')).toEqual('on')
-  })
+    it('array', (done) => {
+      const array = ['foo', 'bar']
+      const wrapper = mount(Component, {
+        propsData: {
+          autocomplete: array,
+        }
+      })
+      const input = wrapper.find('input')
+      input.trigger('focus')
 
-  it('off', () => {
-    expect(subject('off')).toEqual('off')
-  })
+      Vue.nextTick(() => {
+        const dropdownListTexts = wrapper.findAll('.dropdown-list-item').wrappers.map(wrapper => wrapper.text())
+        expect(dropdownListTexts).toEqual(array)
+        done()
+      })
+    })
 
-  it('array', () => {
-    expect(subject(['foo', 'bar'])).toEqual('off')
-  })
-
-  it('function', () => {
-    expect(subject(() => ['foo', 'bar'])).toEqual('off')
   })
 
 })
-
-
