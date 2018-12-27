@@ -11,7 +11,8 @@
     @mousemove='selectedIndex = index'
     @mousedown='select'
   )
-    slot(v-bind='{record}')
+    slot(v-bind='{record}' v-if='$scopedSlots.default')
+    template(v-else) {{record}}
 </template>
 
 <script>

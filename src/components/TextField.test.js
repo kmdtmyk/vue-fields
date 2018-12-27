@@ -1,4 +1,4 @@
-import {shallowMount} from '@vue/test-utils'
+import {shallowMount, mount} from '@vue/test-utils'
 import Component from './TextField'
 
 describe('attributes', () => {
@@ -111,41 +111,60 @@ describe('input', () => {
 
 describe('autocomplete', () => {
 
-  const subject = (autocomplete) => {
-    const wrapper = shallowMount(Component, {
-      propsData: {
-        value: '',
-        autocomplete,
-      }
+  describe('attribute', () => {
+
+    const subject = (autocomplete) => {
+      const wrapper = shallowMount(Component, {
+        propsData: {
+          value: '',
+          autocomplete,
+        }
+      })
+      const input = wrapper.find('input')
+      return input.attributes().autocomplete
+    }
+
+    it('true', () => {
+      expect(subject(true)).toEqual('on')
     })
-    const input = wrapper.find('input')
-    return input.attributes().autocomplete
-  }
 
-  it('true', () => {
-    expect(subject(true)).toEqual('on')
+    it('false', () => {
+      expect(subject(false)).toEqual('off')
+    })
+
+    it('on', () => {
+      expect(subject('on')).toEqual('on')
+    })
+
+    it('off', () => {
+      expect(subject('off')).toEqual('off')
+    })
+
+    it('array', () => {
+      expect(subject(['foo', 'bar'])).toEqual('off')
+    })
+
+    it('function', () => {
+      expect(subject(() => ['foo', 'bar'])).toEqual('off')
+    })
+
   })
 
-  it('false', () => {
-    expect(subject(false)).toEqual('off')
-  })
+  describe('dropdown', () => {
 
-  it('on', () => {
-    expect(subject('on')).toEqual('on')
-  })
+    it('array', () => {
+      const array = ['foo', 'bar']
+      const wrapper = mount(Component, {
+        propsData: {
+          autocomplete: array,
+        }
+      })
+      const input = wrapper.find('input')
+      input.trigger('focus')
+      const dropdownListTexts = wrapper.findAll('.dropdown-list-item').wrappers.map(wrapper => wrapper.text())
+      expect(dropdownListTexts).toEqual(array)
+    })
 
-  it('off', () => {
-    expect(subject('off')).toEqual('off')
-  })
-
-  it('array', () => {
-    expect(subject(['foo', 'bar'])).toEqual('off')
-  })
-
-  it('function', () => {
-    expect(subject(() => ['foo', 'bar'])).toEqual('off')
   })
 
 })
-
-
