@@ -1,10 +1,11 @@
-import {shallowMount, mount} from '@vue/test-utils'
+import {mount} from '@vue/test-utils'
 import Component from './TextField'
+import Vue from 'vue'
 
 describe('attributes', () => {
 
   it('readonly', () => {
-    const wrapper = shallowMount(Component, {
+    const wrapper = mount(Component, {
       propsData: {
         readonly: true,
       }
@@ -14,7 +15,7 @@ describe('attributes', () => {
   })
 
   it('disabled', () => {
-    const wrapper = shallowMount(Component, {
+    const wrapper = mount(Component, {
       propsData: {
         disabled: true,
       }
@@ -30,7 +31,7 @@ describe('input', () => {
   describe('multiple: false', () => {
 
     it('string', () => {
-      const wrapper = shallowMount(Component, {
+      const wrapper = mount(Component, {
         propsData: {
           value: 'foo',
         }
@@ -41,7 +42,7 @@ describe('input', () => {
     })
 
     it('empty', () => {
-      const wrapper = shallowMount(Component, {
+      const wrapper = mount(Component, {
         propsData: {
           value: '',
         }
@@ -52,7 +53,7 @@ describe('input', () => {
     })
 
     it('null', () => {
-      const wrapper = shallowMount(Component, {
+      const wrapper = mount(Component, {
         propsData: {
           value: null,
         }
@@ -67,7 +68,7 @@ describe('input', () => {
   describe('multiple: true', () => {
 
     it('string', () => {
-      const wrapper = shallowMount(Component, {
+      const wrapper = mount(Component, {
         propsData: {
           value: 'foo',
           multiple: true,
@@ -80,7 +81,7 @@ describe('input', () => {
     })
 
     it('array', () => {
-      const wrapper = shallowMount(Component, {
+      const wrapper = mount(Component, {
         propsData: {
           value: ['foo'],
           multiple: true,
@@ -93,7 +94,7 @@ describe('input', () => {
     })
 
     it('null', () => {
-      const wrapper = shallowMount(Component, {
+      const wrapper = mount(Component, {
         propsData: {
           value: null,
           multiple: true,
@@ -114,7 +115,7 @@ describe('autocomplete', () => {
   describe('attribute', () => {
 
     const subject = (autocomplete) => {
-      const wrapper = shallowMount(Component, {
+      const wrapper = mount(Component, {
         propsData: {
           value: '',
           autocomplete,
@@ -152,7 +153,7 @@ describe('autocomplete', () => {
 
   describe('dropdown', () => {
 
-    it('array', () => {
+    it('array', (done) => {
       const array = ['foo', 'bar']
       const wrapper = mount(Component, {
         propsData: {
@@ -161,8 +162,12 @@ describe('autocomplete', () => {
       })
       const input = wrapper.find('input')
       input.trigger('focus')
-      const dropdownListTexts = wrapper.findAll('.dropdown-list-item').wrappers.map(wrapper => wrapper.text())
-      expect(dropdownListTexts).toEqual(array)
+
+      Vue.nextTick(() => {
+        const dropdownListTexts = wrapper.findAll('.dropdown-list-item').wrappers.map(wrapper => wrapper.text())
+        expect(dropdownListTexts).toEqual(array)
+        done()
+      })
     })
 
   })
