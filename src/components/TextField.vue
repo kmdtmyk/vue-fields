@@ -1,7 +1,6 @@
 <template lang='pug'>
 .text-field
   dropdown-input(
-    :class='defaultClass'
     ref='input'
     type='text'
     v-on='listeners'
@@ -9,8 +8,12 @@
     v-for='(inputValue, index) in inputValues'
     v-model='inputValues[index]'
     :key='index'
-    :autocomplete='useDropdown || $props.autocomplete === false ? "off" : $props.autocomplete === true ? "on" : $props.autocomplete'
+    :class='defaultClass'
     :style='wrapperStyle'
+    :autocomplete='useDropdown || $props.autocomplete === false ? "off" : $props.autocomplete === true ? "on" : $props.autocomplete'
+    @keydown.up='keydownUp($event, index)'
+    @keydown.down='keydownDown($event, index)'
+    @keydown.enter='keydownEnter($event, index)'
   )
     dropdown-list(
       v-if='useDropdown'
@@ -76,6 +79,40 @@ export default {
     },
   },
   methods: {
+    keydownUp(e, index){
+      if(!this.useDropdown){
+        return
+      }
+      const dropdown = this.$refs.dropdown[index]
+      e.preventDefault()
+      if(dropdown){
+        dropdown.up()
+        return
+      }
+      this.$nextTick(() => {
+        this.$refs.dropdown[index].up()
+      })
+    },
+    keydownDown(e, index){
+      if(!this.useDropdown){
+        return
+      }
+      const dropdown = this.$refs.dropdown[index]
+      e.preventDefault()
+      if(dropdown){
+        dropdown.down()
+      }
+    },
+    keydownEnter(e, index){
+      if(!this.useDropdown){
+        return
+      }
+      const dropdown = this.$refs.dropdown[index]
+      if(dropdown){
+        e.preventDefault()
+        dropdown.select()
+      }
+    },
     input(e){
       if(!this.multiple){
         this.$emit('input', e)
@@ -124,4 +161,3 @@ export default {
   display: inline-block;
 }
 </style>
-

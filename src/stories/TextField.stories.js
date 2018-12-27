@@ -63,7 +63,7 @@ storiesOf('TextField', module)
     components: {TextField},
     template: `
       <div>
-        <text-field v-model='value' :autocomplete='["foo", "bar", "hoge"]'/>
+        <text-field v-model='value' :autocomplete='["foo", "bar", "baz", "hoge", "piyo"]'/>
         {{value}}
       </div>
     `,
