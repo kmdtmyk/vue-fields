@@ -1,6 +1,7 @@
 import {storiesOf} from '@storybook/vue'
 import VueInfoAddon from 'storybook-addon-vue-info'
 import {withKnobs, text, number, boolean, color} from '@storybook/addon-knobs'
+import _ from 'lodash'
 
 import TextField from '../components/TextField'
 
@@ -76,7 +77,7 @@ storiesOf('TextField', module)
     components: {TextField},
     template: `
       <div>
-        <text-field v-model='value' :autocomplete='autocomplete'/>
+        <text-field v-model='value' :autocomplete='autocomplete' :loading='loading'  @input.native='input'/>
         {{value}}
       </div>
     `,
@@ -84,20 +85,24 @@ storiesOf('TextField', module)
       return {
         value: '',
         autocomplete: [],
+        loading: false,
       }
     },
-    watch: {
-      async value(){
-        const query = this.value
-        if(!query){
-          this.autocomplete = []
+    methods: {
+      input(e){
+        if(!e.target.value){
           return
         }
+        this.loading = true
+        this.search(e.target.value)
+      },
+      search: _.debounce(async function(query){
         const result = await fetch(`https://api.github.com/search/repositories?q=${query}`)
         const text = await result.text()
         const json = JSON.parse(text)
         this.autocomplete = () => json.items.map(item => item.name)
-      }
+        this.loading = false
+      }, 500),
     },
   }))
 
