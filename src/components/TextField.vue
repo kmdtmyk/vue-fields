@@ -8,16 +8,16 @@
     v-for='(inputValue, index) in inputValues'
     v-model='inputValues[index]'
     :key='index'
-    :class='defaultClass'
     :style='wrapperStyle'
+    :defaultClass='defaultClass'
     :autocomplete='useDropdown || $props.autocomplete === false ? "off" : $props.autocomplete === true ? "on" : $props.autocomplete'
     @keydown.up='keydownUp($event, index)'
     @keydown.down='keydownDown($event, index)'
     @keydown.enter='keydownEnter($event, index)'
   )
     dropdown-list(
-      v-if='useDropdown'
       ref='dropdown'
+      v-if='useDropdown'
       :records='getDropdownRecords(inputValues[index])'
       @input='select'
     )

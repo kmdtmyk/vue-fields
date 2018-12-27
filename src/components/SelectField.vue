@@ -2,17 +2,17 @@
 .select-field
   dropdown-input(
     v-model='inputValue'
+    v-bind='$attrs'
+    :placeholder='placeholder'
+    :clear='!!value'
+    :style='wrapperStyle'
+    :defaultClass='defaultClass'
     @keydown.up='keydownUp'
     @keydown.down='keydownDown'
     @keydown.enter='keydownEnter'
     @keydown.delete='keydownDelete'
     @blur='blur'
     @clear='clear'
-    v-bind='$attrs'
-    :placeholder='placeholder'
-    :clear='!!value'
-    :style='wrapperStyle'
-    :defaultClass='defaultClass'
   )
     dropdown-list(
       ref='dropdown'
