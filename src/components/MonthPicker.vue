@@ -1,14 +1,18 @@
 <template lang='pug'>
 .month-picker(@mousedown.prevent @wheel.prevent='wheel')
   header
-    button(type='button' @click='previousYear' tabindex='-1') &lt;
-    label {{year}}
-    button(type='button' @click='nextYear' tabindex='-1') &gt;
-  table
-    tbody
-      tr(v-for='(_, y) in 4')
-        td(v-for='(_, x) in 3')
-          button(type='button' @click='select(year, x + y * 3 + 1)') {{x + y * 3 + 1}}月
+    div
+      button(type='button' @click='previousYear' tabindex='-1') &lt;
+      label {{year}}
+      button(type='button' @click='nextYear' tabindex='-1') &gt;
+    div
+      button(type='button' @click='currentYear' tabindex='-1') 今年
+  .picker
+    table
+      tbody
+        tr(v-for='(_, y) in 3')
+          td(v-for='(_, x) in 4')
+            button(type='button' @click='select(year, x + y * 4 + 1)') {{x + y * 3 + 1}}月
   footer
     button(type='button' @click='currentMonth' tabindex='-1') 今月
     button(type='button' @click='clear' tabindex='-1') クリア
@@ -46,6 +50,10 @@ export default {
       const date = new Midnight(year, month)
       this.$emit('input', dateformat(date, 'yyyy-mm'))
     },
+    currentYear(){
+      const today = new Midnight()
+      this.year = today.year()
+    },
     currentMonth(){
       const today = new Midnight()
       this.select(today.year(), today.month())
@@ -64,10 +72,17 @@ export default {
   background-color: white;
   border: 1px solid $border-color;
 
+  header, footer, .picker{
+    padding: 2px;
+  }
+
   header{
     border-bottom: 1px solid $border-color;
     display: flex;
     justify-content: space-between;
+    label{
+      margin: 0 0.4rem;
+    }
   }
 
   footer{

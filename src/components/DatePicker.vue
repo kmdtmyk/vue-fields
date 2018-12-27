@@ -1,13 +1,13 @@
 <template lang='pug'>
 .date-picker(@mousedown.prevent @wheel.prevent='wheel')
   header
-    .month
+    div
       button(type='button' @click='previousMonth' tabindex='-1') &lt;
       label {{calendarDates[7] | period}}
       button(type='button' @click='nextMonth' tabindex='-1') &gt;
-    .current
+    div
       button(type='button' @click='currentMonth' tabindex='-1') 今月
-  .calendar
+  .picker
     table
       thead
         tr
@@ -111,15 +111,14 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-$border-color: #ced4da;
-
 .date-picker{
+  $border-color: #ced4da;
   font-size: 14px;
 
   background-color: white;
   border: 1px solid $border-color;
 
-  header, footer, .calendar{
+  header, footer, .picker{
     padding: 2px;
   }
 
