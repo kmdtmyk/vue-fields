@@ -10,6 +10,8 @@ component(:is='wrapperTag')
 </template>
 
 <script>
+import Elements from './lib/Elements'
+
 export default {
   props: {
     value: {
@@ -43,18 +45,14 @@ export default {
         this.records = records
 
         this.$nextTick(() => {
-          this.$el.querySelectorAll('input').forEach(input => {
+          Elements.getInputChildren(this.$el).forEach(input => {
             input.removeEventListener('input', this.inputLast)
           })
           const children = this.$el.children
           const lastChild = children[children.length - 1]
-          if(lastChild.tagName === 'INPUT'){
-            lastChild.addEventListener('input', this.inputLast)
-          }else{
-            lastChild.querySelectorAll('input').forEach(input => {
-              input.addEventListener('input', this.inputLast)
-            })
-          }
+          Elements.getInputChildren(lastChild).forEach(input => {
+            input.addEventListener('input', this.inputLast)
+          })
         })
       },
       immediate: true,
