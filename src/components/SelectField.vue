@@ -1,27 +1,26 @@
 <template lang='pug'>
-.select-field
-  dropdown-input(
-    v-model='inputValue'
-    v-bind='$attrs'
-    :placeholder='placeholder'
-    :clear='!!value'
-    :style='wrapperStyle'
-    :defaultClass='defaultClass'
-    @keydown.up='keydownUp'
-    @keydown.down='keydownDown'
-    @keydown.enter='keydownEnter'
-    @keydown.delete='keydownDelete'
-    @blur='blur'
-    @clear='clear'
+dropdown-input(
+  v-model='inputValue'
+  v-bind='$attrs'
+  :placeholder='placeholder'
+  :clear='!!value'
+  :style='wrapperStyle'
+  :defaultClass='defaultClass'
+  @keydown.up='keydownUp'
+  @keydown.down='keydownDown'
+  @keydown.enter='keydownEnter'
+  @keydown.delete='keydownDelete'
+  @blur='blur'
+  @clear='clear'
+)
+  dropdown-list(
+    ref='dropdown'
+    :records='filteredRecords'
+    @input='select'
   )
-    dropdown-list(
-      ref='dropdown'
-      :records='filteredRecords'
-      @input='select'
-    )
-      template(slot-scope='{record}')
-        slot(v-bind='{record}' v-if='$scopedSlots.default')
-        template(v-else) {{record}}
+    template(slot-scope='{record}')
+      slot(v-bind='{record}' v-if='$scopedSlots.default')
+      template(v-else) {{record}}
 </template>
 
 <script>
@@ -132,8 +131,8 @@ export default {
 }
 </script>
 
-<style lang='scss'>
-.select-field{
+<style lang='scss' scoped>
+/deep/ {
   input{
     &::placeholder{
       color: inherit;
@@ -143,11 +142,5 @@ export default {
       opacity: 1;
     }
   }
-}
-</style>
-
-<style lang='scss'>
-.select-field{
-  display: inline-block;
 }
 </style>
