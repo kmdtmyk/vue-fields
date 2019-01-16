@@ -1,26 +1,23 @@
 <template lang='pug'>
-.text-field
-  dropdown-input(
-    ref='input'
-    type='text'
-    v-on='listeners'
-    v-bind='$attrs'
-    v-for='(inputValue, index) in inputValues'
-    v-model='inputValues[index]'
-    :key='index'
-    :style='wrapperStyle'
-    :defaultClass='defaultClass'
-    :autocomplete='useDropdown || $props.autocomplete === false ? "off" : $props.autocomplete === true ? "on" : $props.autocomplete'
-    @keydown.up='keydownUp($event, index)'
-    @keydown.down='keydownDown($event, index)'
-    @keydown.enter='keydownEnter($event, index)'
+dropdown-input(
+  ref='input'
+  type='text'
+  v-on='listeners'
+  v-bind='$attrs'
+  v-model='inputValue'
+  :style='wrapperStyle'
+  :defaultClass='defaultClass'
+  :autocomplete='useDropdown || $props.autocomplete === false ? "off" : $props.autocomplete === true ? "on" : $props.autocomplete'
+  @keydown.up='keydownUp'
+  @keydown.down='keydownDown'
+  @keydown.enter='keydownEnter'
+)
+  dropdown-list(
+    ref='dropdown'
+    v-if='useDropdown'
+    :records='dropdownRecords'
+    @input='select'
   )
-    dropdown-list(
-      ref='dropdown'
-      v-if='useDropdown'
-      :records='getDropdownRecords(inputValues[index])'
-      @input='select'
-    )
 </template>
 
 <script>
@@ -36,25 +33,14 @@ export default {
     DropdownList,
   },
   props: {
-    value: [String, Array],
+    value: String,
     defaultClass: [String, Array],
     autocomplete: [String, Boolean, Array, Function],
   },
   watch: {
     value: {
       handler(value){
-        const values = []
-        if(this.multiple){
-          if(Array.isArray(this.value)){
-            values.push(...this.value)
-          }else if(this.value){
-            values.push(this.value)
-          }
-          values.push('')
-        }else{
-          values.push(this.value)
-        }
-        this.inputValues = values
+        this.inputValue = value
       },
       immediate: true,
     },
@@ -64,11 +50,7 @@ export default {
       return {
         ...this.$listeners,
         input: this.input,
-        change: this.change,
       }
-    },
-    multiple(){
-      return this.$attrs.multiple === '' || !!this.$attrs.multiple
     },
     useDropdown(){
       const {autocomplete} = this.$props
@@ -77,87 +59,57 @@ export default {
       }
       return false
     },
+    dropdownRecords(){
+      if(this.autocomplete instanceof Function){
+        return this.autocomplete(this.inputValue)
+      }
+      return Arrays.search(this.autocomplete, this.inputValue)
+    },
   },
   methods: {
-    keydownUp(e, index){
+    keydownUp(e){
       if(!this.useDropdown){
         return
       }
-      const dropdown = this.$refs.dropdown[index]
+      const dropdown = this.$refs.dropdown
       e.preventDefault()
       if(dropdown){
         dropdown.up()
         return
       }
       this.$nextTick(() => {
-        this.$refs.dropdown[index].up()
+        this.$refs.dropdown.up()
       })
     },
-    keydownDown(e, index){
+    keydownDown(e){
       if(!this.useDropdown){
         return
       }
-      const dropdown = this.$refs.dropdown[index]
+      const dropdown = this.$refs.dropdown
       e.preventDefault()
       if(dropdown){
         dropdown.down()
       }
     },
-    keydownEnter(e, index){
+    keydownEnter(e){
       if(!this.useDropdown){
         return
       }
-      const dropdown = this.$refs.dropdown[index]
+      const dropdown = this.$refs.dropdown
       if(dropdown){
         e.preventDefault()
         dropdown.select()
       }
     },
     input(e){
-      if(!this.multiple){
-        this.$emit('input', e)
-        return
-      }
-      const {inputValues} = this
-      if(!inputValues[inputValues.length - 1]){
-        inputValues.splice(inputValues.length - 1, 1)
-      }
-      this.$emit('input', inputValues)
-    },
-    change(e){
-      if(!this.multiple || e.target.value){
-        return
-      }
-      const index = this.findIndex(e.target)
-      this.remove(index)
-    },
-    findIndex(node){
-      return [...this.$el.childNodes].findIndex(it => it === node)
-    },
-    remove(index){
-      if(!this.multiple){
-        return
-      }
-      const {inputValues} = this
-      inputValues.splice(index, 1)
-      inputValues.splice(inputValues.length - 1, 1)
-      this.$emit('input', inputValues)
+      this.$emit('input', e)
     },
     select(record){
       this.$emit('input', record)
     },
-    getDropdownRecords(query){
-      if(this.autocomplete instanceof Function){
-        return this.autocomplete(query)
-      }
-      return Arrays.search(this.autocomplete, query)
-    }
   },
 }
 </script>
 
 <style lang='scss' scoped>
-.text-field{
-  display: inline-block;
-}
 </style>

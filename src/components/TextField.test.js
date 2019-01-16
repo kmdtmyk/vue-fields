@@ -65,7 +65,7 @@ describe('input', () => {
 
   })
 
-  describe('multiple: true', () => {
+  describe.skip('multiple: true', () => {
 
     it('string', () => {
       const wrapper = mount(Component, {
