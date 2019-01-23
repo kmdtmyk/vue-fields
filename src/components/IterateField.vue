@@ -1,12 +1,13 @@
 <template lang='pug'>
 component(:is='wrapperTag')
-  slot(
-    v-for='(record, index) in records'
-    v-bind='{[recordName]: record}'
-    :index='index'
-    :remove='remove(index)'
-    :present='!!value[index]'
-  )
+  template(v-for='(record, index) in records')
+    slot(
+      v-if='max == null || index < max'
+      v-bind='{[recordName]: record}'
+      :index='index'
+      :remove='remove(index)'
+      :present='!!value[index]'
+    )
 </template>
 
 <script>
@@ -32,6 +33,17 @@ export default {
       type: Number,
     },
   },
+  data(){
+    return {
+      records: []
+    }
+  },
+  beforeUpdate(){
+    const last = this.records[this.records.length - 1]
+    if(0 < Object.keys(last).length){
+      this.$emit('input', this.records)
+    }
+  },
   watch: {
     value: {
       handler(value){
@@ -39,38 +51,13 @@ export default {
         if(Array.isArray(value)){
           records.push(...value)
         }
-        if(!this.$props.max || records.length < this.$props.max){
-          records.push({})
-        }
+        records.push({})
         this.records = records
-
-        this.$nextTick(() => {
-          Elements.getInputChildren(this.$el).forEach(input => {
-            input.removeEventListener('input', this.inputLast)
-          })
-          const children = this.$el.children
-          const lastChild = children[children.length - 1]
-          Elements.getInputChildren(lastChild).forEach(input => {
-            input.addEventListener('input', this.inputLast)
-          })
-        })
       },
       immediate: true,
     },
   },
   methods: {
-    inputLast(e){
-      if(this.$props.max && this.$props.max <= this.value.length){
-        return
-      }
-      const {records} = this
-      this.$nextTick(() => {
-        if(records.length < this.records.length){
-          return
-        }
-        this.$emit('input', records)
-      })
-    },
     remove(index){
       return e => {
         this.value.splice(index, 1)

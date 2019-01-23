@@ -2,6 +2,7 @@ import {storiesOf} from '@storybook/vue'
 import VueInfoAddon from 'storybook-addon-vue-info'
 
 import IterateField from '../components/IterateField'
+import SelectField from '../components/SelectField'
 
 storiesOf('IterateField', module)
   .addDecorator(VueInfoAddon)
@@ -94,6 +95,23 @@ storiesOf('IterateField', module)
     data(){
       return {
         books: []
+      }
+    },
+  }))
+  .add('with select field', () => ({
+    components: {IterateField, SelectField},
+    template: `
+      <div>
+        <iterate-field v-model='values'>
+          <select-field slot-scope='{index}' v-model='values[index]' :records='records'/>
+        </iterate-field>
+        <pre>{{values}}</pre>
+      </div>
+    `,
+    data(){
+      return {
+        values: [],
+        records: ['foo', 'bar', 'baz', 'hoge', 'piyo'],
       }
     },
   }))
