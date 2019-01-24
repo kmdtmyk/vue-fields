@@ -13,7 +13,7 @@
     @focus='focus'
     @blur='blur'
   )
-  date-picker.date-picker(v-if='open && !readOnly' v-model='inputValue' @input='open = false')
+  date-picker.date-picker(v-if='open && !readOnly' v-model='inputValue' @input='select')
 </template>
 
 <script>
@@ -67,6 +67,10 @@ export default {
     input(e){
       // this.$emit('input', e.target.inputValue)
     },
+    select(value){
+      this.$emit('input', value)
+      this.open = false
+    },
     click(e){
       this.open = true
     },
@@ -75,6 +79,7 @@ export default {
     },
     blur(){
       this.open = false
+      this.inputValue = this.value
     },
   },
 }
