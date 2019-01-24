@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/kmdtmyk/vue-fields#readme",
   "devDependencies": {
-    "@kmdtmyk/midnight": "^0.1.3",
+    "@kmdtmyk/midnight": "^0.2.0",
     "@storybook/addon-actions": "^4.1.2",
     "@storybook/addon-knobs": "^4.1.2",
     "@storybook/addon-links": "^4.1.2",
