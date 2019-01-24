@@ -7,13 +7,13 @@
       button(type='button' @click='nextMonth' tabindex='-1') &gt;
     div
       button(type='button' @click='currentMonth' tabindex='-1') 今月
-  .picker
+  .calendar(:class='animation')
     table
       thead
         tr
           th(v-for='dayName in dayNames') {{dayName}}
-      tbody
-        tr(v-for='(_, y) in 6')
+      transition-group(tag='tbody' @beforeEnter='beforeEnter' @afterLeave='afterLeave')
+        tr(v-for='(n, y) in 6' :key='`${year}/${month}:${n}`')
           td(v-for='(_, x) in 7' :class='tdClass(calendarDates[x + y * 7])')
             button(
               type='button'
@@ -30,14 +30,21 @@ import dateformat from 'dateformat'
 import Midnight from '@kmdtmyk/midnight'
 
 export default {
+  props: {
+    value: {
+      type: String,
+    },
+  },
   data(){
-    const date = new Midnight()
+    const date = Midnight.parse(this.value) || new Midnight()
     const year = date.year()
     const month = date.month()
     return {
       year,
       month,
       dayNames: ['日', '月', '火', '水', '木', '金', '土'],
+      animationCount: 0,
+      animation: '',
     }
   },
   filters: {
@@ -57,19 +64,40 @@ export default {
       }
       return result
     },
+    animating(){
+      return 0 < this.animationCount
+    },
   },
   methods: {
+    beforeEnter(e){
+      this.animationCount++
+    },
+    afterLeave(e){
+      this.animationCount--
+      if(this.animationCount == 0){
+        this.animation = ''
+      }
+    },
     previousMonth(){
+      if(this.animating){
+        return
+      }
       const date = new Midnight(this.year, this.month - 1, 1)
       this.year = date.year()
       this.month = date.month()
     },
     nextMonth(){
+      if(this.animating){
+        return
+      }
       const date = new Midnight(this.year, this.month + 1, 1)
       this.year = date.year()
       this.month = date.month()
     },
     currentMonth(){
+      if(this.animating){
+        return
+      }
       const date = new Midnight()
       this.year = date.year()
       this.month = date.month()
@@ -88,9 +116,14 @@ export default {
       this.select('')
     },
     wheel(e){
+      if(this.animating){
+        return
+      }
       if(0 < e.deltaY){
+        this.animation = 'next'
         this.nextMonth()
       }else if(e.deltaY < 0){
+        this.animation = 'previous'
         this.previousMonth()
       }
     },
@@ -118,8 +151,51 @@ export default {
   background-color: white;
   border: 1px solid $border-color;
 
-  header, footer, .picker{
+  header, footer{
     padding: 2px;
+  }
+
+  .calendar{
+    $row-height: 27px;
+    height: $row-height * 6 + 23px;
+    overflow: hidden;
+
+    &.previous, &.next{
+      .v-enter-active, .v-leave-active {
+        transition: transform 0.3s;
+        transition-timing-function: linear;
+      }
+    }
+
+    &.next{
+      .v-enter {
+        transform: translateY(0);
+      }
+      .v-enter-to{
+        transform: translateY($row-height * -6);
+      }
+      .v-leave{
+        transform: translateY(0);
+      }
+      .v-leave-to{
+        transform: translateY($row-height * -6);
+      }
+    }
+
+    &.previous{
+      .v-enter {
+        transform: translateY($row-height * -6 * 2);
+      }
+      .v-enter-to{
+        transform: translateY($row-height * -6);
+      }
+      .v-leave{
+        transform: translateY(0);
+      }
+      .v-leave-to{
+        transform: translateY($row-height * 6);
+      }
+    }
   }
 
   header{
@@ -142,8 +218,13 @@ export default {
 
   table{
     border-collapse: collapse;
+    transform-style: preserve-3d;
+    thead{
+      transform: translate3d(0, 0, 1px);
+    }
     thead th{
       text-align: center;
+      background-color: white;
     }
     tbody{
       td{
