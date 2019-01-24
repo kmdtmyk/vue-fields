@@ -60,7 +60,9 @@ export default {
   methods: {
     remove(index){
       return e => {
-        this.value.splice(index, 1)
+        const value = [...this.value]
+        value.splice(index, 1)
+        this.$emit('input', value)
       }
     },
   },
