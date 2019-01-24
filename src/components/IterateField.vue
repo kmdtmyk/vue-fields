@@ -11,8 +11,6 @@ component(:is='wrapperTag')
 </template>
 
 <script>
-import Elements from './lib/Elements'
-
 export default {
   props: {
     value: {
