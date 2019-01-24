@@ -47,7 +47,7 @@ storiesOf('IterateField', module)
               <th></th>
             </tr>
           </thead>
-          <iterate-field v-model='books' wrapper-tag='tbody' record-name='book'>
+          <iterate-field v-model='books' tag='tbody' record-name='book'>
             <tr slot-scope='{book, remove, present}'>
               <td><input type='text' v-model='book.name'></td>
               <td><input type='number' v-model='book.price'></td>
@@ -77,7 +77,7 @@ storiesOf('IterateField', module)
               <th></th>
             </tr>
           </thead>
-          <iterate-field v-model='books' wrapper-tag='tbody' record-name='book'>
+          <iterate-field v-model='books' tag='tbody' record-name='book'>
             <tr slot-scope='{book, remove, present}'>
               <td><input type='text' v-model='book.name'></td>
               <td>

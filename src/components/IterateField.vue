@@ -1,5 +1,5 @@
 <template lang='pug'>
-component(:is='wrapperTag')
+component(:is='tag')
   template(v-for='(record, index) in records')
     slot(
       v-if='max == null || index < max'
@@ -23,7 +23,7 @@ export default {
       type: String,
       default: 'record',
     },
-    wrapperTag: {
+    tag: {
       type: String,
       default: 'div',
     },
