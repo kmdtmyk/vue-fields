@@ -1,18 +1,19 @@
 <template lang='pug'>
 .date-field
   input(
-    :class='defaultClass'
     type='text'
+    ref='input'
     v-on='listeners'
     v-bind='$attrs'
     :value='inputValue'
+    :class='defaultClass'
+    :style='wrapperStyle'
     @input='input'
     @click='click'
     @focus='focus'
     @blur='blur'
-    :style='wrapperStyle'
   )
-  date-picker.date-picker(v-if='open' v-model='inputValue' @input='open = false')
+  date-picker.date-picker(v-if='open && !readOnly' v-model='inputValue' @input='open = false')
 </template>
 
 <script>
@@ -35,15 +36,16 @@ export default {
   data(){
     return {
       open: false,
+      isMounted: false,
       inputValue: this.value,
     }
+  },
+  mounted(){
+    this.isMounted = true
   },
   watch: {
     value(){
       return this.inputValue
-    },
-    inputValue(){
-      this.$emit('input', this.inputValue)
     },
   },
   computed: {
@@ -52,6 +54,13 @@ export default {
         ...this.$listeners,
         input: this.input,
       }
+    },
+    readOnly(){
+      if(!this.isMounted){
+        return false
+      }
+      const {input} = this.$refs
+      return input.readOnly
     },
   },
   methods: {
