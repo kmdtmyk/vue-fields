@@ -155,8 +155,20 @@ export default {
     padding: 2px;
   }
 
+  header{
+    border-bottom: 1px solid $border-color;
+    display: flex;
+    justify-content: space-between;
+    button{
+      min-width: 1.5rem;
+    }
+    label{
+      margin: 0 0.4rem;
+    }
+  }
+
   .calendar{
-    $row-height: 27px;
+    $row-height: 28px;
     height: $row-height * 6 + 23px;
     overflow: hidden;
 
@@ -196,17 +208,41 @@ export default {
         transform: translateY($row-height * 6);
       }
     }
-  }
 
-  header{
-    border-bottom: 1px solid $border-color;
-    display: flex;
-    justify-content: space-between;
-    button{
-      min-width: 1.5rem;
-    }
-    label{
-      margin: 0 0.4rem;
+    table{
+      border-collapse: collapse;
+      transform-style: preserve-3d;
+      thead{
+        transform: translate3d(0, 0, 1px);
+      }
+      thead th{
+        text-align: center;
+        background-color: white;
+      }
+      tbody{
+        tr{
+          height: $row-height;
+        }
+        td{
+          padding: 0;
+          &.current-month{
+            color: black;
+          }
+          &:not(.current-month){
+            color: gray;
+          }
+          button{
+            text-align: center;
+            border: 0;
+            background: none;
+            color: inherit;
+            width: 100%;
+            &:hover{
+              background: #bcd4fd;
+            }
+          }
+        }
+      }
     }
   }
 
@@ -214,39 +250,6 @@ export default {
     border-top: 1px solid $border-color;
     display: flex;
     justify-content: space-between;
-  }
-
-  table{
-    border-collapse: collapse;
-    transform-style: preserve-3d;
-    thead{
-      transform: translate3d(0, 0, 1px);
-    }
-    thead th{
-      text-align: center;
-      background-color: white;
-    }
-    tbody{
-      td{
-        padding: 0;
-        &.current-month{
-          color: black;
-        }
-        &:not(.current-month){
-          color: gray;
-        }
-        button{
-          text-align: center;
-          border: 0;
-          background: none;
-          color: inherit;
-          width: 100%;
-          &:hover{
-            background: #bcd4fd;
-          }
-        }
-      }
-    }
   }
 
   button{
