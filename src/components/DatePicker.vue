@@ -12,7 +12,7 @@
       thead
         tr
           th(v-for='dayName in dayNames') {{dayName}}
-      transition-group(tag='tbody' @beforeEnter='beforeEnter' @afterLeave='afterLeave')
+      transition-group(tag='tbody' @beforeEnter='transitionBeforeEnter' @afterLeave='transitionAfterLeave')
         tr(v-for='(n, y) in 6' :key='`${year}/${month}:${n}`')
           td(v-for='(_, x) in 7' :class='tdClass(calendarDates[x + y * 7])')
             button(
@@ -69,10 +69,10 @@ export default {
     },
   },
   methods: {
-    beforeEnter(e){
+    transitionBeforeEnter(e){
       this.animationCount++
     },
-    afterLeave(e){
+    transitionAfterLeave(e){
       this.animationCount--
       if(this.animationCount == 0){
         this.animation = ''
