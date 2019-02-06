@@ -42,6 +42,23 @@ storiesOf('PercentField', module)
       },
     }
   })
+  .add('min, max', () => {
+    const value = text('value', '0.5')
+    const min = text('min', '0')
+    const max = text('max', '1')
+    return {
+      components: {PercentField},
+      template: `
+        <div>
+          <percent-field v-model='value' :min='${min}' :max='${max}'/>
+          {{value}}
+        </div>
+      `,
+      data(){
+        return {value}
+      },
+    }
+  })
   .add('custom', () => {
     const value = text('value', '0.5')
     return {

@@ -28,6 +28,8 @@ export default {
     value: [Number, String],
     defaultClass: [String, Array],
     name: String,
+    min: [Number, String],
+    max: [Number, String],
     unit: {
       type: Number,
       default: 1/100,
@@ -86,7 +88,20 @@ export default {
     toActualValue(value){
       try{
         const floatValue = Parser.parseFloat(value)
-        return new Big(floatValue).times(this.unit).toString()
+        let big = new Big(floatValue).times(this.unit)
+        if(this.min != null){
+          const min = new Big(this.min)
+          if(big.lt(min)){
+            big = min
+          }
+        }
+        if(this.max != null){
+          const max = new Big(this.max)
+          if(big.gt(max)){
+            big = max
+          }
+        }
+        return big.toString()
       }catch(e){
         return null
       }
