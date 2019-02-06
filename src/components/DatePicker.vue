@@ -153,6 +153,13 @@ export default {
 
   header, footer{
     padding: 2px;
+    button{
+      border: 0;
+      background-color: #ccc;
+      &:hover{
+        background-color: #bbb;
+      }
+    }
   }
 
   header{
