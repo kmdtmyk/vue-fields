@@ -8,7 +8,7 @@
     :value='inputValue'
     :class='defaultClass'
     :style='wrapperStyle'
-    @input='input'
+    @change='change'
     @click='click'
     @focus='focus'
     @blur='blur'
@@ -18,6 +18,7 @@
 
 <script>
 import dateformat from 'dateformat'
+import Midnight from '@kmdtmyk/midnight'
 import wrapper from './mixins/wrapper'
 import DatePicker from './DatePicker'
 
@@ -45,7 +46,7 @@ export default {
   },
   watch: {
     value(){
-      return this.inputValue
+      this.inputValue = this.value
     },
   },
   computed: {
@@ -65,7 +66,15 @@ export default {
   },
   methods: {
     input(e){
-      // this.$emit('input', e.target.inputValue)
+      // nothing
+    },
+    change(e){
+      const date = Midnight.parse(e.target.value)
+      if(date == null){
+        this.$emit('input', null)
+      }else{
+        this.$emit('input', dateformat(date, 'yyyy-mm-dd'))
+      }
     },
     select(value){
       this.$emit('input', value)
@@ -79,7 +88,6 @@ export default {
     },
     blur(){
       this.open = false
-      this.inputValue = this.value
     },
   },
 }
