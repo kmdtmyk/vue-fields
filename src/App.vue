@@ -42,7 +42,7 @@
           th
             button(type='button' @click='books.push({})') add
           th
-      iterate-field(v-model='books' wrapper-tag='tbody' record-name='book')
+      iterate-field(v-model='books' tag='tbody' record-name='book')
         tr(slot-scope='{book, remove}')
           td
             text-field(v-model='book.name')
