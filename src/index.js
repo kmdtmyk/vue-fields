@@ -25,13 +25,31 @@ function applyOption(component, option){
   }
 }
 
+function transformName(originalName, prefix = '', suffix = 'Field'){
+  const names = []
+  names.push(prefix)
+  names.push(originalName.replace('Field', ''))
+  names.push(suffix)
+  return names.map(name => upcaseFirstChar(name)).join('')
+}
+
+function upcaseFirstChar(string){
+  if(!string){
+    return string
+  }
+  return string[0].toUpperCase() + string.substr(1)
+}
+
 export default class{
 
   static install(Vue, option){
+    const {prefix, suffix} = option
     for(const name in components){
       const component = components[name]
       applyOption(component, option)
-      Vue.component(name, component)
+      const mountName = transformName(name, prefix, suffix)
+      console.log(mountName)
+      Vue.component(mountName, component)
     }
   }
 
