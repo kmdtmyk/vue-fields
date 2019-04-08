@@ -35,6 +35,8 @@ export default {
       default: true,
     },
     precision: Number,
+    min: Number,
+    max: Number,
   },
   data(){
     return {
@@ -56,10 +58,8 @@ export default {
       }
     },
     actualValue(){
-      if(this.precision == null){
-        return Parser.parseFloat(this.inputValue)
-      }
-      return NumberUtil.round(this.inputValue, this.precision)
+      const number = NumberUtil.clamp(this.inputValue, this.min, this.max)
+      return NumberUtil.round(number, this.precision)
     },
     $input(){
       return this.$refs.input

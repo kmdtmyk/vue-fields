@@ -58,3 +58,20 @@ storiesOf('IntegerField', module)
       },
     }
   })
+  .add('min and max', () => {
+    const value = number('value', 50)
+    const min = number('min', 0)
+    const max = number('max', 100)
+    return {
+      components: {IntegerField},
+      template: `
+        <form>
+          <integer-field v-model='value' :min='${min}' :max='${max}'/>
+          {{value}}
+        </form>
+      `,
+      data(){
+        return {value}
+      },
+    }
+  })
