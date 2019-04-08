@@ -112,6 +112,16 @@ describe('round', () => {
     expect(subject(123.455, 2)).toBe(123.46)
   })
 
+  it('string', () => {
+    expect(subject('123.454', 2)).toBe(123.45)
+    expect(subject('123.455', 2)).toBe(123.46)
+  })
+
+  it('precision is null', () => {
+    expect(subject(123, null)).toBe(123)
+    expect(subject(123.456, null)).toBe(123.456)
+  })
+
   it('null', () => {
     expect(subject(null)).toBeNull()
   })

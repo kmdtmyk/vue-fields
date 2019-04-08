@@ -42,6 +42,9 @@ export default class{
     if(number == null){
       return null
     }
+    if(precision == null){
+      return number
+    }
     return Math.round(number * Math.pow(10, precision)) / Math.pow(10, precision)
   }
 
