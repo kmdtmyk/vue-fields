@@ -1,11 +1,13 @@
 import {storiesOf} from '@storybook/vue'
 import VueInfoAddon from 'storybook-addon-vue-info'
+import {withKnobs, number} from '@storybook/addon-knobs'
 
 import IterateField from '../components/IterateField'
 import SelectField from '../components/SelectField'
 
 storiesOf('IterateField', module)
   .addDecorator(VueInfoAddon)
+  .addDecorator(withKnobs)
   .add('basic', () => ({
     components: {IterateField},
     template: `
@@ -20,20 +22,23 @@ storiesOf('IterateField', module)
       return {values: []}
     },
   }))
-  .add('max', () => ({
-    components: {IterateField},
-    template: `
-      <div>
-        <iterate-field v-model='values' :max='3'>
-          <input type='text' slot-scope='{index}' v-model='values[index]'>
-        </iterate-field>
-        <pre>{{values}}</pre>
-      </div>
-    `,
-    data(){
-      return {values: []}
-    },
-  }))
+  .add('max', () => {
+    const max = number('max', 3)
+    return {
+      components: {IterateField},
+      template: `
+        <div>
+          <iterate-field v-model='values' :max='${max}'>
+            <input type='text' slot-scope='{index}' v-model='values[index]'>
+          </iterate-field>
+          <pre>{{values}}</pre>
+        </div>
+      `,
+      data(){
+        return {values: []}
+      },
+    }
+  })
   .add('object array', () => ({
     components: {IterateField},
     template: `
