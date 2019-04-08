@@ -22,6 +22,7 @@ span
 import wrapper from './mixins/wrapper'
 import Parser from './lib/Parser'
 import ElementUtil from './lib/ElementUtil'
+import NumberUtil from './lib/NumberUtil'
 
 export default {
   mixins: [wrapper],
@@ -33,6 +34,7 @@ export default {
       type: Boolean,
       default: true,
     },
+    precision: Number,
   },
   data(){
     return {
@@ -54,7 +56,10 @@ export default {
       }
     },
     actualValue(){
-      return Parser.parseFloat(this.inputValue)
+      if(this.precision == null){
+        return Parser.parseFloat(this.inputValue)
+      }
+      return NumberUtil.round(this.inputValue, this.precision)
     },
     $input(){
       return this.$refs.input
@@ -100,14 +105,8 @@ export default {
       })
     },
     format(value){
-      const number = Parser.parseFloat(value)
-      if(number == null){
-        return null
-      }
-      if(this.delimiter){
-        return number.toLocaleString()
-      }
-      return number
+      const {precision} = this
+      return NumberUtil.format(value, {precision})
     },
     downKeyup(e){
       const nextValue = this.actualValue + 1

@@ -58,3 +58,19 @@ storiesOf('NumberField', module)
       },
     }
   })
+  .add('precision', () => {
+    const value = number('value', 123.45)
+    const precision = number('precision', 2)
+    return {
+      components: {NumberField},
+      template: `
+        <div>
+          <number-field v-model='value' :precision='${precision}'/>
+          {{value}}
+        </div>
+      `,
+      data(){
+        return {value}
+      },
+    }
+  })
