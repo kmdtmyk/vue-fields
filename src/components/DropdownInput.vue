@@ -29,7 +29,7 @@
 
 <script>
 import wrapper from './mixins/wrapper'
-import Elements from './lib/Elements'
+import ElementUtil from './lib/ElementUtil'
 import LoadingSpinner from './LoadingSpinner'
 
 export default {
@@ -89,7 +89,7 @@ export default {
       this.inputValue = this.value
     },
     dropdownOpen(){
-      let elements = Elements.getParents(this.$el)
+      let elements = ElementUtil.getParents(this.$el)
       if(this.dropdownOpen){
         this.updateDropdownStyle()
         elements.forEach(element => {
