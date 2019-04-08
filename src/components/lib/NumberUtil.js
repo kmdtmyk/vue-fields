@@ -2,6 +2,24 @@ import Parser from './Parser'
 
 export default class{
 
+  static clamp(value, min, max){
+    const number = Parser.parseFloat(value)
+    if(number == null){
+      return null
+    }
+    let result = number
+
+    if(min != null && result < min){
+      result = min
+    }
+
+    if(max != null && max < result){
+      result = max
+    }
+
+    return result
+  }
+
   static format(value, options = {}){
     const number = Parser.parseFloat(value)
     if(number == null){

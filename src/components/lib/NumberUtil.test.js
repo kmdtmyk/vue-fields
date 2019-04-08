@@ -1,9 +1,72 @@
 import NumberUtil from './NumberUtil'
 
+describe('clamp', () => {
+
+  function subject(...args){
+    return NumberUtil.clamp(...args)
+  }
+
+  it('min < max', () => {
+    const min = 0
+    const max = 100
+    expect(subject(-1, min, max)).toBe(0)
+    expect(subject(0, min, max)).toBe(0)
+    expect(subject(50, min, max)).toBe(50)
+    expect(subject(100, min, max)).toBe(100)
+    expect(subject(101, min, max)).toBe(100)
+    expect(subject(null, min, max)).toBe(null)
+  })
+
+  it('min > max', () => {
+    const min = 100
+    const max = 0
+    expect(subject(-1, min, max)).toBe(0)
+    expect(subject(0, min, max)).toBe(0)
+    expect(subject(50, min, max)).toBe(0)
+    expect(subject(100, min, max)).toBe(0)
+    expect(subject(101, min, max)).toBe(0)
+    expect(subject(null, min, max)).toBe(null)
+  })
+
+  it('min is null', () => {
+    const min = null
+    const max = 100
+    expect(subject(-1, min, max)).toBe(-1)
+    expect(subject(0, min, max)).toBe(0)
+    expect(subject(50, min, max)).toBe(50)
+    expect(subject(100, min, max)).toBe(100)
+    expect(subject(101, min, max)).toBe(100)
+    expect(subject(null, min, max)).toBe(null)
+  })
+
+  it('max is null', () => {
+    const min = 0
+    const max = null
+    expect(subject(-1, min, max)).toBe(0)
+    expect(subject(0, min, max)).toBe(0)
+    expect(subject(50, min, max)).toBe(50)
+    expect(subject(100, min, max)).toBe(100)
+    expect(subject(101, min, max)).toBe(101)
+    expect(subject(null, min, max)).toBe(null)
+  })
+
+  it('min and max null', () => {
+    const min = null
+    const max = null
+    expect(subject(-1, min, max)).toBe(-1)
+    expect(subject(0, min, max)).toBe(0)
+    expect(subject(50, min, max)).toBe(50)
+    expect(subject(100, min, max)).toBe(100)
+    expect(subject(101, min, max)).toBe(101)
+    expect(subject(null, min, max)).toBe(null)
+  })
+
+})
+
 describe('format', () => {
 
-  function subject(value, options){
-    return NumberUtil.format(value, options)
+  function subject(...args){
+    return NumberUtil.format(...args)
   }
 
   it('number', () => {
@@ -40,8 +103,8 @@ describe('format', () => {
 
 describe('round', () => {
 
-  function subject(value, precision){
-    return NumberUtil.round(value, precision)
+  function subject(...args){
+    return NumberUtil.round(...args)
   }
 
   it('number', () => {
