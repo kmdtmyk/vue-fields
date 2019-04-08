@@ -31,3 +31,25 @@ describe('format', () => {
   })
 
 })
+
+
+describe('round', () => {
+
+  function subject(value, precision){
+    return NumberUtil.round(value, precision)
+  }
+
+  it('number', () => {
+    expect(subject(123.454, 2)).toBe(123.45)
+    expect(subject(123.455, 2)).toBe(123.46)
+  })
+
+  it('null', () => {
+    expect(subject(null)).toBeNull()
+  })
+
+  it('undefined', () => {
+    expect(subject(undefined)).toBeNull()
+  })
+
+})

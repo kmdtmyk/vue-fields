@@ -15,7 +15,7 @@ export default class{
 
     const {precision} = options
     if(precision != null){
-      const {integer, decimal} = split(round(number, precision))
+      const {integer, decimal} = split(this.round(number, precision))
       if(decimal == null){
         return integer.toLocaleString()
       }
@@ -23,6 +23,14 @@ export default class{
     }
 
     return `${integer.toLocaleString()}.${decimal}`
+  }
+
+  static round(value, precision){
+    const number = Parser.parseFloat(value)
+    if(number == null){
+      return null
+    }
+    return Math.round(number * Math.pow(10, precision)) / Math.pow(10, precision)
   }
 
 }
@@ -34,6 +42,3 @@ const split = (number) => {
   return {integer, decimal}
 }
 
-const round = (number, precision) => {
-  return parseFloat(number.toFixed(precision))
-}
