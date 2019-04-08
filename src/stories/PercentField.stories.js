@@ -42,7 +42,7 @@ storiesOf('PercentField', module)
       },
     }
   })
-  .add('min, max', () => {
+  .add('min and max', () => {
     const value = text('value', '0.5')
     const min = text('min', '0')
     const max = text('max', '1')
