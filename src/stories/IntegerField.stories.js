@@ -25,22 +25,6 @@ storiesOf('IntegerField', module)
       },
     }
   })
-  .add('delimiter', () => {
-    const value = number('value', 123456789)
-    const delimiter = boolean('delimiter', true)
-    return {
-      components: {IntegerField},
-      template: `
-        <div>
-          <integer-field v-model='value' :delimiter='${delimiter}'/>
-          {{value}}
-        </div>
-      `,
-      data(){
-        return {value}
-      },
-    }
-  })
   .add('style', () => {
     const value = number('value', 123456789)
     const size = number('size', 24)
@@ -58,4 +42,19 @@ storiesOf('IntegerField', module)
       },
     }
   })
-
+  .add('delimiter', () => {
+    const value = number('value', 123456789)
+    const delimiter = boolean('delimiter', true)
+    return {
+      components: {IntegerField},
+      template: `
+        <div>
+          <integer-field v-model='value' :delimiter='${delimiter}'/>
+          {{value}}
+        </div>
+      `,
+      data(){
+        return {value}
+      },
+    }
+  })
