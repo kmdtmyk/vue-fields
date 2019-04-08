@@ -1,7 +1,12 @@
 <template lang='pug'>
 .dropdown-input
   input(
+    ref='input'
+    v-model='inputValue'
+    v-on='listeners'
+    v-bind='$attrs'
     :class='defaultClass'
+    :style='wrapperStyle'
     @mousedown='mousedown'
     @focus='focus'
     @blur='blur'
@@ -10,11 +15,6 @@
     @keydown.enter='keydownEnter'
     @keydown.27='keydownEscape'
     @input='input'
-    ref='input'
-    v-on='listeners'
-    v-bind='$attrs'
-    v-model='inputValue'
-    :style='wrapperStyle'
   )
   .spinner(v-if='loading')
     loading-spinner

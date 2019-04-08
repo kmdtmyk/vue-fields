@@ -1,15 +1,15 @@
 <template lang='pug'>
 .percent-field
   input(
-    ref='input'
-    :class='defaultClass'
     type='text'
+    ref='input'
+    v-model='inputValue'
     v-on='listeners'
     v-bind='$attrs'
+    :class='defaultClass'
+    :style='wrapperStyle'
     @input='input'
     @blur='blur'
-    v-model='inputValue'
-    :style='wrapperStyle'
   )
   .suffix(
     :style='suffixStyle'

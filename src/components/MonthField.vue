@@ -1,16 +1,16 @@
 <template lang='pug'>
 .month-field
   input(
-    :class='defaultClass'
     type='text'
     v-on='listeners'
     v-bind='$attrs'
     :value='inputValue'
+    :class='defaultClass'
+    :style='wrapperStyle'
     @input='input'
     @click='click'
     @focus='focus'
     @blur='blur'
-    :style='wrapperStyle'
   )
   month-picker.month-picker(v-if='open' v-model='inputValue' @input='open = false')
 </template>

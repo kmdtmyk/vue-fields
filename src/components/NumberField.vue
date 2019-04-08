@@ -1,19 +1,19 @@
 <template lang='pug'>
 span
   input(
-    :class='defaultClass'
-    ref='input'
     type='text'
+    ref='input'
     v-on='listeners'
     v-bind='$attrs'
     v-model='inputValue'
+    :class='defaultClass'
+    :style='wrapperStyle'
     @input='input'
     @focus='focus'
     @blur='blur'
     @drop='drop'
     @keydown.up.prevent='downKeyup'
     @keydown.down.prevent='downKeydown'
-    :style='wrapperStyle'
   )
   input(v-if='$props.name' :name='$props.name' :value='value' type='hidden')
 </template>
