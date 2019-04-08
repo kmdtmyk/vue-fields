@@ -5,6 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build --target lib --name index ./src/index.js",
+    "build:report": "npm run build -- --report",
     "test": "vue-cli-service test:unit",
     "storybook": "start-storybook -p 6006 --ci",
     "build-storybook": "build-storybook --output-dir docs",
