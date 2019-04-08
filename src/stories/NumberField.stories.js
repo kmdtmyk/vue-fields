@@ -25,6 +25,22 @@ storiesOf('NumberField', module)
       },
     }
   })
+  .add('delimiter', () => {
+    const value = number('value', 12345.67)
+    const delimiter = boolean('delimiter', true)
+    return {
+      components: {NumberField},
+      template: `
+        <div>
+          <number-field v-model='value' :delimiter='${delimiter}'/>
+          {{value}}
+        </div>
+      `,
+      data(){
+        return {value}
+      },
+    }
+  })
   .add('style', () => {
     const value = number('value', 123456789)
     const size = number('size', 24)

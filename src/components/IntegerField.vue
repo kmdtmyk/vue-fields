@@ -29,6 +29,10 @@ export default {
     value: [Number, String],
     defaultClass: [String, Array],
     name: String,
+    delimiter: {
+      type: Boolean,
+      default: true,
+    },
   },
   data(){
     return {
@@ -96,11 +100,14 @@ export default {
       })
     },
     format(value){
-      const intValue = Parser.parseInt(value)
-      if(intValue == null){
+      const number = Parser.parseInt(value)
+      if(number == null){
         return null
       }
-      return intValue.toLocaleString()
+      if(this.delimiter){
+        return number.toLocaleString()
+      }
+      return number
     },
     downKeyup(e){
       const nextValue = this.actualValue + 1

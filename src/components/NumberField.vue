@@ -29,6 +29,10 @@ export default {
     value: [Number, String],
     defaultClass: [String, Array],
     name: String,
+    delimiter: {
+      type: Boolean,
+      default: true,
+    },
   },
   data(){
     return {
@@ -100,8 +104,10 @@ export default {
       if(number == null){
         return null
       }
-      console.log(number)
-      return number.toLocaleString()
+      if(this.delimiter){
+        return number.toLocaleString()
+      }
+      return number
     },
     downKeyup(e){
       const nextValue = this.actualValue + 1
