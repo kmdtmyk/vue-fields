@@ -105,8 +105,8 @@ export default {
       })
     },
     format(value){
-      const {precision} = this
-      return NumberUtil.format(value, {precision})
+      const {precision, delimiter} = this
+      return NumberUtil.format(value, {precision, delimiter})
     },
     downKeyup(e){
       const nextValue = this.actualValue + 1

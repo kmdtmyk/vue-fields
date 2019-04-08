@@ -8,21 +8,15 @@ export default class{
       return null
     }
 
-    const {integer, decimal} = split(number)
-    if(!decimal){
-      return integer.toLocaleString()
-    }
+    const {precision, delimiter = true} = options
 
-    const {precision} = options
     if(precision != null){
       const {integer, decimal} = split(this.round(number, precision))
-      if(decimal == null){
-        return integer.toLocaleString()
-      }
-      return `${integer.toLocaleString()}.${decimal}`
+      return join(integer, decimal, delimiter)
     }
 
-    return `${integer.toLocaleString()}.${decimal}`
+    const {integer, decimal} = split(number)
+    return join(integer, decimal, delimiter)
   }
 
   static round(value, precision){
@@ -42,3 +36,10 @@ const split = (number) => {
   return {integer, decimal}
 }
 
+const join = (integer, decimal, delimiter) => {
+  const integerString = delimiter === true ? integer.toLocaleString() : integer.toString()
+  if(decimal == null){
+    return integerString
+  }
+  return `${integerString}.${decimal}`
+}
