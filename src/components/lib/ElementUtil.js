@@ -18,4 +18,11 @@ export default class{
     return element.querySelectorAll('input')
   }
 
+  static selectedAll(element){
+    const start = element.selectionStart
+    const end = element.selectionEnd
+    const value = element.value
+    return start === 0 && end === value.length
+  }
+
 }

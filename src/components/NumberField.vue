@@ -21,6 +21,7 @@ span
 <script>
 import wrapper from './mixins/wrapper'
 import Parser from './lib/Parser'
+import ElementUtil from './lib/ElementUtil'
 
 export default {
   mixins: [wrapper],
@@ -59,18 +60,11 @@ export default {
     },
   },
   methods: {
-    selectedAll(){
-      const input = this.$input
-      const start = input.selectionStart
-      const end = input.selectionEnd
-      const value = input.value
-      return start === 0 && end === value.length
-    },
     input(e){
       this.$emit('input', this.actualValue)
     },
     focus(e){
-      const select = this.selectedAll()
+      const select = ElementUtil.selectedAll(this.$input)
       this.$nextTick(() => {
         this.inputValue = this.value
         if(select){
