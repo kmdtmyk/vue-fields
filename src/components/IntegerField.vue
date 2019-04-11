@@ -2,6 +2,7 @@
 number-field(
   v-model='inputValue'
   v-bind='$attrs'
+  v-on='listeners'
   :delimiter='delimiter'
   :precision='0'
   @input='input'
@@ -27,6 +28,14 @@ export default {
     return {
       inputValue: this.value
     }
+  },
+  computed: {
+    listeners(){
+      return {
+        ...this.$listeners,
+        input: this.input,
+      }
+    },
   },
   methods: {
     input(value){
