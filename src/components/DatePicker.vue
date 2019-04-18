@@ -176,7 +176,8 @@ export default {
 
   .calendar{
     $row-height: 28px;
-    height: $row-height * 6 + 23px;
+    $row-count: 6;
+    height: $row-height * $row-count + 23px;
     overflow: hidden;
 
     &.previous, &.next{
@@ -191,28 +192,28 @@ export default {
         transform: translateY(0);
       }
       .v-enter-to{
-        transform: translateY($row-height * -6);
+        transform: translateY($row-height * -$row-count);
       }
       .v-leave{
         transform: translateY(0);
       }
       .v-leave-to{
-        transform: translateY($row-height * -6);
+        transform: translateY($row-height * -$row-count);
       }
     }
 
     &.previous{
       .v-enter {
-        transform: translateY($row-height * -6 * 2);
+        transform: translateY($row-height * -$row-count * 2);
       }
       .v-enter-to{
-        transform: translateY($row-height * -6);
+        transform: translateY($row-height * -$row-count);
       }
       .v-leave{
         transform: translateY(0);
       }
       .v-leave-to{
-        transform: translateY($row-height * 6);
+        transform: translateY($row-height * $row-count);
       }
     }
 

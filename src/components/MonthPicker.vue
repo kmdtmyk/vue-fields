@@ -121,7 +121,8 @@ export default {
 
   .picker{
     $row-height: 32px;
-    height: $row-height * 3;
+    $row-count: 3;
+    height: $row-height * $row-count;
     overflow: hidden;
 
     &.previous, &.next{
@@ -136,28 +137,28 @@ export default {
         transform: translateY(0);
       }
       .v-enter-to{
-        transform: translateY($row-height * -3);
+        transform: translateY($row-height * -$row-count);
       }
       .v-leave{
         transform: translateY(0);
       }
       .v-leave-to{
-        transform: translateY($row-height * -3);
+        transform: translateY($row-height * -$row-count);
       }
     }
 
     &.previous{
       .v-enter {
-        transform: translateY($row-height * -3 * 2);
+        transform: translateY($row-height * -$row-count * 2);
       }
       .v-enter-to{
-        transform: translateY($row-height * -3);
+        transform: translateY($row-height * -$row-count);
       }
       .v-leave{
         transform: translateY(0);
       }
       .v-leave-to{
-        transform: translateY($row-height * 3);
+        transform: translateY($row-height * $row-count);
       }
     }
 
