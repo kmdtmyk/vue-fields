@@ -23,9 +23,14 @@ import dateformat from 'dateformat'
 import Midnight from '@kmdtmyk/midnight'
 
 export default {
+  props: {
+    value: {
+      type: String,
+    },
+  },
   data(){
-    const date = new Midnight()
-    const year = date.year()
+    const date = Midnight.parse(this.value)
+    const year = date == null ? new Midnight().year() : date.year()
     return {
       year,
       animationCount: 0,

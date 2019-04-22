@@ -7,16 +7,17 @@
     :value='inputValue'
     :class='defaultClass'
     :style='wrapperStyle'
-    @input='input'
+    @change='change'
     @click='click'
     @focus='focus'
     @blur='blur'
   )
-  month-picker.month-picker(v-if='open' v-model='inputValue' @input='open = false')
+  month-picker.month-picker(v-if='open' v-model='inputValue' @input='select')
 </template>
 
 <script>
 import dateformat from 'dateformat'
+import Midnight from '@kmdtmyk/midnight'
 import wrapper from './mixins/wrapper'
 import MonthPicker from './MonthPicker'
 
@@ -40,10 +41,7 @@ export default {
   },
   watch: {
     value(){
-      return this.inputValue
-    },
-    inputValue(){
-      this.$emit('input', this.inputValue)
+      this.inputValue = this.value
     },
   },
   computed: {
@@ -56,7 +54,15 @@ export default {
   },
   methods: {
     input(e){
-      // this.$emit('input', e.target.inputValue)
+      // nothing
+    },
+    change(e){
+      const date = Midnight.parse(e.target.value)
+      if(date == null){
+        this.$emit('input', null)
+      }else{
+        this.$emit('input', dateformat(date, 'yyyy-mm'))
+      }
     },
     click(e){
       this.open = true
@@ -65,6 +71,10 @@ export default {
       this.open = true
     },
     blur(){
+      this.open = false
+    },
+    select(value){
+      this.$emit('input', value)
       this.open = false
     },
   },
