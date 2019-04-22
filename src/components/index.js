@@ -5,6 +5,7 @@ import NumberField from './NumberField'
 import PercentField from './PercentField'
 import SelectField from './SelectField'
 import TextField from './TextField'
+import YearField from './YearField'
 
 export {
   DateField,
@@ -14,4 +15,5 @@ export {
   PercentField,
   SelectField,
   TextField,
+  YearField,
 }

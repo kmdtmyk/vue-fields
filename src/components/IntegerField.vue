@@ -29,6 +29,11 @@ export default {
       inputValue: this.value
     }
   },
+  watch: {
+    value(){
+      this.inputValue = this.value
+    },
+  },
   computed: {
     listeners(){
       return {
