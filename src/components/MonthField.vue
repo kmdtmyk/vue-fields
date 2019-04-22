@@ -11,6 +11,7 @@
     @click='click'
     @focus='focus'
     @blur='blur'
+    @keydown.esc='keydownEsc'
   )
   month-picker.month-picker(v-if='open' v-model='inputValue' @input='select')
 </template>
@@ -75,6 +76,9 @@ export default {
     },
     select(value){
       this.$emit('input', value)
+      this.open = false
+    },
+    keydownEsc(e){
       this.open = false
     },
   },

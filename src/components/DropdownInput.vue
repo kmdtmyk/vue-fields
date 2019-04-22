@@ -13,7 +13,7 @@
     @keydown.up='keydownUp'
     @keydown.down='keydownDown'
     @keydown.enter='keydownEnter'
-    @keydown.27='keydownEscape'
+    @keydown.esc='keydownEsc'
     @input='input'
   )
   .spinner(v-if='loading')
@@ -127,7 +127,7 @@ export default {
     keydownEnter(e){
       this.dropdownOpen = false
     },
-    keydownEscape(e){
+    keydownEsc(e){
       this.dropdownOpen = false
     },
     onParentScroll(e){

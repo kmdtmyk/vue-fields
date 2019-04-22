@@ -11,6 +11,7 @@
     @click='click'
     @focus='focus'
     @blur='blur'
+    @keydown.esc='keydownEsc'
   )
   year-picker.year-picker(v-if='open' v-model='inputValue' @input='select')
 </template>
@@ -71,6 +72,9 @@ export default {
       this.$nextTick(() => {
         this.inputValue = value
       })
+    },
+    keydownEsc(e){
+      this.open = false
     },
   },
 }

@@ -12,6 +12,7 @@
     @click='click'
     @focus='focus'
     @blur='blur'
+    @keydown.esc='keydownEsc'
   )
   date-picker.date-picker(v-if='open && !readOnly' v-model='inputValue' @input='select')
 </template>
@@ -87,6 +88,9 @@ export default {
       this.open = true
     },
     blur(){
+      this.open = false
+    },
+    keydownEsc(e){
       this.open = false
     },
   },
