@@ -28,16 +28,15 @@ export default {
     },
   },
   data(){
-    // const date = new Date()
-    // date.setFullYear(this.value)
-    // const year = date.getFullYear() || Midnight.today().year()
-    // const startYear = Math.floor(year / duration) * duration
-
-    const date = new Midnight(this.value, 1, 1)
-    const year = date.year() || Midnight.today().year()
+    let year
+    if(this.value == null || this.value === ''){
+      year = new Midnight().year()
+    }else{
+      const date = new Midnight(this.value, 1, 1)
+      year = date.year() || new Midnight().year()
+    }
     const startYear = Math.floor(year / duration) * duration
     return {
-      year,
       animationCount: 0,
       animation: '',
       startYear,
