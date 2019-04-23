@@ -107,6 +107,14 @@ export default {
 
   header, footer{
     padding: 2px;
+    button{
+      border: 0;
+      background-color: #ccc;
+      min-width: 1.5rem;
+      &:hover{
+        background-color: #bbb;
+      }
+    }
   }
 
   header{
