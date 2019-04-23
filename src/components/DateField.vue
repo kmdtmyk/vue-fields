@@ -14,7 +14,10 @@
     @blur='blur'
     @keydown.esc='keydownEsc'
   )
-  date-picker.date-picker(v-if='open && !readOnly' v-model='inputValue' @input='select')
+  date-picker.date-picker(
+    v-if='open && !readOnly'
+    v-model='inputValue'
+    @input='select')
 </template>
 
 <script>

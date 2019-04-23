@@ -2,6 +2,7 @@
 .month-field
   input(
     type='text'
+    ref='input'
     v-on='listeners'
     v-bind='$attrs'
     :value='inputValue'
@@ -13,7 +14,10 @@
     @blur='blur'
     @keydown.esc='keydownEsc'
   )
-  month-picker.month-picker(v-if='open' v-model='inputValue' @input='select')
+  month-picker.month-picker(
+    v-if='open && !readOnly'
+    v-model='inputValue'
+    @input='select')
 </template>
 
 <script>
@@ -37,8 +41,12 @@ export default {
   data(){
     return {
       open: false,
+      isMounted: false,
       inputValue: this.value,
     }
+  },
+  mounted(){
+    this.isMounted = true
   },
   watch: {
     value(){
@@ -51,6 +59,13 @@ export default {
         ...this.$listeners,
         input: this.input,
       }
+    },
+    readOnly(){
+      if(!this.isMounted){
+        return false
+      }
+      const {input} = this.$refs
+      return input.readOnly
     },
   },
   methods: {

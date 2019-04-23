@@ -1,5 +1,6 @@
 <template lang='pug'>
 number-field(
+  ref='input'
   v-model='inputValue'
   v-bind='$attrs'
   v-on='listeners'
@@ -40,6 +41,9 @@ export default {
         ...this.$listeners,
         input: this.input,
       }
+    },
+    $input(){
+      return this.$refs.input.$input
     },
   },
   methods: {

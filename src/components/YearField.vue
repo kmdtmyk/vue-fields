@@ -2,6 +2,7 @@
 .year-field
   integer-field(
     type='text'
+    ref='input'
     v-on='listeners'
     v-bind='$attrs'
     v-model='inputValue'
@@ -13,7 +14,10 @@
     @blur='blur'
     @keydown.esc='keydownEsc'
   )
-  year-picker.year-picker(v-if='open' v-model='inputValue' @input='select')
+  year-picker.year-picker(
+    v-if='open && !readOnly'
+    v-model='inputValue'
+    @input='select')
 </template>
 
 <script>
@@ -37,8 +41,12 @@ export default {
   data(){
     return {
       open: false,
+      isMounted: false,
       inputValue: this.value,
     }
+  },
+  mounted(){
+    this.isMounted = true
   },
   watch: {
     value(){
@@ -51,6 +59,15 @@ export default {
         ...this.$listeners,
         input: this.input,
       }
+    },
+    $input(){
+      return this.$refs.input.$input
+    },
+    readOnly(){
+      if(!this.isMounted){
+        return false
+      }
+      return this.$input.readOnly
     },
   },
   methods: {
