@@ -48,7 +48,6 @@ export default class{
       const component = components[name]
       applyOption(component, option)
       const mountName = transformName(name, prefix, suffix)
-      console.log(mountName)
       Vue.component(mountName, component)
     }
   }
