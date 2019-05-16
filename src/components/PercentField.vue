@@ -7,7 +7,7 @@
     v-on='listeners'
     v-bind='$attrs'
     :class='defaultClass'
-    :style='wrapperStyle'
+    :style='style'
     @input='input'
     @blur='blur'
   )
@@ -41,11 +41,13 @@ export default {
   },
   data(){
     return {
+      isMounted: false,
       inputValue: this.toInputValue(this.value),
       suffixStyle: {},
     }
   },
   mounted(){
+    this.isMounted = true
     this.$nextTick(() => {
       this.updateSuffixStyle()
     })
@@ -69,6 +71,16 @@ export default {
     },
     active(){
       return this.$input === document.activeElement
+    },
+    style(){
+      if(!this.isMounted){
+        return this.wrapperStyle
+      }
+      const input = this.$refs.input
+      const style = getComputedStyle(input)
+      return this.wrapperStyle +
+        `marginRight: calc(-1.5em + ${style.paddingRight});` +
+        'paddingRight: 1.5em;'
     },
   },
   methods: {
@@ -129,8 +141,8 @@ export default {
   display: inline-block;
 
   input{
-    padding-right: 1.5em;
     box-sizing: border-box;
+    width: 100%;
   }
 
   .suffix{
