@@ -150,7 +150,7 @@ export default {
       if(!input){
         return
       }
-      const {fontSize} = window.getComputedStyle(input)
+      const {fontSize} = getComputedStyle(input)
       const rect = input.getBoundingClientRect()
       const left = `${rect.x}px`
       const top = `${rect.height + rect.y}px`
