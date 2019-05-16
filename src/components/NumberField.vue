@@ -45,7 +45,7 @@ export default {
   },
   watch: {
     value(){
-      if(!this.active){
+      if(!this.isActive()){
         this.inputValue = this.format(this.value)
       }
     },
@@ -64,11 +64,11 @@ export default {
     $input(){
       return this.$refs.input
     },
-    active(){
-      return this.$input === document.activeElement
-    },
   },
   methods: {
+    isActive(){
+      return this.$input === document.activeElement
+    },
     input(e){
       this.$emit('input', this.actualValue)
     },
