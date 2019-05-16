@@ -6,7 +6,7 @@
     v-on='listeners'
     v-bind='$attrs'
     :class='defaultClass'
-    :style='wrapperStyle'
+    :style='style'
     @mousedown='mousedown'
     @focus='focus'
     @blur='blur'
@@ -78,6 +78,16 @@ export default {
         return this.$props.clear
       }
       return !!this.value
+    },
+    style(){
+      if(!this.clearable){
+        return this.wrapperStyle
+      }
+      const input = this.$refs.input
+      const style = getComputedStyle(input)
+      return this.wrapperStyle +
+        `marginRight: calc(-2em + ${style.paddingRight});` +
+        'paddingRight: 2em;'
     },
   },
   mounted(){
@@ -161,7 +171,8 @@ export default {
 }
 
 input{
-  padding-right: 2em;
+  box-sizing: border-box;
+  width: 100%;
 }
 
 .dropdown{
