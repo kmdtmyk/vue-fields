@@ -14,7 +14,6 @@
     @keydown.down='keydownDown'
     @keydown.enter='keydownEnter'
     @keydown.esc='keydownEsc'
-    @input='input'
   )
   .spinner(v-if='loading')
     loading-spinner
