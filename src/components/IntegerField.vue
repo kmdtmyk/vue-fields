@@ -6,7 +6,6 @@ number-field(
   v-on='listeners'
   :delimiter='delimiter'
   :precision='0'
-  @input='input'
   )
 </template>
 

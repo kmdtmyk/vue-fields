@@ -8,7 +8,6 @@ span
     v-model='inputValue'
     :class='defaultClass'
     :style='wrapperStyle'
-    @input='input'
     @focus='focus'
     @blur='blur'
     @drop='drop'
