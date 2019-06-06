@@ -37,6 +37,11 @@ export default {
     defaultClass: [String, Array],
     autocomplete: [String, Boolean, Array, Function],
   },
+  data(){
+    return {
+      inputValue: '',
+    }
+  },
   watch: {
     value: {
       handler(value){

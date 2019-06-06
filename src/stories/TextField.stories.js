@@ -73,6 +73,23 @@ storiesOf('TextField', module)
       }
     },
   }))
+  .add('autocomplete (function)', () => ({
+    components: {TextField},
+    template: `
+      <div>
+        <text-field v-model='value' :autocomplete='autocomplete'/>
+        {{value}}
+      </div>
+    `,
+    data(){
+      return {
+        value: '',
+        autocomplete: (value) => {
+          return value.split('').map((value, index) => value.repeat(index + 1))
+        }
+      }
+    },
+  }))
   .add('autocomplete (ajax)', () => ({
     components: {TextField},
     template: `
