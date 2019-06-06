@@ -3,7 +3,7 @@ import {withKnobs, text, number, boolean, color} from '@storybook/addon-knobs'
 
 import TimeField from '../components/TimeField'
 
-storiesOf('TimeField', module)
+storiesOf('TimeField (WIP)', module)
   .addDecorator(withKnobs)
   .add('basic', () => {
     const value = text('value', '')
