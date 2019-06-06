@@ -1,6 +1,6 @@
 import DateField from './DateField'
 import IntegerField from './IntegerField'
-import IterateField from './IterateField'
+import RepeatField from './RepeatField'
 import NumberField from './NumberField'
 import PercentField from './PercentField'
 import SelectField from './SelectField'
@@ -11,7 +11,7 @@ import YearField from './YearField'
 export {
   DateField,
   IntegerField,
-  IterateField,
+  RepeatField,
   NumberField,
   PercentField,
   SelectField,

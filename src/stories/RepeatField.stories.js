@@ -2,19 +2,19 @@ import {storiesOf} from '@storybook/vue'
 import VueInfoAddon from 'storybook-addon-vue-info'
 import {withKnobs, number} from '@storybook/addon-knobs'
 
-import IterateField from '../components/IterateField'
+import RepeatField from '../components/RepeatField'
 import SelectField from '../components/SelectField'
 
-storiesOf('IterateField', module)
+storiesOf('RepeatField', module)
   .addDecorator(VueInfoAddon)
   .addDecorator(withKnobs)
   .add('basic', () => ({
-    components: {IterateField},
+    components: {RepeatField},
     template: `
       <div>
-        <iterate-field v-model='values'>
+        <repeat-field v-model='values'>
           <input type='text' slot-scope='{index}' v-model='values[index]'>
-        </iterate-field>
+        </repeat-field>
         <pre>{{values}}</pre>
       </div>
     `,
@@ -25,12 +25,12 @@ storiesOf('IterateField', module)
   .add('max', () => {
     const max = number('max', 3)
     return {
-      components: {IterateField},
+      components: {RepeatField},
       template: `
         <div>
-          <iterate-field v-model='values' :max='${max}'>
+          <repeat-field v-model='values' :max='${max}'>
             <input type='text' slot-scope='{index}' v-model='values[index]'>
-          </iterate-field>
+          </repeat-field>
           <pre>{{values}}</pre>
         </div>
       `,
@@ -40,7 +40,7 @@ storiesOf('IterateField', module)
     }
   })
   .add('object array', () => ({
-    components: {IterateField},
+    components: {RepeatField},
     template: `
       <div>
         <table>
@@ -52,14 +52,14 @@ storiesOf('IterateField', module)
               <th></th>
             </tr>
           </thead>
-          <iterate-field v-model='books' tag='tbody' record-name='book'>
+          <repeat-field v-model='books' tag='tbody' record-name='book'>
             <tr slot-scope='{book, remove, present}'>
               <td><input type='text' v-model='book.name'></td>
               <td><input type='number' v-model='book.price'></td>
               <td><input type='date' v-model='book.releaseDate'></td>
               <td><button type='button' v-if='present' @click='remove'>remove</button></td>
             </tr>
-          </iterate-field>
+          </repeat-field>
         </table>
         <pre>{{books}}</pre>
       </div>
@@ -71,7 +71,7 @@ storiesOf('IterateField', module)
     },
   }))
   .add('object array (nest)', () => ({
-    components: {IterateField},
+    components: {RepeatField},
     template: `
       <div>
         <table>
@@ -82,17 +82,17 @@ storiesOf('IterateField', module)
               <th></th>
             </tr>
           </thead>
-          <iterate-field v-model='books' tag='tbody' record-name='book'>
+          <repeat-field v-model='books' tag='tbody' record-name='book'>
             <tr slot-scope='{book, remove, present}'>
               <td><input type='text' v-model='book.name'></td>
               <td>
-                <iterate-field v-model='book.comments' record-name='comment'>
+                <repeat-field v-model='book.comments' record-name='comment'>
                   <input type='text' slot-scope='{comment}' v-model='comment.body'>
-                </iterate-field>
+                </repeat-field>
               </td>
               <td><button type='button' v-if='present' @click='remove'>remove</button></td>
             </tr>
-          </iterate-field>
+          </repeat-field>
         </table>
         <pre>{{books}}</pre>
       </div>
@@ -104,12 +104,12 @@ storiesOf('IterateField', module)
     },
   }))
   .add('with select field', () => ({
-    components: {IterateField, SelectField},
+    components: {RepeatField, SelectField},
     template: `
       <div>
-        <iterate-field v-model='values'>
+        <repeat-field v-model='values'>
           <select-field slot-scope='{index}' v-model='values[index]' :records='records'/>
-        </iterate-field>
+        </repeat-field>
         <pre>{{values}}</pre>
       </div>
     `,

@@ -42,8 +42,8 @@
           th
             button(type='button' @click='books.push({})') add
           th
-      iterate-field(v-model='books' tag='tbody' record-name='book')
-        tr(slot-scope='{book, remove}')
+      repeat-field(v-model='books' tag='tbody' record-name='book')
+        tr(slot-scope='{book, remove, present}')
           td
             text-field(v-model='book.name')
           td
@@ -51,7 +51,7 @@
           td
             date-field(v-model='book.releaseDate')
           td
-            button(type='button' @click='remove') remove
+            button(type='button' @click='remove' v-if='present') remove
           td {{book}}
     pre {{books}}
 </template>
