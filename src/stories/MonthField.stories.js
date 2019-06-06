@@ -1,11 +1,9 @@
 import {storiesOf} from '@storybook/vue'
-import VueInfoAddon from 'storybook-addon-vue-info'
 import {withKnobs, text, number, boolean, color} from '@storybook/addon-knobs'
 
 import MonthField from '../components/MonthField'
 
 storiesOf('MonthField', module)
-  .addDecorator(VueInfoAddon)
   .addDecorator(withKnobs)
   .add('basic', () => {
     const value = text('value', '2018-12')
@@ -24,7 +22,7 @@ storiesOf('MonthField', module)
         return {value}
       },
     }
-  })
+  }, {info: true})
   .add('style', () => {
     const value = text('value', '2018-12')
     const size = number('size', 24)
@@ -41,5 +39,5 @@ storiesOf('MonthField', module)
         return {value}
       },
     }
-  })
+  }, {info: true})
 

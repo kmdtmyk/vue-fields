@@ -9,6 +9,11 @@ module.exports = (storybookBaseConfig, configType, defaultConfig) => {
       test: /\.scss$/,
       loader: ['style-loader', 'css-loader', 'sass-loader']
     },
+    // {
+    //   test: /\.vue$/,
+    //   loader: 'storybook-addon-vue-info/loader',
+    //   enforce: 'post'
+    // }
   )
 
   return defaultConfig

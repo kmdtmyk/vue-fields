@@ -1,11 +1,9 @@
 import {storiesOf} from '@storybook/vue'
-import VueInfoAddon from 'storybook-addon-vue-info'
 import {withKnobs, number, boolean, color} from '@storybook/addon-knobs'
 
 import YearField from '../components/YearField'
 
 storiesOf('YearField', module)
-  .addDecorator(VueInfoAddon)
   .addDecorator(withKnobs)
   .add('basic', () => {
     const value = number('value', 2018)
@@ -24,7 +22,7 @@ storiesOf('YearField', module)
         return {value}
       },
     }
-  })
+  }, {info: true})
   .add('style', () => {
     const value = number('value', 2018)
     const size = number('size', 24)
@@ -41,5 +39,5 @@ storiesOf('YearField', module)
         return {value}
       },
     }
-  })
+  }, {info: true})
 

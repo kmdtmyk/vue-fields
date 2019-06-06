@@ -44,7 +44,7 @@
     "pug": "^2.0.3",
     "pug-plain-loader": "^1.0.0",
     "sass-loader": "^7.1.0",
-    "storybook-addon-vue-info": "^0.7.0",
+    "storybook-addon-vue-info": "^1.2.1",
     "vue": "^2.5.21",
     "vue-template-compiler": "^2.5.21"
   },

@@ -1,11 +1,9 @@
 import {storiesOf} from '@storybook/vue'
-import VueInfoAddon from 'storybook-addon-vue-info'
 import {withKnobs, text, number, boolean, color} from '@storybook/addon-knobs'
 
 import TimeField from '../components/TimeField'
 
 storiesOf('TimeField', module)
-  .addDecorator(VueInfoAddon)
   .addDecorator(withKnobs)
   .add('basic', () => {
     const value = text('value', '')
@@ -24,7 +22,7 @@ storiesOf('TimeField', module)
         return {value}
       },
     }
-  })
+  }, {info: true})
   .add('style', () => {
     const value = text('value', '')
     const size = number('size', 24)
@@ -41,5 +39,5 @@ storiesOf('TimeField', module)
         return {value}
       },
     }
-  })
+  }, {info: true})
 

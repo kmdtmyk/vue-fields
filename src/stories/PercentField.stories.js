@@ -1,11 +1,9 @@
 import {storiesOf} from '@storybook/vue'
-import VueInfoAddon from 'storybook-addon-vue-info'
 import {withKnobs, text, number, boolean, color} from '@storybook/addon-knobs'
 
 import PercentField from '../components/PercentField'
 
 storiesOf('PercentField', module)
-  .addDecorator(VueInfoAddon)
   .addDecorator(withKnobs)
   .add('basic', () => {
     const value = text('value', '0.5')
@@ -24,7 +22,7 @@ storiesOf('PercentField', module)
         return {value}
       },
     }
-  })
+  }, {info: true})
   .add('style', () => {
     const value = text('value', '0.5')
     const size = number('size', 24)
@@ -41,7 +39,7 @@ storiesOf('PercentField', module)
         return {value}
       },
     }
-  })
+  }, {info: true})
   .add('min and max', () => {
     const value = text('value', '0.5')
     const min = text('min', '0')
@@ -58,7 +56,7 @@ storiesOf('PercentField', module)
         return {value}
       },
     }
-  })
+  }, {info: true})
   .add('custom', () => {
     const value = text('value', '0.5')
     return {
@@ -73,4 +71,4 @@ storiesOf('PercentField', module)
         return {value}
       },
     }
-  })
+  }, {info: true})

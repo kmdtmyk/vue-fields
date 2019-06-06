@@ -1,11 +1,9 @@
 import {storiesOf} from '@storybook/vue'
-import VueInfoAddon from 'storybook-addon-vue-info'
 import {withKnobs, number, boolean, color} from '@storybook/addon-knobs'
 
 import IntegerField from '../components/IntegerField'
 
 storiesOf('IntegerField', module)
-  .addDecorator(VueInfoAddon)
   .addDecorator(withKnobs)
   .add('basic', () => {
     const value = number('value', 123456789)
@@ -24,7 +22,7 @@ storiesOf('IntegerField', module)
         return {value}
       },
     }
-  })
+  }, {info: true})
   .add('style', () => {
     const value = number('value', 123456789)
     const size = number('size', 24)
@@ -41,7 +39,7 @@ storiesOf('IntegerField', module)
         return {value}
       },
     }
-  })
+  }, {info: true})
   .add('delimiter', () => {
     const value = number('value', 123456789)
     const delimiter = boolean('delimiter', true)
@@ -57,7 +55,7 @@ storiesOf('IntegerField', module)
         return {value}
       },
     }
-  })
+  }, {info: true})
   .add('min and max', () => {
     const value = number('value', 50)
     const min = number('min', 0)
@@ -74,4 +72,4 @@ storiesOf('IntegerField', module)
         return {value}
       },
     }
-  })
+  }, {info: true})

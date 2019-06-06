@@ -1,12 +1,10 @@
 import {storiesOf} from '@storybook/vue'
-import VueInfoAddon from 'storybook-addon-vue-info'
 import {withKnobs, text, number, boolean, color} from '@storybook/addon-knobs'
 import _ from 'lodash'
 
 import SelectField from '../components/SelectField'
 
 storiesOf('SelectField', module)
-  .addDecorator(VueInfoAddon)
   .addDecorator(withKnobs)
   .add('basic', () => {
     const value = text('value', '')
@@ -28,7 +26,7 @@ storiesOf('SelectField', module)
         }
       },
     }
-  })
+  }, {info: true})
   .add('style', () => {
     const value = text('value', '')
     const size = number('size', 24)
@@ -48,7 +46,7 @@ storiesOf('SelectField', module)
         }
       },
     }
-  })
+  }, {info: true})
   .add('custom filter', () => {
     const value = text('value', '')
     return {
@@ -76,7 +74,7 @@ storiesOf('SelectField', module)
         },
       },
     }
-  })
+  }, {info: true})
   .add('function', () => {
     const value = text('value', '')
     return {
@@ -99,7 +97,7 @@ storiesOf('SelectField', module)
         }
       },
     }
-  })
+  }, {info: true})
   .add('object array', () => {
     const value = number('value', '')
     return {
@@ -129,36 +127,38 @@ storiesOf('SelectField', module)
         }
       },
     }
-  })
-  .add('ajax', () => ({
-    components: {SelectField},
-    template: `
-      <div>
-        <select-field v-model='value' :records='records' :loading='loading' @input.native='input'/>
-        {{value}}
-      </div>
-    `,
-    data(){
-      return {
-        value: '',
-        records: [],
-        loading: false,
-      }
-    },
-    methods: {
-      input(e){
-        this.loading = true
-        this.search(e.target.value)
+  }, {info: true})
+  .add('ajax', () => {
+    return {
+      components: {SelectField},
+      template: `
+        <div>
+          <select-field v-model='value' :records='records' :loading='loading' @input.native='input'/>
+          {{value}}
+        </div>
+      `,
+      data(){
+        return {
+          value: '',
+          records: [],
+          loading: false,
+        }
       },
-      search: _.debounce(async function(query){
-        const result = await fetch(`https://api.github.com/search/repositories?q=${query}`)
-        const text = await result.text()
-        const json = JSON.parse(text)
-        this.records = () => json.items.map(item => item.name)
-        this.loading = false
-      }, 500),
-    },
-  }))
+      methods: {
+        input(e){
+          this.loading = true
+          this.search(e.target.value)
+        },
+        search: _.debounce(async function(query){
+          const result = await fetch(`https://api.github.com/search/repositories?q=${query}`)
+          const text = await result.text()
+          const json = JSON.parse(text)
+          this.records = () => json.items.map(item => item.name)
+          this.loading = false
+        }, 500),
+      },
+    }
+  }, {info: true})
   .add('performance test', () => {
     const value = number('value', '')
     return {
@@ -183,4 +183,4 @@ storiesOf('SelectField', module)
         }
       },
     }
-  })
+  }, {info: true})
