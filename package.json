@@ -55,7 +55,8 @@
     "not ie <= 8"
   ],
   "files": [
-    "dist/"
+    "dist/*.js",
+    "dist/*.js.map"
   ],
   "keywords": [
     "vue"
