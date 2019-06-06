@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/kmdtmyk/vue-fields.svg?branch=master)](https://travis-ci.org/kmdtmyk/vue-fields)
+
 ## Installation
 
 ```
