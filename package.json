@@ -9,7 +9,7 @@
     "test": "vue-cli-service test:unit",
     "storybook": "start-storybook -p 6006 --ci",
     "build-storybook": "build-storybook --output-dir docs",
-    "prepublish": "npm run build"
+    "prepare": "npm run build"
   },
   "main": "./dist/index.umd.min.js",
   "repository": {
