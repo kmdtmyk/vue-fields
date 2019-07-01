@@ -10,19 +10,48 @@ https://kmdtmyk.github.io/vue-fields/
 npm install @kmdtmyk/vue-fields
 ```
 
+Register as plugin.
+
 ```javascript
 import VueFields from '@kmdtmyk/vue-fields'
 
 Vue.use(VueFields)
 ```
 
-or
+Register as component.
 
 ```javascript
-import {IntegerField} from '@kmdtmyk/vue-fields'
+import {NumberField} from '@kmdtmyk/vue-fields'
 
-Vue.component('integer-field', IntegerField)
+Vue.component('number-field', NumberField)
 ```
+
+### Plugin option
+
+inputClass
+
+```javascript
+Vue.use(VueFields, {inputClass: 'form-control'})
+```
+
+```html
+<text-field/> <!-- <input type='text' class='form-control'> -->
+```
+prefix, suffix
+
+```javascript
+Vue.use(VueFields, {prefix: 'v', suffix: ''})
+```
+
+```html
+<v-text/> <!-- <input type='text'> -->
+```
+
+|name|default value|
+|-|-|
+|inputClass|''|
+|prefix|''|
+|suffix|'Field'|
 
 ## License
 
