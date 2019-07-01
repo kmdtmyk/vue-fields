@@ -6,7 +6,7 @@ dropdown-input(
   v-bind='$attrs'
   v-model='inputValue'
   :style='wrapperStyle'
-  :defaultClass='defaultClass'
+  :inputClass='inputClass'
   :autocomplete='useDropdown || $props.autocomplete === false ? "off" : $props.autocomplete === true ? "on" : $props.autocomplete'
   @keydown.up='keydownUp'
   @keydown.down='keydownDown'
@@ -34,7 +34,7 @@ export default {
   },
   props: {
     value: String,
-    defaultClass: [String, Array],
+    inputClass: [String, Array],
     autocomplete: [String, Boolean, Array, Function],
   },
   data(){

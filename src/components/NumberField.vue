@@ -6,7 +6,7 @@ span
     v-on='listeners'
     v-bind='$attrs'
     v-model='inputValue'
-    :class='defaultClass'
+    :class='inputClass'
     :style='wrapperStyle'
     @focus='focus'
     @blur='blur'
@@ -27,7 +27,7 @@ export default {
   mixins: [wrapper],
   props: {
     value: [Number, String],
-    defaultClass: [String, Array],
+    inputClass: [String, Array],
     name: String,
     delimiter: {
       type: Boolean,

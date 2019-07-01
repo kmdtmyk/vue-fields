@@ -6,7 +6,7 @@
     v-model='inputValue'
     v-on='listeners'
     v-bind='$attrs'
-    :class='defaultClass'
+    :class='inputClass'
     :style='style'
     @input='input'
     @blur='blur'
@@ -26,7 +26,7 @@ export default {
   mixins: [wrapper],
   props: {
     value: [Number, String],
-    defaultClass: [String, Array],
+    inputClass: [String, Array],
     name: String,
     min: [Number, String],
     max: [Number, String],

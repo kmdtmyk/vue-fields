@@ -5,7 +5,7 @@ dropdown-input(
   :placeholder='placeholder'
   :clear='!!value'
   :style='wrapperStyle'
-  :defaultClass='defaultClass'
+  :inputClass='inputClass'
   @keydown.up='keydownUp'
   @keydown.down='keydownDown'
   @keydown.enter='keydownEnter'
@@ -38,7 +38,7 @@ export default {
   props: {
     value: [Number, String],
     name: String,
-    defaultClass: [String, Array],
+    inputClass: [String, Array],
     filter: {
       type: Function,
       default: Arrays.search,

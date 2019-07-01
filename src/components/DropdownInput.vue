@@ -5,7 +5,7 @@
     v-model='inputValue'
     v-on='listeners'
     v-bind='$attrs'
-    :class='defaultClass'
+    :class='inputClass'
     :style='style'
     @mousedown='mousedown'
     @focus='focus'
@@ -43,7 +43,7 @@ export default {
     value: [String],
     clear: Boolean,
     loading: Boolean,
-    defaultClass: [String, Array],
+    inputClass: [String, Array],
   },
   data(){
     return {

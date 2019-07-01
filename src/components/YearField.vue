@@ -6,7 +6,7 @@
     v-on='listeners'
     v-bind='$attrs'
     v-model='inputValue'
-    :class='defaultClass'
+    :class='inputClass'
     :style='wrapperStyle'
     :delimiter='false'
     @click='click'
@@ -32,7 +32,7 @@ export default {
   },
   props: {
     value: [Number, String],
-    defaultClass: [String, Array],
+    inputClass: [String, Array],
   },
   components: {
     IntegerField,

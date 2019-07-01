@@ -6,7 +6,7 @@
     v-on='listeners'
     v-bind='$attrs'
     :value='inputValue'
-    :class='defaultClass'
+    :class='inputClass'
     :style='wrapperStyle'
     @change='change'
     @click='click'
@@ -33,7 +33,7 @@ export default {
   },
   props: {
     value: String,
-    defaultClass: [String, Array],
+    inputClass: [String, Array],
   },
   components: {
     DatePicker,

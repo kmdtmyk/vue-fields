@@ -62,7 +62,7 @@ import Fields from './'
 import languages from './sample/languages'
 
 Vue.use(Fields, {
-  defaultClass: 'form-control form-control-sm'
+  inputClass: 'form-control form-control-sm'
 })
 
 export default {

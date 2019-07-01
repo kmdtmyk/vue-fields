@@ -13,15 +13,15 @@ function extractProps(component){
 function applyOption(component, option){
   option = option || {}
   extractProps(component)
-  const {defaultClass} = option
+  const {inputClass} = option
   const {props} = component
-  if(defaultClass && props.defaultClass){
-    if(Array.isArray(props.defaultClass)){
-      props.defaultClass = {
-        type: props.defaultClass
+  if(inputClass && props.inputClass){
+    if(Array.isArray(props.inputClass)){
+      props.inputClass = {
+        type: props.inputClass
       }
     }
-    props.defaultClass.default = defaultClass
+    props.inputClass.default = inputClass
   }
 }
 
