@@ -123,7 +123,7 @@ export default {
     recordText(record){
       const slot = this.$scopedSlots.default
       if(slot && record){
-        return slot({record}).children[0].text
+        return slot({record})[0].children[0].text
       }
       return record
     },
