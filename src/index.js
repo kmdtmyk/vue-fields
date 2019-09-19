@@ -42,7 +42,7 @@ function upcaseFirstChar(string){
 
 export default class{
 
-  static install(Vue, option){
+  static install(Vue, option = {}){
     const {prefix, suffix} = option
     for(const name in components){
       const component = components[name]
