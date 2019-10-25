@@ -13,11 +13,12 @@
     @mousedown='mousedown'
     @mouseup='mouseup'
   )
-  .tooltip-container
+  .tooltip-container(
+    :class='tooltipClass'
+    v-if='enableTooltip && dragging'
+  )
     .tooltip-offset(:style='tooltipOffsetStyle')
-    .tooltip(
-      v-if='enableTooltip && dragging'
-    ) {{tooltipValue}}
+    .tooltip {{tooltipValue}}
 </template>
 
 <script>
@@ -40,6 +41,10 @@ export default {
     tooltip: {
       type: [Boolean, Function],
       default: false,
+    },
+    tooltipPosition: {
+      type: String,
+      default: 'down',
     },
     inputClass: {
       type: [String, Array],
@@ -84,6 +89,11 @@ export default {
       const rate = (this.value - this.min) / (this.max - this.min)
       return {flexGrow: rate}
     },
+    tooltipClass(){
+      if(this.tooltipPosition === 'up'){
+        return 'tooltip-up'
+      }
+    },
   },
   methods: {
     input(e){
@@ -108,6 +118,10 @@ export default {
     position: absolute;
     display: flex;
     width: 100%;
+
+    &.tooltip-up{
+      top: -1.8em;
+    }
   }
 
   .tooltip-offset{

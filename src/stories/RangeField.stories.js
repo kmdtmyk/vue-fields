@@ -78,3 +78,25 @@ storiesOf('RangeField', module)
       },
     }
   }, {info: true})
+  .add('tooltip position', () => {
+    const value = number('value', 10)
+    const position = select('position', ['up', 'down'], 'up')
+    return {
+      components: {RangeField},
+      template: `
+        <div>
+          <br>
+          <range-field v-model='value' :tooltip='true' tooltip-position='${position}'/>
+          {{value}}
+        </div>
+      `,
+      data(){
+        return {
+          value,
+          tooltip(value){
+            return `${value}%`
+          }
+        }
+      },
+    }
+  }, {info: true})
