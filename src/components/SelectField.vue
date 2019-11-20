@@ -18,7 +18,7 @@ dropdown-input(
     :records='filteredRecords'
     @input='select'
   )
-    template(slot-scope='{record}')
+    template(v-slot='{record}')
       slot(v-bind='{record}' v-if='$scopedSlots.default')
       template(v-else) {{record}}
 </template>

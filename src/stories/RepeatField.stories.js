@@ -12,7 +12,9 @@ storiesOf('RepeatField', module)
       template: `
         <div>
           <repeat-field v-model='values'>
-            <input type='text' slot-scope='{index}' v-model='values[index]'>
+            <template v-slot='{index}'>
+              <input type='text' v-model='values[index]'>
+            </template>
           </repeat-field>
           <pre>{{values}}</pre>
         </div>
@@ -29,7 +31,9 @@ storiesOf('RepeatField', module)
       template: `
         <div>
           <repeat-field v-model='values' :max='${max}'>
-            <input type='text' slot-scope='{index}' v-model='values[index]'>
+            <template v-slot='{index}'>
+              <input type='text' v-model='values[index]'>
+            </template>
           </repeat-field>
           <pre>{{values}}</pre>
         </div>
@@ -54,12 +58,14 @@ storiesOf('RepeatField', module)
               </tr>
             </thead>
             <repeat-field v-model='books' tag='tbody' record-name='book'>
-              <tr slot-scope='{book, remove, present}'>
-                <td><input type='text' v-model='book.name'></td>
-                <td><input type='number' v-model='book.price'></td>
-                <td><input type='date' v-model='book.releaseDate'></td>
-                <td><button type='button' v-if='present' @click='remove'>remove</button></td>
-              </tr>
+              <template v-slot='{book, remove, present}'>
+                <tr>
+                  <td><input type='text' v-model='book.name'></td>
+                  <td><input type='number' v-model='book.price'></td>
+                  <td><input type='date' v-model='book.releaseDate'></td>
+                  <td><button type='button' v-if='present' @click='remove'>remove</button></td>
+                </tr>
+              </template>
             </repeat-field>
           </table>
           <pre>{{books}}</pre>
@@ -86,15 +92,19 @@ storiesOf('RepeatField', module)
               </tr>
             </thead>
             <repeat-field v-model='books' tag='tbody' record-name='book'>
-              <tr slot-scope='{book, remove, present}'>
-                <td><input type='text' v-model='book.name'></td>
-                <td>
-                  <repeat-field v-model='book.comments' record-name='comment'>
-                    <input type='text' slot-scope='{comment}' v-model='comment.body'>
-                  </repeat-field>
-                </td>
-                <td><button type='button' v-if='present' @click='remove'>remove</button></td>
-              </tr>
+              <template v-slot='{book, remove, present}'>
+                <tr>
+                  <td><input type='text' v-model='book.name'></td>
+                  <td>
+                    <repeat-field v-model='book.comments' record-name='comment'>
+                      <template v-slot='{comment}'>
+                        <input type='text' v-model='comment.body'>
+                      </template>
+                    </repeat-field>
+                  </td>
+                  <td><button type='button' v-if='present' @click='remove'>remove</button></td>
+                </tr>
+              </template>
             </repeat-field>
           </table>
           <pre>{{books}}</pre>
@@ -113,7 +123,9 @@ storiesOf('RepeatField', module)
       template: `
         <div>
           <repeat-field v-model='values'>
-            <select-field slot-scope='{index}' v-model='values[index]' :records='records'/>
+            <template v-slot='{index}'>
+              <select-field v-model='values[index]' :records='records'/>
+            </template>
           </repeat-field>
           <pre>{{values}}</pre>
         </div>

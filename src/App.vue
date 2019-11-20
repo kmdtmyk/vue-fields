@@ -43,16 +43,17 @@
             button(type='button' @click='books.push({})') add
           th
       repeat-field(v-model='books' tag='tbody' record-name='book')
-        tr(slot-scope='{book, remove, present}')
-          td
-            text-field(v-model='book.name')
-          td
-            integer-field(v-model='book.price')
-          td
-            date-field(v-model='book.releaseDate')
-          td
-            button(type='button' @click='remove' v-if='present') remove
-          td {{book}}
+        template(v-slot='{book, remove, present}')
+          tr
+            td
+              text-field(v-model='book.name')
+            td
+              integer-field(v-model='book.price')
+            td
+              date-field(v-model='book.releaseDate')
+            td
+              button(type='button' @click='remove' v-if='present') remove
+            td {{book}}
     pre {{books}}
 </template>
 
