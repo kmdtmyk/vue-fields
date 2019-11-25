@@ -9,12 +9,13 @@ storiesOf('RangeField', module)
     const value = number('value', 10)
     const min = number('min', 0)
     const max = number('max', 100)
+    const step = number('step', 5)
     const disabled = boolean('disabled', false)
     return {
       components: {RangeField},
       template: `
         <div>
-          <range-field v-model='value' :min='${min}' :max='${max}' :disabled='${disabled}'/>
+          <range-field v-model='value' :min='${min}' :max='${max}' :step='${step}' :disabled='${disabled}'/>
           {{value}}
         </div>
       `,
@@ -64,6 +65,28 @@ storiesOf('RangeField', module)
       template: `
         <div>
           <range-field v-model='value' :tooltip='tooltip'/>
+          {{value}}
+        </div>
+      `,
+      data(){
+        return {
+          value,
+          tooltip(value){
+            return `${value}%`
+          }
+        }
+      },
+    }
+  }, {info: true})
+  .add('tooltip position', () => {
+    const value = number('value', 10)
+    const position = select('position', ['up', 'down'], 'up')
+    return {
+      components: {RangeField},
+      template: `
+        <div>
+          <br>
+          <range-field v-model='value' :tooltip='true' tooltip-position='${position}'/>
           {{value}}
         </div>
       `,

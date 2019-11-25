@@ -105,7 +105,9 @@ storiesOf('SelectField', module)
       template: `
         <div>
           <select-field v-model='value' :records='records' record-key='id'>
-            <span slot-scope='{record}'>{{record.id}}. {{record.name}}</span>
+            <template v-slot='{record}'>
+              <span>{{record.id}}. {{record.name}}</span>
+            </template>
           </select-field>
           {{value}}
         </div>
@@ -166,7 +168,9 @@ storiesOf('SelectField', module)
       template: `
         <div>
           <select-field v-model='value' :records='records' record-key='id' v-for='i in 100' :key='i'>
-            <span slot-scope='{record}'>{{record.id}}. {{record.name}}</span>
+            <template v-slot='{record}'>
+              <span>{{record.id}}. {{record.name}}</span>
+            </template>
           </select-field>
         </div>
       `,

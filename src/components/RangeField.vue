@@ -1,22 +1,24 @@
 <template lang='pug'>
-  div.range-field
-    input(
-      type='range'
-      :min='min'
-      :max='max'
-      :class='inputClass'
-      :style='wrapperStyle'
-      v-model.number='inputValue'
-      v-on='listeners'
-      v-bind='$attrs'
-      @input='input'
-      @mousedown='mousedown'
-      @mouseup='mouseup'
-    )
-    .tooltip(
-      v-if='enableTooltip && dragging'
-      :style='tooltipStyle'
-    ) {{tooltipValue}}
+.range-field
+  input(
+    type='range'
+    :min='min'
+    :max='max'
+    :class='inputClass'
+    :style='wrapperStyle'
+    v-model.number='inputValue'
+    v-on='listeners'
+    v-bind='$attrs'
+    @input='input'
+    @mousedown='mousedown'
+    @mouseup='mouseup'
+  )
+  .tooltip-container(
+    :class='tooltipClass'
+    v-if='enableTooltip && dragging'
+  )
+    .tooltip-offset(:style='tooltipOffsetStyle')
+    .tooltip {{tooltipValue}}
 </template>
 
 <script>
@@ -39,6 +41,10 @@ export default {
     tooltip: {
       type: [Boolean, Function],
       default: false,
+    },
+    tooltipPosition: {
+      type: String,
+      default: 'down',
     },
     inputClass: {
       type: [String, Array],
@@ -79,10 +85,14 @@ export default {
         return this.value
       }
     },
-    tooltipStyle(){
-      const percent = ((this.value - this.min) / (this.max - this.min)) * 100
-      const left = `${percent}%`
-      return {left}
+    tooltipOffsetStyle(){
+      const rate = (this.value - this.min) / (this.max - this.min)
+      return {flexGrow: rate}
+    },
+    tooltipClass(){
+      if(this.tooltipPosition === 'up'){
+        return 'tooltip-up'
+      }
     },
   },
   methods: {
@@ -104,9 +114,21 @@ export default {
   position: relative;
   display: inline-block;
 
-  .tooltip{
+  .tooltip-container{
     position: absolute;
-    top: 3em;
+    display: flex;
+    width: 100%;
+
+    &.tooltip-up{
+      top: -1.8em;
+    }
+  }
+
+  .tooltip-offset{
+    display: block;
+  }
+
+  .tooltip{
     font-size: 0.8rem;
     padding: 0 0.2em;
     color: black;

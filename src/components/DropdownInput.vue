@@ -7,17 +7,17 @@
     v-bind='$attrs'
     :class='inputClass'
     :style='style'
-    @mousedown='mousedown'
-    @focus='focus'
-    @blur='blur'
-    @keydown.up='keydownUp'
-    @keydown.down='keydownDown'
-    @keydown.enter='keydownEnter'
-    @keydown.esc='keydownEsc'
+    @mousedown='_onMousedown'
+    @focus='_onFocus'
+    @blur='_onBlur'
+    @keydown.up='_onKeydownUp'
+    @keydown.down='_onKeydownDown'
+    @keydown.enter='_onKeydownEnter'
+    @keydown.esc='_onKeydownEsc'
   )
   .spinner(v-if='loading')
-    loading-spinner
-  .clear(v-else-if='clearable' @click='clickClear')
+    LoadingSpinner
+  .clear(v-else-if='clearable' @click='_clickClear')
   .dropdown(
     v-if='editable && dropdownOpen'
     :style='dropdownStyle'
@@ -57,7 +57,10 @@ export default {
     listeners(){
       return {
         ...this.$listeners,
-        input: this.input,
+        input: (e) => {
+          this.$emit('input', e.target.value)
+          this.dropdownOpen = true
+        },
       }
     },
     editable(){
@@ -100,52 +103,51 @@ export default {
     dropdownOpen(){
       let elements = ElementUtil.getParents(this.$el)
       if(this.dropdownOpen){
-        this.updateDropdownStyle()
+        this._updateDropdownStyle()
         elements.forEach(element => {
-          element.addEventListener('scroll', this.onParentScroll)
+          element.addEventListener('scroll', this._onParentScroll)
         })
-        addEventListener('resize', this.onWindowResize)
+        addEventListener('resize', this._onWindowResize)
       }else{
         elements.forEach(element => {
-          element.removeEventListener('scroll', this.onParentScroll)
+          element.removeEventListener('scroll', this._onParentScroll)
         })
-        removeEventListener('resize', this.onWindowResize)
+        removeEventListener('resize', this._onWindowResize)
       }
     },
   },
   methods: {
-    input(e){
-      this.$emit('input', e.target.value)
+    focus(){
+      this.$refs.input.focus()
+    },
+    _onMousedown(e){
       this.dropdownOpen = true
     },
-    mousedown(e){
+    _onFocus(e){
       this.dropdownOpen = true
     },
-    focus(e){
+    _onBlur(e){
+      this.dropdownOpen = false
+    },
+    _onKeydownUp(e){
       this.dropdownOpen = true
     },
-    blur(e){
-      this.dropdownOpen = false
-    },
-    keydownUp(e){
+    _onKeydownDown(e){
       this.dropdownOpen = true
     },
-    keydownDown(e){
-      this.dropdownOpen = true
-    },
-    keydownEnter(e){
+    _onKeydownEnter(e){
       this.dropdownOpen = false
     },
-    keydownEsc(e){
+    _onKeydownEsc(e){
       this.dropdownOpen = false
     },
-    onParentScroll(e){
+    _onParentScroll(e){
       this.dropdownOpen = false
     },
-    onWindowResize(e){
+    _onWindowResize(e){
       this.dropdownOpen = false
     },
-    updateDropdownStyle(){
+    _updateDropdownStyle(){
       const input = this.$refs.input
       if(!input){
         return
@@ -157,7 +159,7 @@ export default {
       const width = `${rect.width}px`
       this.dropdownStyle = {fontSize, width, left, top}
     },
-    clickClear(){
+    _clickClear(){
       this.$emit('clear', null)
     },
   }
