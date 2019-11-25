@@ -1,4 +1,5 @@
-[![Build Status](https://travis-ci.org/kmdtmyk/vue-fields.svg?branch=master)](https://travis-ci.org/kmdtmyk/vue-fields)
+[![Publish](https://github.com/kmdtmyk/vue-fields/workflows/Publish/badge.svg)](https://github.com/kmdtmyk/vue-fields/actions)
+[![Test](https://github.com/kmdtmyk/vue-fields/workflows/Test/badge.svg)](https://github.com/kmdtmyk/vue-fields/actions)
 
 ## Demo
 
