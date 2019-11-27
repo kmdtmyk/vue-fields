@@ -92,7 +92,7 @@ storiesOf('TextField', module)
       },
     }
   }, {info: true})
-  .add('autocomplete (ajax)', () => {
+  .add('autocomplete (async function)', () => {
     return {
       components: {TextField},
       template: `
