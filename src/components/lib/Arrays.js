@@ -9,4 +9,16 @@ export default class{
     })
   }
 
+  static from(arrayLike){
+    if(Array.isArray(arrayLike)){
+      return arrayLike
+    }
+
+    if(arrayLike instanceof Function){
+      return this.from(arrayLike())
+    }
+
+    return []
+  }
+
 }

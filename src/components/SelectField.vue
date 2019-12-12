@@ -58,15 +58,9 @@ export default {
       }
       return this.filter(this.records, this.inputValue)
     },
-    allRecords(){
-      if(this.records instanceof Function){
-        return this.records() || []
-      }
-      return this.records || []
-    },
     selectedRecord(){
       const {recordKey} = this
-      return this.allRecords.find(record => {
+      return Arrays.from(this.records).find(record => {
         if(recordKey){
           return record[recordKey] === this.value
         }
