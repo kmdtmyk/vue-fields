@@ -1,6 +1,23 @@
 import {mount} from '@vue/test-utils'
 import Component from './NumberField'
 
+describe('name', () => {
+
+  it('has hidden field', () => {
+    const wrapper = mount(Component, {
+      propsData: {
+        name: 'foo',
+        value: '123456789',
+        delimiter: true,
+      }
+    })
+    const hidden = wrapper.find('input[type=hidden]')
+    expect(wrapper.attributes().name).toBeUndefined()
+    expect(hidden.attributes().name).toBe('foo')
+    expect(hidden.attributes().value).toBe('123456789')
+  })
+
+})
 
 describe('delimiter', () => {
 

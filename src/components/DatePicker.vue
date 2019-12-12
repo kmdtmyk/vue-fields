@@ -1,5 +1,5 @@
 <template lang='pug'>
-.date-picker(@mousedown.prevent @wheel.prevent='wheel')
+.date-picker(@mousedown.prevent='' @wheel.prevent='wheel')
   header
     div
       button(type='button' @click='previousMonth' tabindex='-1') &lt;

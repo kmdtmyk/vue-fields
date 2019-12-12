@@ -18,6 +18,7 @@
     v-if='open && !readOnly'
     v-model='inputValue'
     @input='select')
+  input(v-if='$attrs.name' :name='$attrs.name' :value='value' type='hidden')
 </template>
 
 <script>
