@@ -162,7 +162,7 @@ storiesOf('SelectField', module)
       },
     }
   }, {info: true})
-  .add('ajax', () => {
+  .add('async function', () => {
     return {
       components: {SelectField},
       template: `
