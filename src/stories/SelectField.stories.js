@@ -104,6 +104,38 @@ storiesOf('SelectField', module)
       components: {SelectField},
       template: `
         <div>
+          <select-field v-model='value' :records='records'>
+            <template v-slot='{record}'>
+              <span>{{record.id}}. {{record.name}}</span>
+            </template>
+          </select-field>
+          {{value}}
+        </div>
+      `,
+      data(){
+        return {
+          value,
+          records: (query) => {
+            const records = [
+              {id: 1, name: 'foo'},
+              {id: 2, name: 'bar'},
+              {id: 3, name: 'hoge'},
+            ]
+            if(!query){
+              return records
+            }
+            return records.filter(record => record.name.startsWith(query))
+          },
+        }
+      },
+    }
+  }, {info: true})
+  .add('object array (record-key)', () => {
+    const value = number('value', '')
+    return {
+      components: {SelectField},
+      template: `
+        <div>
           <select-field v-model='value' :records='records' record-key='id'>
             <template v-slot='{record}'>
               <span>{{record.id}}. {{record.name}}</span>

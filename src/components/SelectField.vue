@@ -36,7 +36,7 @@ export default {
     DropdownInput,
   },
   props: {
-    value: [Number, String],
+    value: [Number, String, Object],
     name: String,
     inputClass: [String, Array],
     filter: {
@@ -48,8 +48,31 @@ export default {
   },
   data(){
     return {
+      selectedRecord: null,
       inputValue: '',
     }
+  },
+  watch: {
+    value: {
+      handler(value){
+        if(value == null){
+          this.selectedRecord = null
+          return
+        }
+
+        const {recordKey} = this
+        if(recordKey == null){
+          this.selectedRecord = value
+          return
+        }
+
+        this.selectedRecord = Arrays.from(this.records).find(record => {
+          return record[recordKey] === this.value
+        })
+
+      },
+      immediate: true,
+    },
   },
   computed: {
     filteredRecords(){
@@ -57,15 +80,6 @@ export default {
         return this.records(this.inputValue)
       }
       return this.filter(this.records, this.inputValue)
-    },
-    selectedRecord(){
-      const {recordKey} = this
-      return Arrays.from(this.records).find(record => {
-        if(recordKey){
-          return record[recordKey] === this.value
-        }
-        return record === this.value
-      })
     },
     placeholder(){
       if(this.selectedRecord){
