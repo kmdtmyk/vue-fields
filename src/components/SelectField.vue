@@ -47,28 +47,31 @@ export default {
     recordKey: String,
   },
   data(){
+    const {recordKey} = this
+    let selectedRecord = null
+    if(recordKey != null){
+      selectedRecord = Arrays.from(this.records).find(record => {
+        return record[recordKey] === this.value
+      })
+    }
+
     return {
-      selectedRecord: null,
+      selectedRecord,
       inputValue: '',
     }
   },
   watch: {
     value: {
       handler(value){
-        if(value == null){
-          this.selectedRecord = null
-          return
-        }
-
         const {recordKey} = this
-        if(recordKey == null){
-          this.selectedRecord = value
-          return
-        }
 
-        this.selectedRecord = Arrays.from(this.records).find(record => {
-          return record[recordKey] === this.value
-        })
+        if(value instanceof Object){
+          this.selectedRecord = value
+          const {recordKey} = this
+          if(recordKey != null){
+            this.$emit('input', value[recordKey])
+          }
+        }
 
       },
       immediate: true,
@@ -114,12 +117,16 @@ export default {
       this.inputValue = ''
     },
     clear(){
+      this.selectedRecord = null
       this.$emit('input', null)
     },
     select(record){
+      if(record instanceof Object){
+        this.selectedRecord = record
+      }
       this.inputValue = this.recordText(record)
       const {recordKey} = this
-      if(recordKey){
+      if(recordKey != null){
         this.$emit('input', record[recordKey])
       }else{
         this.$emit('input', record)
