@@ -18,3 +18,17 @@ describe('name', () => {
   })
 
 })
+
+describe('autocomplete', () => {
+
+  it('force off', () => {
+    const wrapper = mount(Component, {
+      propsData: {
+        autocomplete: 'on',
+      }
+    })
+    const input = wrapper.find('input[type=text]')
+    expect(input.attributes().autocomplete).toBe('off')
+  })
+
+})

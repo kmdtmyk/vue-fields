@@ -1,8 +1,9 @@
 <template lang='pug'>
 .year-field
   integer-field(
-    type='text'
     ref='input'
+    type='text'
+    autocomplete='off'
     v-on='listeners'
     v-bind='$attrs'
     v-model='inputValue'

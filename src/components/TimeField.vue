@@ -1,8 +1,9 @@
 <template lang='pug'>
 .time-field
   input(
-    type='text'
     ref='input'
+    type='text'
+    autocomplete='off'
     v-on='listeners'
     v-bind='$attrs'
     :value='inputValue'

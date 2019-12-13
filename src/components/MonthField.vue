@@ -1,8 +1,9 @@
 <template lang='pug'>
 .month-field
   input(
-    type='text'
     ref='input'
+    type='text'
+    autocomplete='off'
     v-on='listeners'
     v-bind='$attrs'
     :value='inputValue'

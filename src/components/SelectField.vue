@@ -1,6 +1,7 @@
 <template lang='pug'>
 dropdown-input(
   type='text'
+  autocomplete='off'
   v-model='inputValue'
   v-bind='$attrs'
   :placeholder='placeholder'
