@@ -3,7 +3,7 @@ dropdown-input(
   v-model='inputValue'
   v-bind='$attrs'
   :placeholder='placeholder'
-  :clear='!!value'
+  :clear='value != null && value !== ""'
   :style='wrapperStyle'
   :inputClass='inputClass'
   @keydown.up='keydownUp'

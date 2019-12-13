@@ -82,3 +82,31 @@ describe('placeholder', () => {
   })
 
 })
+
+
+describe('clear button', () => {
+
+  const subject = (records, value) => {
+    const wrapper = mount(Component, {
+      propsData: {
+        records,
+        value,
+      },
+    })
+    const clear = wrapper.find('.clear')
+    return clear.exists()
+  }
+
+  it('exists', () => {
+    expect(subject([], 0)).toBe(true)
+    expect(subject([], 1)).toBe(true)
+    expect(subject([], 'foo')).toBe(true)
+  })
+
+  it('not exists', () => {
+    expect(subject([], '')).toBe(false)
+    expect(subject([], null)).toBe(false)
+    expect(subject([], undefined)).toBe(false)
+  })
+
+})
