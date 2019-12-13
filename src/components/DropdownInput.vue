@@ -178,12 +178,13 @@ input{
 }
 
 .dropdown{
-  border-width: 1px;
-  border-style: solid;
+  border: 1px solid #ced4da;
   box-sizing: border-box;
   background-color: white;
   position: fixed;
   z-index: 9999;
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
+
   &:empty{
     display: none;
   }
