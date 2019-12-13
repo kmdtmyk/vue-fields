@@ -195,6 +195,50 @@ story
       },
     }
   }, {info: true})
+  .add('async function 2', () => {
+    return {
+      components: {SelectField},
+      template: `
+        <div>
+          <select-field
+          record-key='id'
+          v-model='value'
+          :records='records'
+          :loading='loading'
+          @input.native='input'>
+            <template v-slot='{record}'>
+              <span>{{record.id}}. {{record.name}}</span>
+            </template>
+          </select-field>
+          {{value}}
+          <button @click='click'>button</button>
+        </div>
+      `,
+      data(){
+        return {
+          value: {id: 0, name: 'dummy'},
+          records: [],
+          loading: false,
+        }
+      },
+      methods: {
+        input(e){
+          this.loading = true
+          this.search(e.target.value)
+        },
+        search: _.debounce(async function(query){
+          const result = await fetch(`http://192.168.21.93/autocomplete/users?q=${query}`)
+          const text = await result.text()
+          const records = JSON.parse(text)
+          this.records = () => records
+          this.loading = false
+        }, 200),
+        click(){
+          this.value = {id: 100, name: 'user100'}
+        },
+      },
+    }
+  }, {info: true})
 
 if(process.env.NODE_ENV === 'development'){
 

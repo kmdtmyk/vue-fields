@@ -11,8 +11,9 @@ describe('name', () => {
         delimiter: true,
       }
     })
+    const input = wrapper.find('input[type=text]')
     const hidden = wrapper.find('input[type=hidden]')
-    expect(wrapper.attributes().name).toBeUndefined()
+    expect(input.attributes().name).toBeUndefined()
     expect(hidden.attributes().name).toBe('foo')
     expect(hidden.attributes().value).toBe('123456789')
   })

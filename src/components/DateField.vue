@@ -18,7 +18,7 @@
     v-if='open && !readOnly'
     v-model='inputValue'
     @input='select')
-  input(v-if='$attrs.name' :name='$attrs.name' :value='value' type='hidden')
+  input(v-if='$props.name != null' :name='$props.name' :value='value' type='hidden')
 </template>
 
 <script>
@@ -33,6 +33,7 @@ export default {
     prop: 'value',
   },
   props: {
+    name: String,
     value: String,
     inputClass: [String, Array],
   },

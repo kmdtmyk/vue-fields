@@ -1,5 +1,5 @@
 <template lang='pug'>
-.year-picker(@mousedown.prevent @wheel.prevent='wheel')
+.year-picker(@mousedown.prevent='' @wheel.prevent='wheel')
   header
     div
       button(type='button' @click='previous' tabindex='-1') &lt;

@@ -1,6 +1,25 @@
 import {mount} from '@vue/test-utils'
 import Component from './SelectField'
 
+describe('name', () => {
+
+  it('has hidden field', () => {
+    const wrapper = mount(Component, {
+      propsData: {
+        name: 'foo',
+        value: 'bar',
+      }
+    })
+    const input = wrapper.find('input[type=text]')
+    const hidden = wrapper.find('input[type=hidden]')
+    expect(input.attributes().name).toBeUndefined()
+    expect(hidden.attributes().name).toBe('foo')
+    expect(hidden.attributes().value).toBe('bar')
+  })
+
+})
+
+
 describe.skip('dropdown-list-item length', () => {
 
   function subject(records){

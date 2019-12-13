@@ -14,7 +14,7 @@ span
     @keydown.up.prevent='downKeyup'
     @keydown.down.prevent='downKeydown'
   )
-  input(v-if='$props.name' :name='$props.name' :value='value' type='hidden')
+  input(v-if='$props.name != null' :name='$props.name' :value='value' type='hidden')
 </template>
 
 <script>

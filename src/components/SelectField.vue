@@ -1,5 +1,6 @@
 <template lang='pug'>
 dropdown-input(
+  type='text'
   v-model='inputValue'
   v-bind='$attrs'
   :placeholder='placeholder'
@@ -21,6 +22,8 @@ dropdown-input(
     template(v-slot='{record}')
       slot(v-bind='{record}' v-if='$scopedSlots.default')
       template(v-else) {{record}}
+  template(v-slot:tail='' v-if='$props.name != null')
+    input(:name='$props.name' :value='value' type='hidden')
 </template>
 
 <script>

@@ -14,7 +14,7 @@
   .suffix(
     :style='suffixStyle'
   ) {{suffix}}
-  input(v-if='$props.name' :name='$props.name' :value='value' type='hidden')
+  input(v-if='$props.name != null' :name='$props.name' :value='value' type='hidden')
 </template>
 
 <script>

@@ -2,6 +2,21 @@ import {mount} from '@vue/test-utils'
 import Component from './TextField'
 import Vue from 'vue'
 
+describe('name', () => {
+
+  it('has name attribute', () => {
+    const wrapper = mount(Component, {
+      propsData: {
+        name: 'foo',
+        value: 'bar',
+      }
+    })
+    const input = wrapper.find('input[type=text]')
+    expect(input.attributes().name).toBe('foo')
+  })
+
+})
+
 describe('attributes', () => {
 
   it('readonly', () => {

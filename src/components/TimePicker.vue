@@ -1,5 +1,5 @@
 <template lang='pug'>
-.time-picker(@mousedown.prevent)
+.time-picker(@mousedown.prevent='')
   header
     label {{time}}
   .picker
