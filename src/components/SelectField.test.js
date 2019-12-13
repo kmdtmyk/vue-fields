@@ -42,6 +42,40 @@ describe.skip('dropdown-list-item length', () => {
 
 })
 
+describe('value', () => {
+
+  it('string', () => {
+    const wrapper = mount(Component, {
+      propsData: {
+        value: 'foo',
+      },
+    })
+    expect(wrapper.vm.value).toEqual('foo')
+    expect(wrapper.emitted().input).toBeUndefined()
+  })
+
+  it('object', () => {
+    const wrapper = mount(Component, {
+      propsData: {
+        value: {id: 1, name: 'foo'},
+      },
+    })
+    expect(wrapper.vm.value).toEqual({id: 1, name: 'foo'})
+    expect(wrapper.emitted().input).toBeUndefined()
+  })
+
+  it('object and record key', () => {
+    const wrapper = mount(Component, {
+      propsData: {
+        value: {id: 1, name: 'foo'},
+        recordKey: 'id',
+      },
+    })
+    expect(wrapper.emitted().input[0]).toEqual([1])
+  })
+
+})
+
 describe('placeholder', () => {
 
   it('without slot', () => {

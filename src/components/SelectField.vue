@@ -47,16 +47,8 @@ export default {
     recordKey: String,
   },
   data(){
-    const {recordKey} = this
-    let selectedRecord = null
-    if(recordKey != null){
-      selectedRecord = Arrays.from(this.records).find(record => {
-        return record[recordKey] === this.value
-      })
-    }
-
     return {
-      selectedRecord,
+      selectedRecord: null,
       inputValue: '',
     }
   },
@@ -70,6 +62,15 @@ export default {
           const {recordKey} = this
           if(recordKey != null){
             this.$emit('input', value[recordKey])
+          }
+        }
+
+        if(recordKey != null){
+          const record = Arrays.from(this.records).find(record => {
+            return record[recordKey] === value
+          })
+          if(record != null){
+            this.selectedRecord = record
           }
         }
 
