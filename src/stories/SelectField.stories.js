@@ -4,7 +4,9 @@ import _ from 'lodash'
 
 import SelectField from '../components/SelectField'
 
-storiesOf('SelectField', module)
+const story = storiesOf('SelectField', module)
+
+story
   .addDecorator(withKnobs)
   .add('basic', () => {
     const value = text('value', '')
@@ -193,30 +195,36 @@ storiesOf('SelectField', module)
       },
     }
   }, {info: true})
-  .add('performance test', () => {
-    const value = number('value', '')
-    return {
-      components: {SelectField},
-      template: `
-        <div>
-          <select-field v-model='value' :records='records' record-key='id' v-for='i in 100' :key='i'>
-            <template v-slot='{record}'>
-              <span>{{record.id}}. {{record.name}}</span>
-            </template>
-          </select-field>
-        </div>
-      `,
-      data(){
-        return {
-          value,
-          records: (query) => {
-            const records = [...Array(1000)].map((_, i) => ({id: ++i, name:`name${i}`}))
-            if(!query){
-              return records
-            }
-            return records.filter(record => record.name.startsWith(query))
-          },
-        }
-      },
-    }
-  }, {info: true})
+
+if(process.env.NODE_ENV === 'development'){
+
+  story
+    .add('performance test', () => {
+      const value = number('value', '')
+      return {
+        components: {SelectField},
+        template: `
+          <div>
+            <select-field v-model='value' :records='records' record-key='id' v-for='i in 100' :key='i'>
+              <template v-slot='{record}'>
+                <span>{{record.id}}. {{record.name}}</span>
+              </template>
+            </select-field>
+          </div>
+        `,
+        data(){
+          return {
+            value,
+            records: (query) => {
+              const records = [...Array(1000)].map((_, i) => ({id: ++i, name:`name${i}`}))
+              if(!query){
+                return records
+              }
+              return records.filter(record => record.name.startsWith(query))
+            },
+          }
+        },
+      }
+    }, {info: true})
+
+}
