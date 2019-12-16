@@ -110,6 +110,25 @@ describe('value', () => {
 
 describe('placeholder', () => {
 
+  it('attribute', () => {
+    const subject = (value, placeholder) => {
+      const wrapper = mount(Component, {
+        propsData: {
+          value,
+          placeholder,
+        },
+      })
+      const input = wrapper.find('input')
+      return input.attributes().placeholder
+    }
+
+    expect(subject(null, 'foo')).toBe('foo')
+    expect(subject('', 'foo')).toBe('foo')
+    expect(subject(0, 'foo')).toBe('0')
+    expect(subject('', '')).toBe('')
+    expect(subject('', null)).toBe(undefined)
+  })
+
   it('without slot', () => {
     const subject = (records, value) => {
       const wrapper = mount(Component, {
@@ -126,7 +145,6 @@ describe('placeholder', () => {
     expect(subject(['foo'], 'value')).toBe('value')
     expect(subject(() => [], 'value')).toBe('value')
   })
-
 
   it('with slot', () => {
     const subject = (records, value, options = {}) => {

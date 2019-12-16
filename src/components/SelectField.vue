@@ -5,9 +5,9 @@ dropdown-input(
   v-model='inputValue'
   v-bind='$attrs'
   :placeholder='placeholder'
-  :clear='value != null && value !== ""'
+  :clear='_isBlank === false'
   :style='wrapperStyle'
-  :inputClass='{...inputClass, empty: value == null}'
+  :inputClass='{...inputClass, blank: _isBlank}'
   @keydown.up='keydownUp'
   @keydown.down='keydownDown'
   @keydown.enter='keydownEnter'
@@ -93,10 +93,13 @@ export default {
       if(this.selectedRecord){
         return this.recordText(this.selectedRecord)
       }
-      if(this.value != null){
+      if(this.value != null && this.value !== ''){
         return this.value
       }
       return this.$attrs.placeholder
+    },
+    _isBlank(){
+      return this.value == null || this.value === ''
     },
   },
   methods: {
@@ -158,7 +161,7 @@ export default {
       color: inherit;
       opacity: 0.7;
     }
-    &:not(:focus):not(.empty)::placeholder{
+    &:not(:focus):not(.blank)::placeholder{
       opacity: 1;
     }
   }
