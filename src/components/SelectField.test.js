@@ -149,7 +149,6 @@ describe('placeholder', () => {
 
 })
 
-
 describe('clear button', () => {
 
   const subject = (records, value) => {
@@ -173,6 +172,58 @@ describe('clear button', () => {
     expect(subject([], '')).toBe(false)
     expect(subject([], null)).toBe(false)
     expect(subject([], undefined)).toBe(false)
+  })
+
+})
+
+describe('key event', () => {
+
+  describe('delete', () => {
+
+    it('emit null when value is present', () => {
+      const records = [
+        {id: 1, name: 'foo'}
+      ]
+      const value = 1
+      const wrapper = mount(Component, {
+        propsData: {
+          records,
+          value,
+          recordKey: 'id'
+        },
+        scopedSlots: {
+          default: '<span>{{props.record.id}}. {{props.record.name}}</span>',
+        },
+      })
+      const input = wrapper.find('input[type=text]')
+      expect(input.attributes().placeholder).toEqual('1. foo')
+      input.trigger('keydown.delete')
+      expect(wrapper.emitted().input[0]).toEqual([null])
+      wrapper.setProps({value: wrapper.emitted().input[0][0]})
+      expect(input.attributes().placeholder).toBeUndefined()
+    })
+
+    it('not emit when value is null', () => {
+      const records = [
+        {id: 1, name: 'foo'}
+      ]
+      const wrapper = mount(Component, {
+        propsData: {
+          records,
+          value: null,
+          recordKey: 'id'
+        },
+        scopedSlots: {
+          default: '<span>{{props.record.id}}. {{props.record.name}}</span>',
+        },
+      })
+      const input = wrapper.find('input[type=text]')
+      expect(wrapper.vm.selectedRecord).toBeNull()
+      input.trigger('keydown.delete')
+      expect(wrapper.vm.selectedRecord).toBeNull()
+      expect(wrapper.emitted().input).toBeUndefined()
+    })
+
   })
 
 })

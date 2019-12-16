@@ -114,8 +114,8 @@ export default {
       }
     },
     keydownDelete(e){
-      if(!e.target.value && this.value){
-        this.remove()
+      if(e.target.value === '' && this.value != null){
+        this.clear()
       }
     },
     blur(e){
@@ -136,9 +136,6 @@ export default {
       }else{
         this.$emit('input', record)
       }
-    },
-    remove(){
-      this.$emit('input', null)
     },
     recordText(record){
       const slot = this.$scopedSlots.default
