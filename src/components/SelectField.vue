@@ -7,7 +7,7 @@ dropdown-input(
   :placeholder='placeholder'
   :clear='value != null && value !== ""'
   :style='wrapperStyle'
-  :inputClass='inputClass'
+  :inputClass='{...inputClass, empty: value == null}'
   @keydown.up='keydownUp'
   @keydown.down='keydownDown'
   @keydown.enter='keydownEnter'
@@ -93,7 +93,10 @@ export default {
       if(this.selectedRecord){
         return this.recordText(this.selectedRecord)
       }
-      return this.value || this.$attrs.placeholder
+      if(this.value != null){
+        return this.value
+      }
+      return this.$attrs.placeholder
     },
   },
   methods: {
@@ -155,7 +158,7 @@ export default {
       color: inherit;
       opacity: 0.7;
     }
-    &:not(:focus)::placeholder{
+    &:not(:focus):not(.empty)::placeholder{
       opacity: 1;
     }
   }

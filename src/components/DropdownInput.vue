@@ -44,7 +44,7 @@ export default {
     value: [String],
     clear: Boolean,
     loading: Boolean,
-    inputClass: [String, Array],
+    inputClass: [String, Array, Object],
   },
   data(){
     return {

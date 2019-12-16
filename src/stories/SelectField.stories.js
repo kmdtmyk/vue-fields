@@ -106,7 +106,7 @@ story
       components: {SelectField},
       template: `
         <div>
-          <select-field v-model='value' :records='records'>
+          <select-field v-model='value' :records='records' placeholder='select...'>
             <template v-slot='{record}'>
               <span>{{record.id}}. {{record.name}}</span>
             </template>
