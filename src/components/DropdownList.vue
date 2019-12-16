@@ -83,5 +83,6 @@ export default {
 .dropdown-list{
   max-height: 15.1em;
   overflow-y: auto;
+  word-break: break-all;
 }
 </style>
