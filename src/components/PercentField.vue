@@ -26,7 +26,7 @@ export default {
   mixins: [wrapper],
   props: {
     value: [Number, String],
-    inputClass: [String, Array],
+    inputClass: [String, Array, Object],
     name: String,
     min: [Number, String],
     max: [Number, String],

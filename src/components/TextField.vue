@@ -34,7 +34,7 @@ export default {
   },
   props: {
     value: String,
-    inputClass: [String, Array],
+    inputClass: [String, Array, Object],
     autocomplete: [String, Boolean, Array, Function],
   },
   data(){

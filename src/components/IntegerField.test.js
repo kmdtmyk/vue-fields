@@ -20,6 +20,27 @@ describe('name', () => {
 
 })
 
+describe('input class', () => {
+
+  it('attribute', () => {
+
+    const subject = inputClass => {
+      const wrapper = mount(Component, {
+        propsData: {
+          inputClass,
+        }
+      })
+      const input = wrapper.find('input[type=text]')
+      return input.attributes().class
+    }
+
+    expect(subject('foo bar')).toEqual('foo bar')
+    expect(subject(['foo', 'baz'])).toEqual('foo baz')
+    expect(subject({foo: true, bar: false, hoge: true})).toEqual('foo hoge')
+  })
+
+})
+
 describe('keydown', () => {
 
   it('up', () => {

@@ -47,7 +47,7 @@ export default {
       default: 'down',
     },
     inputClass: {
-      type: [String, Array],
+      type: [String, Array, Object],
     },
   },
   data(){

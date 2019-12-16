@@ -7,7 +7,6 @@
     v-on='listeners'
     v-bind='$attrs'
     v-model='inputValue'
-    :class='inputClass'
     :style='wrapperStyle'
     :delimiter='false'
     @click='click'
@@ -33,7 +32,6 @@ export default {
   },
   props: {
     value: [Number, String],
-    inputClass: [String, Array],
   },
   components: {
     IntegerField,

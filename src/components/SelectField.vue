@@ -42,7 +42,7 @@ export default {
   props: {
     value: [Number, String, Object],
     name: String,
-    inputClass: [String, Array],
+    inputClass: [String, Array, Object],
     filter: {
       type: Function,
       default: Arrays.search,

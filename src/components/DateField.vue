@@ -36,7 +36,7 @@ export default {
   props: {
     name: String,
     value: String,
-    inputClass: [String, Array],
+    inputClass: [String, Array, Object],
   },
   components: {
     DatePicker,
