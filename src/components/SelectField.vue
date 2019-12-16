@@ -7,7 +7,7 @@ dropdown-input(
   :placeholder='placeholder'
   :clear='_isBlank === false'
   :style='wrapperStyle'
-  :inputClass='{...inputClass, blank: _isBlank}'
+  :inputClass='[inputClass, {blank: _isBlank}]'
   @keydown.up='keydownUp'
   @keydown.down='keydownDown'
   @keydown.enter='keydownEnter'
