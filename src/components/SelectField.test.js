@@ -33,7 +33,7 @@ describe('autocomplete', () => {
 
 })
 
-describe.skip('dropdown-list-item length', () => {
+describe('dropdown-list-item length', () => {
 
   function subject(records){
     const wrapper = mount(Component, {
