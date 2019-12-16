@@ -189,7 +189,7 @@ story
           const result = await fetch(`https://api.github.com/search/repositories?q=${query}`)
           const text = await result.text()
           const json = JSON.parse(text)
-          this.records = () => json.items.map(item => item.name)
+          this.records = () => json.items.map(item => item.full_name)
           this.loading = false
         }, 500),
       },

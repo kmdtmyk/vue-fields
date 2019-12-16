@@ -120,7 +120,7 @@ storiesOf('TextField', module)
           const result = await fetch(`https://api.github.com/search/repositories?q=${query}`)
           const text = await result.text()
           const json = JSON.parse(text)
-          this.autocomplete = () => json.items.map(item => item.name)
+          this.autocomplete = () => json.items.map(item => item.full_name)
           this.loading = false
         }, 500),
       },
