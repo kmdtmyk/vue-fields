@@ -182,6 +182,9 @@ story
       },
       methods: {
         input(e){
+          if(!e.target.value){
+            return
+          }
           this.loading = true
           this.search(e.target.value)
         },
