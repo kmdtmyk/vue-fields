@@ -15,7 +15,7 @@ export default {
 
 const extractWrapperStyle = (component) => {
   const style = component.$el.getAttribute('style')
-  if(!style){
+  if(style == null){
     return
   }
   component.$el.removeAttribute('style')
