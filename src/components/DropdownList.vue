@@ -1,7 +1,7 @@
 <template lang='pug'>
 .dropdown-list(
   ref='dropdown'
-  v-if='records && records.length'
+  v-if='records != null && 0 < records.length'
   @mouseleave='selectedIndex = null'
 )
   dropdown-list-item(
@@ -22,9 +22,14 @@ export default {
   components: {
     DropdownListItem,
   },
-  props: [
-    'records',
-  ],
+  props: {
+    records: {
+      type: Array,
+      default(){
+        return []
+      },
+    },
+  },
   data(){
     return {
       selectedIndex: 0,
@@ -63,10 +68,13 @@ export default {
     },
     autoScroll(){
       const {dropdown} = this.$refs
-      if(!dropdown || !dropdown.children){
+      if(dropdown == null || dropdown.children == null){
         return
       }
       const selected = dropdown.children[this.selectedIndex]
+      if(selected == null){
+        return
+      }
       const topOver = dropdown.scrollTop - selected.offsetTop
       const bottomOver = selected.offsetTop + selected.offsetHeight - dropdown.scrollTop - dropdown.offsetHeight
       if(0 < topOver){
