@@ -267,3 +267,52 @@ describe('key event', () => {
   })
 
 })
+
+describe('record key', () => {
+
+  it('emit when value is object', () => {
+
+    const subject = value => {
+
+      const records = [
+        {id: 1, name: 'foo'}
+      ]
+
+      const wrapper = mount(Component, {
+        propsData: {
+          records,
+          value,
+          recordKey: 'id',
+        },
+      })
+
+      return wrapper.emitted('input')
+    }
+
+    expect(subject(1)).toBeUndefined()
+    expect(subject(null)).toBeUndefined()
+    expect(subject({id: 2, name: 'bar'})[0]).toEqual([2])
+  })
+
+  it('emit when set object value', () => {
+
+    const records = [
+      {id: 1, name: 'foo'}
+    ]
+
+    const wrapper = mount(Component, {
+      propsData: {
+        records,
+        value: '',
+        recordKey: 'id',
+      },
+    })
+
+    wrapper.setProps({value: 1})
+    wrapper.setProps({value: null})
+    wrapper.setProps({value: {id: 2}})
+    expect(wrapper.emitted('input').length).toEqual(1)
+    expect(wrapper.emitted('input')[0]).toEqual([2])
+  })
+
+})
