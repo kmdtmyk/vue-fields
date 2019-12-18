@@ -55,47 +55,6 @@ describe('input class', () => {
 
 })
 
-describe('dropdown-list-item length', () => {
-
-  function subject(records){
-    const wrapper = mount(Component, {
-      propsData: {
-        records
-      }
-    })
-    const input = wrapper.find('input')
-    wrapper.setData({inputValue: ''})
-    input.trigger('input')
-    return wrapper.findAll('.dropdown-list-item').length
-  }
-
-  it('array', () => {
-    const records = [
-      'foo',
-      'bar',
-      'hoge',
-    ]
-    expect(subject(records)).toBe(3)
-  })
-
-  it('function', () => {
-    const records = () => {
-      return [
-        'foo',
-        'bar',
-        'hoge',
-      ]
-    }
-    expect(subject(records)).toBe(3)
-  })
-
-  it('null', () => {
-    const records = null
-    expect(subject(records)).toBe(0)
-  })
-
-})
-
 describe('value', () => {
 
   it('string', () => {
@@ -328,6 +287,50 @@ describe('record key', () => {
     wrapper.setProps({value: {id: 2}})
     expect(wrapper.emitted('input').length).toEqual(1)
     expect(wrapper.emitted('input')[0]).toEqual([2])
+  })
+
+})
+
+describe('dropdown list', () => {
+
+  describe('length', () => {
+
+    const subject = (records) => {
+      const wrapper = mount(Component, {
+        propsData: {
+          records
+        }
+      })
+      const input = wrapper.find('input')
+      input.trigger('input')
+      return wrapper.findAll('.dropdown-list-item').length
+    }
+
+    it('array', () => {
+      const records = [
+        'foo',
+        'bar',
+        'hoge',
+      ]
+      expect(subject(records)).toBe(3)
+    })
+
+    it('function', () => {
+      const records = () => {
+        return [
+          'foo',
+          'bar',
+          'hoge',
+        ]
+      }
+      expect(subject(records)).toBe(3)
+    })
+
+    it('null', () => {
+      const records = null
+      expect(subject(records)).toBe(0)
+    })
+
   })
 
 })
