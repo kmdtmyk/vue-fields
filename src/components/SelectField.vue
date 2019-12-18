@@ -17,12 +17,15 @@ dropdown-input(
 )
   dropdown-list(
     ref='dropdown'
+    v-if='dropdownRecords != null'
     :records='dropdownRecords'
     @input='select'
   )
     template(v-slot='{record}')
       slot(v-bind='{record}' v-if='$scopedSlots.default')
       template(v-else) {{record}}
+    template(v-slot:empty='' v-if='$scopedSlots.empty')
+      slot(name='empty')
   template(v-slot:tail='' v-if='$props.name != null')
     input(:name='$props.name' :value='value' type='hidden')
 </template>

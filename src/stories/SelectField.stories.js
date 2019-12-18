@@ -173,6 +173,26 @@ story
       },
     }
   }, {info: true})
+  .add('empty message', () => {
+    const value = text('value', '')
+    return {
+      components: {SelectField},
+      template: `
+        <div>
+          <select-field v-model='value' :records='records'>
+            <template #empty><i>Not found...</i></template>
+          </select-field>
+          {{value}}
+        </div>
+      `,
+      data(){
+        return {
+          value,
+          records: ['foo', 'bar', 'baz', 'hoge', 'piyo'],
+        }
+      },
+    }
+  }, {info: true})
 
 if(process.env.NODE_ENV === 'development'){
 

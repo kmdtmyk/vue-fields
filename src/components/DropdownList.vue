@@ -1,10 +1,11 @@
 <template lang='pug'>
 .dropdown-list(
   ref='dropdown'
-  v-if='records != null && 0 < records.length'
+  v-if='0 < records.length || $scopedSlots.empty != null'
   @mouseleave='selectedIndex = null'
 )
   dropdown-list-item(
+    v-if='0 < records.length'
     v-for='(record, index) in records'
     :class='{selected: selectedIndex === index}'
     :key='index'
@@ -13,6 +14,8 @@
   )
     slot(v-bind='{record}' v-if='$scopedSlots.default')
     template(v-else) {{record}}
+  dropdown-list-item.empty(v-if='$scopedSlots.empty != null && records.length === 0')
+    slot(name='empty')
 </template>
 
 <script>

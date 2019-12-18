@@ -330,4 +330,48 @@ describe('dropdown list', () => {
 
   })
 
+  describe('empty', () => {
+
+    it('slot exists', () => {
+
+      const subject = (records) => {
+        const wrapper = mount(Component, {
+          propsData: {
+            records,
+          },
+          scopedSlots: {
+            empty(){
+              return 'empty message'
+            }
+          },
+        })
+        const input = wrapper.find('input[type=text]')
+        input.trigger('focus')
+        return wrapper.find('.dropdown-list-item.empty')
+      }
+
+      expect(subject([]).exists()).toEqual(true)
+      expect(subject([]).text()).toEqual('empty message')
+      expect(subject(['foo']).exists()).toEqual(false)
+    })
+
+    it('slot not exists', () => {
+
+      const subject = (records) => {
+        const wrapper = mount(Component, {
+          propsData: {
+            records,
+          },
+        })
+        const input = wrapper.find('input[type=text]')
+        input.trigger('focus')
+        return wrapper.find('.dropdown-list-item.empty')
+      }
+
+      expect(subject([]).exists()).toEqual(false)
+      expect(subject(['foo']).exists()).toEqual(false)
+    })
+
+  })
+
 })

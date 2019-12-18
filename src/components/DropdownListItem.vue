@@ -13,8 +13,11 @@ export default {
 
 <style lang='scss' scoped>
 .dropdown-list-item{
-  cursor: pointer;
   padding: 0.2em 0.4em;
+
+  &:not(.empty){
+    cursor: pointer;
+  }
 
   &.selected{
     background-color: #bedcf5;
