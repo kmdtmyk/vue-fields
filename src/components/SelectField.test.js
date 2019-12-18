@@ -169,22 +169,37 @@ describe('placeholder', () => {
   })
 
   it('with slot', () => {
-    const subject = (records, value, options = {}) => {
+    const subject = (value, slot) => {
+      const records = [
+        {id: 1, name: 'foo'},
+        {id: 2, name: 'bar'},
+      ]
+
       const wrapper = mount(Component, {
         propsData: {
           records,
           value,
           recordKey: 'id',
         },
-        ...options,
+        scopedSlots: {
+          default: slot,
+        },
       })
       const input = wrapper.find('input')
       return input.attributes().placeholder
     }
 
-    expect(subject([{id: 1, name: 'foo'}], 1, {scopedSlots: {
-      default: `<span>{{props.record.id}}. {{props.record.name}}</span>`
-    }})).toBe('1. foo')
+    expect(subject(1, `
+      <template>
+        {{props.record.id}}. {{props.record.name}}
+      </template>
+    `)).toBe('1. foo')
+
+    expect(subject(2, `
+      <template>
+        <span>{{props.record.id}}: {{props.record.name}}</span>
+      </template>
+    `)).toBe('2: bar')
   })
 
 })

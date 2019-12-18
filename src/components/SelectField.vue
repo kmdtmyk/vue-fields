@@ -91,7 +91,7 @@ export default {
     },
     placeholder(){
       if(this.selectedRecord){
-        return this.recordText(this.selectedRecord)
+        return this._recordText(this.selectedRecord)
       }
       if(this.value != null && this.value !== ''){
         return this.value
@@ -135,7 +135,7 @@ export default {
       if(record instanceof Object){
         this.selectedRecord = record
       }
-      this.inputValue = this.recordText(record)
+      this.inputValue = this._recordText(record)
       const {recordKey} = this
       if(recordKey != null){
         this.$emit('input', record[recordKey])
@@ -143,10 +143,12 @@ export default {
         this.$emit('input', record)
       }
     },
-    recordText(record){
+    _recordText(record){
       const slot = this.$scopedSlots.default
-      if(slot && record){
-        return slot({record})[0].children[0].text
+      if(slot != null){
+        const vnode = slot({record})
+        const text = vnode[0].text || vnode[0].children[0].text
+        return text.trim()
       }
       return record
     },
