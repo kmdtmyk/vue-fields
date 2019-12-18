@@ -49,34 +49,6 @@ story
       },
     }
   }, {info: true})
-  .add('custom filter', () => {
-    const value = text('value', '')
-    return {
-      components: {SelectField},
-      template: `
-        <div>
-          <select-field v-model='value' :records='records' :filter='filter'/>
-          {{value}}
-        </div>
-      `,
-      data(){
-        return {
-          value,
-          records: ['foo', 'bar', 'baz', 'hoge', 'piyo']
-        }
-      },
-      methods: {
-        filter(records, query){
-          if(!query){
-            return records
-          }
-          return records.filter(record => {
-            return record.toLowerCase().startsWith(query.toLowerCase())
-          })
-        },
-      },
-    }
-  }, {info: true})
   .add('function', () => {
     const value = text('value', '')
     return {
@@ -90,13 +62,50 @@ story
       data(){
         return {
           value,
-          records: (query) => {
-            if(!query){
-              return []
+          records(query){
+            const records = ['foo', 'bar', 'baz', 'hoge', 'piyo']
+            if(query == null || query === ''){
+              return records
             }
-            return query.split('').map((value, index) => value.repeat(index + 1))
-          },
+            return records.filter(record => {
+              return record.toLowerCase().startsWith(query.toLowerCase())
+            })
+          }
         }
+      },
+    }
+  }, {info: true})
+  .add('async function', () => {
+    return {
+      components: {SelectField},
+      template: `
+        <div>
+          <select-field v-model='value' :records='records' :loading='loading' @input.native='input'/>
+          {{value}}
+        </div>
+      `,
+      data(){
+        return {
+          value: '',
+          records: [],
+          loading: false,
+        }
+      },
+      methods: {
+        input(e){
+          if(!e.target.value){
+            return
+          }
+          this.loading = true
+          this.search(e.target.value)
+        },
+        search: _.debounce(async function(query){
+          const result = await fetch(`https://api.github.com/search/repositories?q=${query}`)
+          const text = await result.text()
+          const json = JSON.parse(text)
+          this.records = () => json.items.map(item => item.full_name)
+          this.loading = false
+        }, 500),
       },
     }
   }, {info: true})
@@ -161,40 +170,6 @@ story
             return records.filter(record => record.name.startsWith(query))
           },
         }
-      },
-    }
-  }, {info: true})
-  .add('async function', () => {
-    return {
-      components: {SelectField},
-      template: `
-        <div>
-          <select-field v-model='value' :records='records' :loading='loading' @input.native='input'/>
-          {{value}}
-        </div>
-      `,
-      data(){
-        return {
-          value: '',
-          records: [],
-          loading: false,
-        }
-      },
-      methods: {
-        input(e){
-          if(!e.target.value){
-            return
-          }
-          this.loading = true
-          this.search(e.target.value)
-        },
-        search: _.debounce(async function(query){
-          const result = await fetch(`https://api.github.com/search/repositories?q=${query}`)
-          const text = await result.text()
-          const json = JSON.parse(text)
-          this.records = () => json.items.map(item => item.full_name)
-          this.loading = false
-        }, 500),
       },
     }
   }, {info: true})
