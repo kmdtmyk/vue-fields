@@ -1,13 +1,6 @@
-export default class{
+import Strings from './Strings'
 
-  static search(array, query){
-    if(!query){
-      return array
-    }
-    return array.filter(value => {
-      return value.toString().toLowerCase().includes(query.toLowerCase())
-    })
-  }
+export default class{
 
   static from(arrayLike){
     if(Array.isArray(arrayLike)){
@@ -19,6 +12,19 @@ export default class{
     }
 
     return []
+  }
+
+  static search(array, query){
+    if(Strings.isEmpty(query)){
+      return array
+    }
+    const words = query.split(/\s/)
+    return array.filter(value => {
+      return words.every(word => {
+        return value.toString().toLowerCase().includes(word.toLowerCase())
+      })
+    })
+
   }
 
 }
