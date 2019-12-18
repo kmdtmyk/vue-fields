@@ -17,7 +17,7 @@ dropdown-input(
 )
   dropdown-list(
     ref='dropdown'
-    :records='filteredRecords'
+    :records='dropdownRecords'
     @input='select'
   )
     template(v-slot='{record}')
@@ -43,10 +43,6 @@ export default {
     value: [Number, String, Object],
     name: String,
     inputClass: [String, Array, Object],
-    filter: {
-      type: Function,
-      default: Arrays.search,
-    },
     records: [Array, Function],
     recordKey: String,
   },
@@ -83,11 +79,11 @@ export default {
     },
   },
   computed: {
-    filteredRecords(){
+    dropdownRecords(){
       if(this.records instanceof Function){
         return this.records(this.inputValue)
       }
-      return this.filter(this.records, this.inputValue)
+      return Arrays.search(this.records, this.inputValue)
     },
     placeholder(){
       if(this.selectedRecord){
