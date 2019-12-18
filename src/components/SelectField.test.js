@@ -227,9 +227,6 @@ describe('key event', () => {
           value: null,
           recordKey: 'id'
         },
-        scopedSlots: {
-          default: '<span>{{props.record.id}}. {{props.record.name}}</span>',
-        },
       })
       const input = wrapper.find('input[type=text]')
       expect(wrapper.vm.selectedRecord).toBeNull()
