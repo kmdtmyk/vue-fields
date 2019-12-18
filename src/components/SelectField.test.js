@@ -333,8 +333,12 @@ describe('dropdown list', () => {
   describe('empty', () => {
 
     it('slot exists', () => {
-
-      const subject = (records) => {
+      const subject = (inputValue) => {
+        const records = [
+          'foo',
+          'bar',
+          'hoge',
+        ]
         const wrapper = mount(Component, {
           propsData: {
             records,
@@ -347,17 +351,22 @@ describe('dropdown list', () => {
         })
         const input = wrapper.find('input[type=text]')
         input.trigger('focus')
+        wrapper.setData({inputValue})
         return wrapper.find('.dropdown-list-item.empty')
       }
 
-      expect(subject([]).exists()).toEqual(true)
-      expect(subject([]).text()).toEqual('empty message')
-      expect(subject(['foo']).exists()).toEqual(false)
+      expect(subject('').exists()).toEqual(false)
+      expect(subject('f').exists()).toEqual(false)
+      expect(subject('zzz').exists()).toEqual(true)
     })
 
     it('slot not exists', () => {
-
-      const subject = (records) => {
+      const subject = (inputValue) => {
+        const records = [
+          'foo',
+          'bar',
+          'hoge',
+        ]
         const wrapper = mount(Component, {
           propsData: {
             records,
@@ -365,11 +374,13 @@ describe('dropdown list', () => {
         })
         const input = wrapper.find('input[type=text]')
         input.trigger('focus')
+        wrapper.setData({inputValue})
         return wrapper.find('.dropdown-list-item.empty')
       }
 
-      expect(subject([]).exists()).toEqual(false)
-      expect(subject(['foo']).exists()).toEqual(false)
+      expect(subject('').exists()).toEqual(false)
+      expect(subject('f').exists()).toEqual(false)
+      expect(subject('zzz').exists()).toEqual(false)
     })
 
   })
