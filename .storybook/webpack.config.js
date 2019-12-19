@@ -1,7 +1,6 @@
-module.exports = (storybookBaseConfig, configType, defaultConfig) => {
+module.exports = ({config, mode}) => {
 
-
-  defaultConfig.module.rules.push(
+  config.module.rules.push(
     {
       test: /\.pug$/,
       loader: 'pug-plain-loader',
@@ -22,6 +21,6 @@ module.exports = (storybookBaseConfig, configType, defaultConfig) => {
     // },
   )
 
-  return defaultConfig
+  return config
 }
 
