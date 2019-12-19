@@ -8,11 +8,13 @@ dropdown-input(
   :clear='_isEmpty === false'
   :style='wrapperStyle'
   :inputClass='[inputClass, {empty: _isEmpty}]'
-  @keydown.up='keydownUp'
-  @keydown.down='keydownDown'
-  @keydown.enter='keydownEnter'
-  @keydown.delete='keydownDelete'
-  @blur='blur'
+  :loading='loading || $attrs.loading'
+  @input.native='_onInputNative'
+  @keydown.up='_onKeydownUp'
+  @keydown.down='_onKeydownDown'
+  @keydown.enter='_onKeydownEnter'
+  @keydown.delete='_onKeydownDelete'
+  @blur='_onBlur'
   @clear='clear'
 )
   dropdown-list(
@@ -31,6 +33,7 @@ dropdown-input(
 </template>
 
 <script>
+import debounce from 'lodash.debounce'
 import wrapper from './mixins/wrapper'
 import DropdownInput from './DropdownInput'
 import DropdownList from './DropdownList'
@@ -49,9 +52,19 @@ export default {
     inputClass: [String, Array, Object],
     records: [Array, Function],
     recordKey: String,
+    async: {
+      type: Boolean,
+      default: false,
+    },
+    asyncWait: {
+      type: Number,
+      default: 0,
+    },
   },
   data(){
     return {
+      loading: false,
+      asyncRecords: [],
       selectedRecord: null,
       inputValue: '',
     }
@@ -84,7 +97,9 @@ export default {
   },
   computed: {
     dropdownRecords(){
-      if(this.records instanceof Function){
+      if(this.async){
+        return this.asyncRecords
+      }else if(this.records instanceof Function){
         return this.records(this.inputValue)
       }
       return Arrays.search(this.records, this.inputValue)
@@ -101,30 +116,45 @@ export default {
     _isEmpty(){
       return Strings.isEmpty(this.value)
     },
+    _callAsyncRecords(){
+      return debounce((query) => {
+        this.records(query).then((data) => {
+          this.asyncRecords = data
+          this.loading = false
+        })
+      }, this.asyncWait)
+    }
   },
   methods: {
-    keydownUp(e){
+    _onInputNative(e){
+      if(this.async === false){
+        return
+      }
+      this._callAsyncRecords(this.inputValue)
+      this.loading = Strings.isNotEmpty(this.inputValue)
+    },
+    _onKeydownUp(e){
       this.$nextTick(() => {
         this.$refs.dropdown.up()
       })
     },
-    keydownDown(e){
+    _onKeydownDown(e){
       if(this.$refs.dropdown){
         this.$refs.dropdown.down()
       }
     },
-    keydownEnter(e){
+    _onKeydownEnter(e){
       if(this.$refs.dropdown){
         e.preventDefault()
         this.$refs.dropdown.select()
       }
     },
-    keydownDelete(e){
+    _onKeydownDelete(e){
       if(e.target.value === '' && this.value != null){
         this.clear()
       }
     },
-    blur(e){
+    _onBlur(e){
       this.inputValue = ''
     },
     clear(){

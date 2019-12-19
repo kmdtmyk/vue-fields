@@ -74,36 +74,28 @@ const story = storiesOf('SelectField', module)
     }
   }, {info: true})
   .add('async function', () => {
+    const asyncWait = number('async-wait', 500)
     return {
       components: {SelectField},
       template: `
         <div>
-          <select-field v-model='value' :records='records' :loading='loading' @input.native='input'/>
+          <select-field v-model='value' :records='records' async :async-wait='${asyncWait}'/>
           {{value}}
         </div>
       `,
       data(){
         return {
           value: '',
-          records: [],
-          loading: false,
+          records: async (query) => {
+            if(!query){
+              return []
+            }
+            const result = await fetch(`https://api.github.com/search/repositories?q=${query}`)
+            const text = await result.text()
+            const json = JSON.parse(text)
+            return json.items.map(item => item.full_name)
+          },
         }
-      },
-      methods: {
-        input(e){
-          if(!e.target.value){
-            return
-          }
-          this.loading = true
-          this.search(e.target.value)
-        },
-        search: debounce(async function(query){
-          const result = await fetch(`https://api.github.com/search/repositories?q=${query}`)
-          const text = await result.text()
-          const json = JSON.parse(text)
-          this.records = () => json.items.map(item => item.full_name)
-          this.loading = false
-        }, 500),
       },
     }
   }, {info: true})
