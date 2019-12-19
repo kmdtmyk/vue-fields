@@ -35,6 +35,7 @@ import wrapper from './mixins/wrapper'
 import DropdownInput from './DropdownInput'
 import DropdownList from './DropdownList'
 import Arrays from './lib/Arrays'
+import Strings from './lib/Strings'
 
 export default {
   mixins: [wrapper],
@@ -92,13 +93,13 @@ export default {
       if(this.selectedRecord){
         return this._recordText(this.selectedRecord)
       }
-      if(this.value != null && this.value !== ''){
+      if(Strings.isNotEmpty(this.value)){
         return this.value
       }
       return this.$attrs.placeholder
     },
     _isEmpty(){
-      return this.value == null || this.value === ''
+      return Strings.isEmpty(this.value)
     },
   },
   methods: {

@@ -8,4 +8,8 @@ export default class{
     return value === ''
   }
 
+  static isNotEmpty(value){
+    return this.isEmpty(value) === false
+  }
+
 }
