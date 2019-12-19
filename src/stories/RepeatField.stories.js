@@ -4,7 +4,7 @@ import {withKnobs, number} from '@storybook/addon-knobs'
 import RepeatField from '../components/RepeatField'
 import SelectField from '../components/SelectField'
 
-storiesOf('RepeatField', module)
+const story = storiesOf('RepeatField', module)
   .addDecorator(withKnobs)
   .add('basic', () => {
     return {
@@ -117,24 +117,30 @@ storiesOf('RepeatField', module)
       },
     }
   }, {info: true})
-  .add('with select field', () => {
-    return {
-      components: {RepeatField, SelectField},
-      template: `
-        <div>
-          <repeat-field v-model='values'>
-            <template v-slot='{index}'>
-              <select-field v-model='values[index]' :records='records'/>
-            </template>
-          </repeat-field>
-          <pre>{{values}}</pre>
-        </div>
-      `,
-      data(){
-        return {
-          values: [],
-          records: ['foo', 'bar', 'baz', 'hoge', 'piyo'],
-        }
-      },
-    }
-  }, {info: true})
+
+if(process.env.NODE_ENV === 'development'){
+
+  story
+    .add('with select field', () => {
+      return {
+        components: {RepeatField, SelectField},
+        template: `
+          <div>
+            <repeat-field v-model='values'>
+              <template v-slot='{index}'>
+                <select-field v-model='values[index]' :records='records'/>
+              </template>
+            </repeat-field>
+            <pre>{{values}}</pre>
+          </div>
+        `,
+        data(){
+          return {
+            values: [],
+            records: ['foo', 'bar', 'baz', 'hoge', 'piyo'],
+          }
+        },
+      }
+    }, {info: true})
+
+}
