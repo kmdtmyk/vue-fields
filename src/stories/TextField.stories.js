@@ -1,6 +1,6 @@
 import {storiesOf} from '@storybook/vue'
 import {withKnobs, text, number, boolean, color} from '@storybook/addon-knobs'
-import _ from 'lodash'
+import debounce from 'lodash.debounce'
 
 import TextField from '../components/TextField'
 
@@ -116,7 +116,7 @@ storiesOf('TextField', module)
           this.loading = true
           this.search(e.target.value)
         },
-        search: _.debounce(async function(query){
+        search: debounce(async function(query){
           const result = await fetch(`https://api.github.com/search/repositories?q=${query}`)
           const text = await result.text()
           const json = JSON.parse(text)
