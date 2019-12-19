@@ -5,8 +5,6 @@ import _ from 'lodash'
 import SelectField from '../components/SelectField'
 
 const story = storiesOf('SelectField', module)
-
-story
   .addDecorator(withKnobs)
   .add('basic', () => {
     const value = text('value', '')
