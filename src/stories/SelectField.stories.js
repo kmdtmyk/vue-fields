@@ -79,7 +79,7 @@ const story = storiesOf('SelectField', module)
       components: {SelectField},
       template: `
         <div>
-          <select-field v-model='value' :records='records' async :async-wait='${asyncWait}'/>
+          <select-field v-model='value' :records='records' :async-wait='${asyncWait}'/>
           {{value}}
         </div>
       `,

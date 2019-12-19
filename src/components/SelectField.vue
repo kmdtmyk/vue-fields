@@ -52,10 +52,6 @@ export default {
     inputClass: [String, Array, Object],
     records: [Array, Function],
     recordKey: String,
-    async: {
-      type: Boolean,
-      default: false,
-    },
     asyncWait: {
       type: Number,
       default: 0,
@@ -97,7 +93,7 @@ export default {
   },
   computed: {
     dropdownRecords(){
-      if(this.async){
+      if(this._isAsync){
         return this.asyncRecords
       }else if(this.records instanceof Function){
         return this.records(this.inputValue)
@@ -123,11 +119,23 @@ export default {
           this.loading = false
         })
       }, this.asyncWait)
-    }
+    },
+    _isAsync(){
+      const {records} = this
+      if(records instanceof Function === false){
+        return false
+      }
+      if(records.constructor.name === 'AsyncFunction'){
+        return true
+      }
+      const {name} = records
+      return records.toString()
+        .includes(`return _${name}.apply(this, arguments);`)
+    },
   },
   methods: {
     _onInputNative(e){
-      if(this.async === false){
+      if(this._isAsync === false){
         return
       }
       this._callAsyncRecords(this.inputValue)
