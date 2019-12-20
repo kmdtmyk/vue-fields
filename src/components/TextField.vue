@@ -41,6 +41,10 @@ export default {
     value: String,
     inputClass: [String, Array, Object],
     autocomplete: [String, Boolean, Array, Function],
+    async: {
+      type: Boolean,
+      default: false,
+    },
     asyncWait: {
       type: Number,
       default: 0,
@@ -90,6 +94,9 @@ export default {
       return Arrays.search(this.autocomplete, this.inputValue)
     },
     isAsync(){
+      if(this.async === true){
+        return true
+      }
       return VueProps.isAsyncFunction(this.autocomplete)
     },
     callAsyncRecords(){

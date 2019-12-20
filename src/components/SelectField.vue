@@ -53,6 +53,10 @@ export default {
     inputClass: [String, Array, Object],
     records: [Array, Function],
     recordKey: String,
+    async: {
+      type: Boolean,
+      default: false,
+    },
     asyncWait: {
       type: Number,
       default: 0,
@@ -79,7 +83,7 @@ export default {
           }
         }
 
-        if(recordKey != null){
+        if(recordKey != null && this.isAsync === false){
           const record = Arrays.from(this.records).find(record => {
             return record[recordKey] === value
           })
@@ -132,6 +136,9 @@ export default {
       }, this.asyncWait)
     },
     isAsync(){
+      if(this.async === true){
+        return true
+      }
       return VueProps.isAsyncFunction(this.records)
     },
   },
