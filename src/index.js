@@ -1,3 +1,4 @@
+import Strings from './lib/Strings'
 import * as components from './components'
 
 function extractProps(component){
@@ -30,14 +31,7 @@ function transformName(originalName, prefix = '', suffix = 'Field'){
   names.push(prefix)
   names.push(originalName.replace('Field', ''))
   names.push(suffix)
-  return names.map(name => upcaseFirstChar(name)).join('')
-}
-
-function upcaseFirstChar(string){
-  if(!string){
-    return string
-  }
-  return string[0].toUpperCase() + string.substr(1)
+  return names.map(name => Strings.toUpperCaseFirst(name)).join('')
 }
 
 export default class{

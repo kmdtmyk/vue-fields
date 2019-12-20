@@ -15,3 +15,17 @@ describe('isEmpty', () => {
   })
 
 })
+
+describe('toUpperCaseFirst', () => {
+
+  it('string', () => {
+    expect(Strings.toUpperCaseFirst('')).toEqual('')
+    expect(Strings.toUpperCaseFirst('abc')).toEqual('Abc')
+  })
+
+  it('invalid value', () => {
+    expect(Strings.toUpperCaseFirst(null)).toEqual(null)
+    expect(Strings.toUpperCaseFirst(undefined)).toEqual(undefined)
+  })
+
+})
