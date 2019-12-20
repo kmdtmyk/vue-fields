@@ -19,3 +19,23 @@ describe('isAsyncFunction', () => {
   })
 
 })
+
+describe('toOnOff', () => {
+
+  it('on', () => {
+    expect(VueProps.toOnOff('on')).toEqual('on')
+    expect(VueProps.toOnOff(true)).toEqual('on')
+  })
+
+  it('off', () => {
+    expect(VueProps.toOnOff('off')).toEqual('off')
+    expect(VueProps.toOnOff(false)).toEqual('off')
+  })
+
+  it('null', () => {
+    expect(VueProps.toOnOff('foo')).toBeNull()
+    expect(VueProps.toOnOff(null)).toBeNull()
+    expect(VueProps.toOnOff(undefined)).toBeNull()
+  })
+
+})

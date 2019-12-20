@@ -10,4 +10,14 @@ export default class{
     return prop.toString().includes('.apply(this, arguments);')
   }
 
+  static toOnOff(prop){
+    if(prop === true || prop === 'on'){
+      return 'on'
+    }
+    if(prop === false || prop === 'off'){
+      return 'off'
+    }
+    return null
+  }
+
 }

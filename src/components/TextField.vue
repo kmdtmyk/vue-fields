@@ -7,7 +7,7 @@ dropdown-input(
   v-model='inputValue'
   :style='wrapperStyle'
   :inputClass='inputClass'
-  :autocomplete='useDropdown || $props.autocomplete === false ? "off" : $props.autocomplete === true ? "on" : $props.autocomplete'
+  :autocomplete='autocompleteAttribute'
   :loading='loading || $attrs.loading'
   @input.native='onInputNative'
   @keydown.up='onKeydownUp'
@@ -67,6 +67,12 @@ export default {
         ...this.$listeners,
         input: this.input,
       }
+    },
+    autocompleteAttribute(){
+      if(this.useDropdown){
+        return 'off'
+      }
+      return VueProps.toOnOff(this.autocomplete)
     },
     useDropdown(){
       const {autocomplete} = this.$props

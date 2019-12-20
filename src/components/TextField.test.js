@@ -153,7 +153,6 @@ describe('autocomplete', () => {
     const subject = (autocomplete) => {
       const wrapper = mount(Component, {
         propsData: {
-          value: '',
           autocomplete,
         }
       })
@@ -161,28 +160,21 @@ describe('autocomplete', () => {
       return input.attributes().autocomplete
     }
 
-    it('true', () => {
-      expect(subject(true)).toEqual('on')
-    })
-
-    it('false', () => {
-      expect(subject(false)).toEqual('off')
-    })
-
     it('on', () => {
+      expect(subject(true)).toEqual('on')
       expect(subject('on')).toEqual('on')
     })
 
     it('off', () => {
+      expect(subject(false)).toEqual('off')
       expect(subject('off')).toEqual('off')
-    })
-
-    it('array', () => {
       expect(subject(['foo', 'bar'])).toEqual('off')
+      expect(subject(() => ['foo', 'bar'])).toEqual('off')
     })
 
-    it('function', () => {
-      expect(subject(() => ['foo', 'bar'])).toEqual('off')
+    it('undefined', () => {
+      expect(subject(null)).toBeUndefined()
+      expect(subject(undefined)).toBeUndefined()
     })
 
   })
