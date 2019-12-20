@@ -28,7 +28,7 @@ dropdown-input(
       template(v-else) {{record}}
     template(v-slot:empty='' v-if='$scopedSlots.empty && inputValue !== ""')
       slot(name='empty')
-  template(v-slot:tail='' v-if='$props.name != null')
+  template(v-slot:after='' v-if='$props.name != null')
     input(:name='$props.name' :value='value' type='hidden')
 </template>
 

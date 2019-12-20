@@ -24,7 +24,7 @@
     ref='dropdown'
   )
     slot
-  slot(name='tail')
+  slot(name='after')
 </template>
 
 <script>
