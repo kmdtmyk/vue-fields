@@ -128,7 +128,7 @@ describe('placeholder', () => {
   })
 
   it('with slot', () => {
-    const subject = (value, slot) => {
+    const subject = (value, async = false) => {
       const records = [
         {id: 1, name: 'foo'},
         {id: 2, name: 'bar'},
@@ -139,26 +139,18 @@ describe('placeholder', () => {
           records,
           value,
           recordKey: 'id',
+          async,
         },
         scopedSlots: {
-          default: slot,
+          default: '<div>{{props.record.id}}. {{props.record.name}}</div>'
         },
       })
       const input = wrapper.find('input')
       return input.attributes().placeholder
     }
 
-    expect(subject(1, `
-      <template>
-        {{props.record.id}}. {{props.record.name}}
-      </template>
-    `)).toBe('1. foo')
-
-    expect(subject(2, `
-      <template>
-        <span>{{props.record.id}}: {{props.record.name}}</span>
-      </template>
-    `)).toBe('2: bar')
+    expect(subject(1)).toBe('1. foo')
+    expect(subject(2, true)).toBe('2')
   })
 
 })
