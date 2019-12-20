@@ -64,84 +64,37 @@ describe('attributes', () => {
 
 describe('input', () => {
 
-  describe('multiple: false', () => {
-
-    it('string', () => {
-      const wrapper = mount(Component, {
-        propsData: {
-          value: 'foo',
-        }
-      })
-      const input = wrapper.find('input')
-      input.trigger('input')
-      expect(wrapper.emitted('input')[0]).toEqual(['foo'])
+  it('string', () => {
+    const wrapper = mount(Component, {
+      propsData: {
+        value: 'foo',
+      }
     })
-
-    it('empty', () => {
-      const wrapper = mount(Component, {
-        propsData: {
-          value: '',
-        }
-      })
-      const input = wrapper.find('input')
-      input.trigger('input')
-      expect(wrapper.emitted('input')[0]).toEqual([''])
-    })
-
-    it('null', () => {
-      const wrapper = mount(Component, {
-        propsData: {
-          value: null,
-        }
-      })
-      const input = wrapper.find('input')
-      input.trigger('input')
-      expect(wrapper.emitted('input')[0]).toEqual([''])
-    })
-
+    const input = wrapper.find('input')
+    input.trigger('input')
+    expect(wrapper.emitted('input')[0]).toEqual(['foo'])
   })
 
-  describe.skip('multiple: true', () => {
-
-    it('string', () => {
-      const wrapper = mount(Component, {
-        propsData: {
-          value: 'foo',
-          multiple: true,
-        }
-      })
-      const inputs = wrapper.findAll('input')
-      expect(inputs.length).toBe(2)
-      inputs.at(0).trigger('input')
-      expect(wrapper.emitted('input')[0]).toEqual([['foo']])
+  it('empty', () => {
+    const wrapper = mount(Component, {
+      propsData: {
+        value: '',
+      }
     })
+    const input = wrapper.find('input')
+    input.trigger('input')
+    expect(wrapper.emitted('input')[0]).toEqual([''])
+  })
 
-    it('array', () => {
-      const wrapper = mount(Component, {
-        propsData: {
-          value: ['foo'],
-          multiple: true,
-        }
-      })
-      const inputs = wrapper.findAll('input')
-      expect(inputs.length).toBe(2)
-      inputs.at(0).trigger('input')
-      expect(wrapper.emitted('input')[0]).toEqual([['foo']])
+  it('null', () => {
+    const wrapper = mount(Component, {
+      propsData: {
+        value: null,
+      }
     })
-
-    it('null', () => {
-      const wrapper = mount(Component, {
-        propsData: {
-          value: null,
-          multiple: true,
-        }
-      })
-      const inputs = wrapper.findAll('input')
-      expect(inputs.length).toBe(1)
-      inputs.at(0).trigger('input')
-      expect(wrapper.emitted('input')[0]).toEqual([[]])
-    })
-
+    const input = wrapper.find('input')
+    input.trigger('input')
+    expect(wrapper.emitted('input')[0]).toEqual([''])
   })
 
 })

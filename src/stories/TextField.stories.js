@@ -43,20 +43,6 @@ storiesOf('TextField', module)
       },
     }
   }, {info: true})
-  // .add('multiple', () => ({
-  //   components: {TextField},
-  //   template: `
-  //     <div>
-  //       <text-field v-model='value' multiple/>
-  //       {{value}}
-  //     </div>
-  //   `,
-  //   data(){
-  //     return {
-  //       value: []
-  //     }
-  //   },
-  // }))
   .add('autocomplete (array)', () => {
     return {
       components: {TextField},
