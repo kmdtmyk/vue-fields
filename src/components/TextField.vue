@@ -89,14 +89,19 @@ export default {
     callAsyncRecords(){
       return debounce((query) => {
         const startTime = Date.now()
-        this.autocomplete(query).then((data) => {
-          if(startTime < this.lastAsyncRecordsTime){
-            return
+        this.autocomplete(query).then(
+          (data) => {
+            if(startTime < this.lastAsyncRecordsTime){
+              return
+            }
+            this.lastAsyncRecordsTime = startTime
+            this.asyncRecords = data
+            this.loading = false
+          },
+          (error) => {
+            this.loading = false
           }
-          this.lastAsyncRecordsTime = startTime
-          this.asyncRecords = data
-          this.loading = false
-        })
+        )
       }, this.asyncWait)
     },
   },
