@@ -1,6 +1,5 @@
 import {storiesOf} from '@storybook/vue'
 import {withKnobs, text, number, boolean, color} from '@storybook/addon-knobs'
-import debounce from 'lodash.debounce'
 
 import TextField from '../components/TextField'
 
