@@ -39,6 +39,7 @@ import DropdownInput from './DropdownInput'
 import DropdownList from './DropdownList'
 import Arrays from './lib/Arrays'
 import Strings from './lib/Strings'
+import VueProps from './lib/VueProps'
 
 export default {
   mixins: [wrapper],
@@ -126,16 +127,7 @@ export default {
       }, this.asyncWait)
     },
     _isAsync(){
-      const {records} = this
-      if(records instanceof Function === false){
-        return false
-      }
-      if(records.constructor.name === 'AsyncFunction'){
-        return true
-      }
-      const {name} = records
-      return records.toString()
-        .includes(`return _${name}.apply(this, arguments);`)
+      return VueProps.isAsyncFunction(this.records)
     },
   },
   methods: {
