@@ -114,7 +114,12 @@ export default {
     },
     _callAsyncRecords(){
       return debounce((query) => {
+        const startTime = Date.now()
         this.records(query).then((data) => {
+          if(startTime < this.lastAsyncRecordsTime){
+            return
+          }
+          this.lastAsyncRecordsTime = startTime
           this.asyncRecords = data
           this.loading = false
         })
