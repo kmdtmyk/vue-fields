@@ -8,9 +8,11 @@ dropdown-input(
   :style='wrapperStyle'
   :inputClass='inputClass'
   :autocomplete='useDropdown || $props.autocomplete === false ? "off" : $props.autocomplete === true ? "on" : $props.autocomplete'
-  @keydown.up='keydownUp'
-  @keydown.down='keydownDown'
-  @keydown.enter='keydownEnter'
+  :loading='loading || $attrs.loading'
+  @input.native='onInputNative'
+  @keydown.up='onKeydownUp'
+  @keydown.down='onKeydownDown'
+  @keydown.enter='onKeydownEnter'
 )
   dropdown-list(
     ref='dropdown'
@@ -21,10 +23,13 @@ dropdown-input(
 </template>
 
 <script>
+import debounce from 'lodash.debounce'
 import wrapper from './mixins/wrapper'
 import DropdownInput from './DropdownInput'
 import DropdownList from './DropdownList'
 import Arrays from './lib/Arrays'
+import Strings from './lib/Strings'
+import VueProps from './lib/VueProps'
 
 export default {
   mixins: [wrapper],
@@ -36,9 +41,15 @@ export default {
     value: String,
     inputClass: [String, Array, Object],
     autocomplete: [String, Boolean, Array, Function],
+    asyncWait: {
+      type: Number,
+      default: 0,
+    },
   },
   data(){
     return {
+      loading: false,
+      asyncRecords: [],
       inputValue: '',
     }
   },
@@ -65,14 +76,39 @@ export default {
       return false
     },
     dropdownRecords(){
-      if(this.autocomplete instanceof Function){
+      if(this.isAsync){
+        return this.asyncRecords
+      }else if(this.autocomplete instanceof Function){
         return this.autocomplete(this.inputValue)
       }
       return Arrays.search(this.autocomplete, this.inputValue)
     },
+    isAsync(){
+      return VueProps.isAsyncFunction(this.autocomplete)
+    },
+    callAsyncRecords(){
+      return debounce((query) => {
+        const startTime = Date.now()
+        this.autocomplete(query).then((data) => {
+          if(startTime < this.lastAsyncRecordsTime){
+            return
+          }
+          this.lastAsyncRecordsTime = startTime
+          this.asyncRecords = data
+          this.loading = false
+        })
+      }, this.asyncWait)
+    },
   },
   methods: {
-    keydownUp(e){
+    onInputNative(e){
+      if(this.isAsync === false){
+        return
+      }
+      this.callAsyncRecords(this.inputValue)
+      this.loading = Strings.isNotEmpty(this.inputValue)
+    },
+    onKeydownUp(e){
       if(!this.useDropdown){
         return
       }
@@ -86,7 +122,7 @@ export default {
         this.$refs.dropdown.up()
       })
     },
-    keydownDown(e){
+    onKeydownDown(e){
       if(!this.useDropdown){
         return
       }
@@ -96,7 +132,7 @@ export default {
         dropdown.down()
       }
     },
-    keydownEnter(e){
+    onKeydownEnter(e){
       if(!this.useDropdown){
         return
       }

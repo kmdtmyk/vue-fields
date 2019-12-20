@@ -7,9 +7,7 @@ export default class{
     if(prop.constructor.name === 'AsyncFunction'){
       return true
     }
-    const {name} = prop
-    return prop.toString()
-      .includes(`return _${name}.apply(this, arguments);`)
+    return prop.toString().includes('.apply(this, arguments);')
   }
 
 }

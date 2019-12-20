@@ -93,37 +93,28 @@ storiesOf('TextField', module)
     }
   }, {info: true})
   .add('autocomplete (async function)', () => {
+    const asyncWait = number('async-wait', 500)
     return {
       components: {TextField},
       template: `
         <div>
-          <text-field v-model='value' :autocomplete='autocomplete' :loading='loading'  @input.native='input'/>
+          <text-field v-model='value' :autocomplete='autocomplete' :async-wait='${asyncWait}'/>
           {{value}}
         </div>
       `,
       data(){
         return {
           value: '',
-          autocomplete: [],
-          loading: false,
+          autocomplete: async (query) => {
+            if(!query){
+              return []
+            }
+            const result = await fetch(`https://api.github.com/search/repositories?q=${query}`)
+            const text = await result.text()
+            const json = JSON.parse(text)
+            return json.items.map(item => item.full_name)
+          },
         }
-      },
-      methods: {
-        input(e){
-          if(!e.target.value){
-            return
-          }
-          this.loading = true
-          this.search(e.target.value)
-        },
-        search: debounce(async function(query){
-          const result = await fetch(`https://api.github.com/search/repositories?q=${query}`)
-          const text = await result.text()
-          const json = JSON.parse(text)
-          this.autocomplete = () => json.items.map(item => item.full_name)
-          this.loading = false
-        }, 500),
       },
     }
   }, {info: true})
-
