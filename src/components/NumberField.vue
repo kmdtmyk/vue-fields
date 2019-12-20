@@ -19,9 +19,9 @@ span
 
 <script>
 import wrapper from './mixins/wrapper'
-import Parser from './lib/Parser'
-import ElementUtil from './lib/ElementUtil'
-import NumberUtil from './lib/NumberUtil'
+import Parser from '../lib/Parser'
+import ElementUtil from '../lib/ElementUtil'
+import NumberUtil from '../lib/NumberUtil'
 
 export default {
   mixins: [wrapper],

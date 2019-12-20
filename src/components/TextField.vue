@@ -27,9 +27,9 @@ import debounce from 'lodash.debounce'
 import wrapper from './mixins/wrapper'
 import DropdownInput from './DropdownInput'
 import DropdownList from './DropdownList'
-import Arrays from './lib/Arrays'
-import Strings from './lib/Strings'
-import VueProps from './lib/VueProps'
+import Arrays from '../lib/Arrays'
+import Strings from '../lib/Strings'
+import VueProps from '../lib/VueProps'
 
 export default {
   mixins: [wrapper],

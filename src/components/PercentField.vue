@@ -20,7 +20,7 @@
 <script>
 import Big from 'big.js'
 import wrapper from './mixins/wrapper'
-import Parser from './lib/Parser'
+import Parser from '../lib/Parser'
 
 export default {
   mixins: [wrapper],

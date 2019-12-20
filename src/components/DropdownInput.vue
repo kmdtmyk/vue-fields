@@ -29,7 +29,7 @@
 
 <script>
 import wrapper from './mixins/wrapper'
-import ElementUtil from './lib/ElementUtil'
+import ElementUtil from '../lib/ElementUtil'
 import LoadingSpinner from './LoadingSpinner'
 
 export default {
