@@ -128,7 +128,7 @@ describe('placeholder', () => {
   })
 
   it('with slot', () => {
-    const subject = (value, async = false) => {
+    const subject = (value, asyncWait = null) => {
       const records = [
         {id: 1, name: 'foo'},
         {id: 2, name: 'bar'},
@@ -139,7 +139,7 @@ describe('placeholder', () => {
           records,
           value,
           recordKey: 'id',
-          async,
+          asyncWait,
         },
         scopedSlots: {
           default: '<div>{{props.record.id}}. {{props.record.name}}</div>'
@@ -150,7 +150,7 @@ describe('placeholder', () => {
     }
 
     expect(subject(1)).toBe('1. foo')
-    expect(subject(2, true)).toBe('2')
+    expect(subject(2, 100)).toBe('2')
   })
 
 })

@@ -7,7 +7,7 @@ export default class{
     if(prop.constructor.name === 'AsyncFunction'){
       return true
     }
-    return prop.toString().includes('.apply(this, arguments);')
+    return false
   }
 
   static toOnOff(prop){

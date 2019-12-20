@@ -53,13 +53,8 @@ export default {
     inputClass: [String, Array, Object],
     records: [Array, Function],
     recordKey: String,
-    async: {
-      type: Boolean,
-      default: false,
-    },
     asyncWait: {
       type: Number,
-      default: 0,
     },
   },
   data(){
@@ -136,7 +131,7 @@ export default {
       }, this.asyncWait)
     },
     isAsync(){
-      if(this.async === true){
+      if(this.asyncWait != null){
         return true
       }
       return VueProps.isAsyncFunction(this.records)
