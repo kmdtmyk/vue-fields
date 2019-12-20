@@ -5,16 +5,16 @@ dropdown-input(
   v-model='inputValue'
   v-bind='$attrs'
   :placeholder='placeholder'
-  :clear='_isEmpty === false'
+  :clear='isEmpty === false'
   :style='wrapperStyle'
-  :inputClass='[inputClass, {empty: _isEmpty}]'
+  :inputClass='[inputClass, {empty: isEmpty}]'
   :loading='loading || $attrs.loading'
-  @input.native='_onInputNative'
-  @keydown.up='_onKeydownUp'
-  @keydown.down='_onKeydownDown'
-  @keydown.enter='_onKeydownEnter'
-  @keydown.delete='_onKeydownDelete'
-  @blur='_onBlur'
+  @input.native='onInputNative'
+  @keydown.up='onKeydownUp'
+  @keydown.down='onKeydownDown'
+  @keydown.enter='onKeydownEnter'
+  @keydown.delete='onKeydownDelete'
+  @blur='onBlur'
   @clear='clear'
 )
   dropdown-list(
@@ -94,7 +94,7 @@ export default {
   },
   computed: {
     dropdownRecords(){
-      if(this._isAsync){
+      if(this.isAsync){
         return this.asyncRecords
       }else if(this.records instanceof Function){
         return this.records(this.inputValue)
@@ -103,17 +103,17 @@ export default {
     },
     placeholder(){
       if(this.selectedRecord){
-        return this._recordText(this.selectedRecord)
+        return this.recordText(this.selectedRecord)
       }
       if(Strings.isNotEmpty(this.value)){
         return this.value
       }
       return this.$attrs.placeholder
     },
-    _isEmpty(){
+    isEmpty(){
       return Strings.isEmpty(this.value)
     },
-    _callAsyncRecords(){
+    callAsyncRecords(){
       return debounce((query) => {
         const startTime = Date.now()
         this.records(query).then((data) => {
@@ -126,40 +126,40 @@ export default {
         })
       }, this.asyncWait)
     },
-    _isAsync(){
+    isAsync(){
       return VueProps.isAsyncFunction(this.records)
     },
   },
   methods: {
-    _onInputNative(e){
-      if(this._isAsync === false){
+    onInputNative(e){
+      if(this.isAsync === false){
         return
       }
-      this._callAsyncRecords(this.inputValue)
+      this.callAsyncRecords(this.inputValue)
       this.loading = Strings.isNotEmpty(this.inputValue)
     },
-    _onKeydownUp(e){
+    onKeydownUp(e){
       this.$nextTick(() => {
         this.$refs.dropdown.up()
       })
     },
-    _onKeydownDown(e){
+    onKeydownDown(e){
       if(this.$refs.dropdown){
         this.$refs.dropdown.down()
       }
     },
-    _onKeydownEnter(e){
+    onKeydownEnter(e){
       if(this.$refs.dropdown){
         e.preventDefault()
         this.$refs.dropdown.select()
       }
     },
-    _onKeydownDelete(e){
+    onKeydownDelete(e){
       if(e.target.value === '' && this.value != null){
         this.clear()
       }
     },
-    _onBlur(e){
+    onBlur(e){
       this.inputValue = ''
     },
     clear(){
@@ -170,7 +170,7 @@ export default {
       if(record instanceof Object){
         this.selectedRecord = record
       }
-      this.inputValue = this._recordText(record)
+      this.inputValue = this.recordText(record)
       const {recordKey} = this
       if(recordKey != null){
         this.$emit('input', record[recordKey])
@@ -178,7 +178,7 @@ export default {
         this.$emit('input', record)
       }
     },
-    _recordText(record){
+    recordText(record){
       const slot = this.$scopedSlots.default
       if(slot != null){
         const vnode = slot({record})
