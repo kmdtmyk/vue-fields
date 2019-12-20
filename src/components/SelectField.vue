@@ -156,9 +156,12 @@ export default {
       }
     },
     onKeydownEnter(e){
-      if(this.$refs.dropdown){
+      const {dropdown} = this.$refs
+      if(dropdown == null){
+        return
+      }
+      if(dropdown.select() === true){
         e.preventDefault()
-        this.$refs.dropdown.select()
       }
     },
     onKeydownDelete(e){

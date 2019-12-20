@@ -149,10 +149,12 @@ export default {
       if(!this.useDropdown){
         return
       }
-      const dropdown = this.$refs.dropdown
-      if(dropdown){
+      const {dropdown} = this.$refs
+      if(dropdown == null){
+        return
+      }
+      if(dropdown.select() === true){
         e.preventDefault()
-        dropdown.select()
       }
     },
     input(e){

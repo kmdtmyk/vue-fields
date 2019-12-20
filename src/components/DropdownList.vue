@@ -64,10 +64,11 @@ export default {
     },
     select(){
       const record = this.records[this.selectedIndex]
-      if(record === undefined){
-        return
+      if(record == null){
+        return false
       }
       this.$emit('input', record)
+      return true
     },
     autoScroll(){
       const {dropdown} = this.$refs
