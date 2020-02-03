@@ -378,3 +378,23 @@ describe('dropdown list', () => {
   })
 
 })
+
+describe('select', () => {
+
+  it('string', () => {
+    const wrapper = mount(Component)
+    wrapper.vm.select('foo')
+    expect(wrapper.emitted('input')[0]).toEqual(['foo'])
+  })
+
+  it('records is null', () => {
+    const wrapper = mount(Component, {
+      propsData: {
+        records: null,
+      },
+    })
+    wrapper.vm.select('foo')
+    expect(wrapper.emitted('input')[0]).toEqual(['foo'])
+  })
+
+})

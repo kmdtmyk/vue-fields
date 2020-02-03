@@ -51,7 +51,12 @@ export default {
     value: [Number, String, Object],
     name: String,
     inputClass: [String, Array, Object],
-    records: [Array, Function],
+    records: {
+      type: [Array, Function],
+      default(){
+        return []
+      },
+    },
     recordKey: String,
     asyncWait: {
       type: Number,
@@ -97,8 +102,10 @@ export default {
         return this.asyncRecords
       }else if(this.records instanceof Function){
         return this.records(this.inputValue)
+      }else if(Array.isArray(this.records)){
+        return Arrays.search(this.records, this.inputValue)
       }
-      return Arrays.search(this.records, this.inputValue)
+      return null
     },
     placeholder(){
       if(this.selectedRecord){
