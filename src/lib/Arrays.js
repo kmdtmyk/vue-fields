@@ -14,6 +14,13 @@ export default class{
     return []
   }
 
+  static isNullOrEmpty(array){
+    if(array == null){
+      return true
+    }
+    return array.length === 0
+  }
+
   static search(array, query){
     if(Strings.isEmpty(query)){
       return array

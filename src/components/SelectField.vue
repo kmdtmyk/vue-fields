@@ -14,6 +14,7 @@ dropdown-input(
   @keydown.down='onKeydownDown'
   @keydown.enter='onKeydownEnter'
   @keydown.delete='onKeydownDelete'
+  @focus='onFocus'
   @blur='onBlur'
   @clear='clear'
 )
@@ -65,7 +66,7 @@ export default {
   data(){
     return {
       loading: false,
-      asyncRecords: [],
+      asyncRecords: null,
       selectedRecord: null,
       inputValue: '',
     }
@@ -145,12 +146,17 @@ export default {
     },
   },
   methods: {
-    onInputNative(e){
-      if(this.isAsync === false){
-        return
+    onFocus(e){
+      if(this.isAsync === true && Arrays.isNullOrEmpty(this.asyncRecords)){
+        this.callAsyncRecords(this.inputValue)
+        this.loading = true
       }
-      this.callAsyncRecords(this.inputValue)
-      this.loading = Strings.isNotEmpty(this.inputValue)
+    },
+    onInputNative(e){
+      if(this.isAsync === true){
+        this.callAsyncRecords(this.inputValue)
+        this.loading = true
+      }
     },
     onKeydownUp(e){
       this.$nextTick(() => {

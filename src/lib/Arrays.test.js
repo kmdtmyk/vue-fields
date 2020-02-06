@@ -12,6 +12,20 @@ describe('from', () => {
 
 })
 
+describe('isNullOrEmpty', () => {
+
+  it('true', () => {
+    expect(Arrays.isNullOrEmpty(null)).toEqual(true)
+    expect(Arrays.isNullOrEmpty(undefined)).toEqual(true)
+    expect(Arrays.isNullOrEmpty([])).toEqual(true)
+  })
+
+  it('false', () => {
+    expect(Arrays.isNullOrEmpty([1])).toEqual(false)
+  })
+
+})
+
 describe('search', () => {
 
   it('ignore case', () => {
