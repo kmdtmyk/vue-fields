@@ -73,12 +73,11 @@ const story = storiesOf('SelectField', module)
     }
   }, {info: true})
   .add('async function', () => {
-    const asyncWait = number('async-wait', 500)
     return {
       components: {SelectField},
       template: `
         <div>
-          <select-field v-model='value' :records='records' :async-wait='${asyncWait}'/>
+          <select-field v-model='value' :records='records' :async-wait='asyncWait'/>
           {{value}}
         </div>
       `,
@@ -94,6 +93,13 @@ const story = storiesOf('SelectField', module)
             const json = JSON.parse(text)
             return json.items.map(item => item.full_name)
           },
+          asyncWait(query){
+            if(!query){
+              return 0
+            }else{
+              return 500
+            }
+          }
         }
       },
     }
