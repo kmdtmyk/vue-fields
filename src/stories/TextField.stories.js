@@ -78,12 +78,11 @@ storiesOf('TextField', module)
     }
   }, {info: true})
   .add('autocomplete (async function)', () => {
-    const asyncWait = number('async-wait', 500)
     return {
       components: {TextField},
       template: `
         <div>
-          <text-field v-model='value' :autocomplete='autocomplete' :async-wait='${asyncWait}'/>
+          <text-field v-model='value' :autocomplete='autocomplete' :async-wait='asyncWait'/>
           {{value}}
         </div>
       `,
@@ -99,6 +98,13 @@ storiesOf('TextField', module)
             const json = JSON.parse(text)
             return json.items.map(item => item.full_name)
           },
+          asyncWait(query){
+            if(!query){
+              return 0
+            }else{
+              return 500
+            }
+          }
         }
       },
     }

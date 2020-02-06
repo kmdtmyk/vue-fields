@@ -13,6 +13,7 @@ dropdown-input(
   @keydown.up='onKeydownUp'
   @keydown.down='onKeydownDown'
   @keydown.enter='onKeydownEnter'
+  @focus='onFocus'
 )
   dropdown-list(
     ref='dropdown'
@@ -23,13 +24,13 @@ dropdown-input(
 </template>
 
 <script>
-import debounce from 'lodash.debounce'
 import wrapper from './mixins/wrapper'
 import DropdownInput from './DropdownInput'
 import DropdownList from './DropdownList'
 import Arrays from '../lib/Arrays'
 import Strings from '../lib/Strings'
 import VueProps from '../lib/VueProps'
+import DebounceFunction from '../lib/DebounceFunction'
 
 export default {
   mixins: [wrapper],
@@ -42,7 +43,7 @@ export default {
     inputClass: [String, Array, Object],
     autocomplete: [String, Boolean, Array, Function],
     asyncWait: {
-      type: Number,
+      type: [Number, Function],
     },
   },
   data(){
@@ -94,8 +95,8 @@ export default {
       }
       return VueProps.isAsyncFunction(this.autocomplete)
     },
-    callAsyncRecords(){
-      return debounce((query) => {
+    asyncRecordsFunction(){
+      return new DebounceFunction((query) => {
         const startTime = Date.now()
         this.autocomplete(query).then(
           (data) => {
@@ -110,16 +111,32 @@ export default {
             this.loading = false
           }
         )
-      }, this.asyncWait)
+      })
     },
   },
   methods: {
-    onInputNative(e){
-      if(this.isAsync === false){
-        return
+    onFocus(e){
+      if(this.isAsync === true && Arrays.isNullOrEmpty(this.asyncRecords)){
+        this.callAsyncRecords()
       }
-      this.callAsyncRecords(this.inputValue)
-      this.loading = Strings.isNotEmpty(this.inputValue)
+    },
+    onInputNative(e){
+      if(this.isAsync === true){
+        this.callAsyncRecords()
+      }
+    },
+    callAsyncRecords(){
+      let wait
+      if(this.asyncWait instanceof Function){
+        wait = this.asyncWait(this.inputValue)
+      }else{
+        wait = this.asyncWait
+      }
+      this.asyncRecordsFunction.call({
+        wait,
+        arguments: [this.inputValue],
+      })
+      this.loading = true
     },
     onKeydownUp(e){
       if(!this.useDropdown){
