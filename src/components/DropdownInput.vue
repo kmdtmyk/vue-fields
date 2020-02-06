@@ -7,6 +7,8 @@
     v-bind='$attrs'
     :class='inputClass'
     :style='style'
+    :readonly='readonly'
+    :disabled='disabled'
     @mousedown='_onMousedown'
     @focus='_onFocus'
     @blur='_onBlur'
@@ -45,6 +47,8 @@ export default {
     clear: Boolean,
     loading: Boolean,
     inputClass: [String, Array, Object],
+    readonly: [Boolean, String],
+    disabled: [Boolean, String],
   },
   data(){
     return {
@@ -65,11 +69,10 @@ export default {
       }
     },
     editable(){
-      if(!this.isMounted){
+      if(this.isMounted === false){
         return false
       }
-      const {input} = this.$refs
-      if(input.readOnly || input.disabled){
+      if(this.readonly !== false || this.disabled !== false){
         return false
       }
       return true
