@@ -93,10 +93,11 @@ export default {
     },
     record: {
       handler(record){
-        if(this.recordKey != null){
+        if(this.recordKey != null && record !== undefined){
           this.selectedRecord = record
         }
       },
+      immediate: true,
     },
   },
   computed: {

@@ -143,6 +143,21 @@ describe('placeholder', () => {
     expect(subject(2, 100)).toBe('2')
   })
 
+  it('with record', () => {
+    const wrapper = mount(Component, {
+      propsData: {
+        recordKey: 'id',
+        value: 1,
+        record: {id: 1, name: 'foo'},
+      },
+      scopedSlots: {
+        default: '<div>{{props.record.id}}. {{props.record.name}}</div>'
+      },
+    })
+    const input = wrapper.find('input')
+    expect((input.attributes().placeholder)).toEqual('1. foo')
+  })
+
   it('set props record', () => {
     const wrapper = mount(Component, {
       propsData: {
@@ -152,8 +167,11 @@ describe('placeholder', () => {
         default: '<div>{{props.record.id}}. {{props.record.name}}</div>'
       },
     })
-    wrapper.setProps({record: {id: 1, name: 'foo'}})
+
     const input = wrapper.find('input')
+
+    expect((input.attributes().placeholder)).toBeUndefined()
+    wrapper.setProps({record: {id: 1, name: 'foo'}})
     expect((input.attributes().placeholder)).toEqual('1. foo')
   })
 
