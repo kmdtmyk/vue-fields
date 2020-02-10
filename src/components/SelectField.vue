@@ -200,8 +200,8 @@ export default {
     },
     clear(){
       this.selectedRecord = null
-      this.$emit('input', null)
       this.$emit('update:record', null)
+      this.$emit('input', null)
     },
     select(record){
       if(record instanceof Object){
@@ -211,8 +211,8 @@ export default {
       const {recordKey} = this
       if(recordKey != null){
         this.selectedRecord = record
-        this.$emit('input', record[recordKey])
         this.$emit('update:record', record)
+        this.$emit('input', record[recordKey])
       }else{
         this.$emit('input', record)
       }
