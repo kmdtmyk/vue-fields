@@ -49,4 +49,16 @@ describe('search', () => {
     expect(Arrays.search(array, 'li　mi')).toEqual(['linux mint'])
   })
 
+  it('object array', () => {
+    const array = [
+      {id: 1, name: 'ubuntu'},
+      {id: 2, name: 'centos'},
+      {id: 3, name: 'debian'},
+      {id: 4, name: 'linux mint'},
+    ]
+    expect(Arrays.search(array, 'bun')).toEqual([{id: 1, name: 'ubuntu'}])
+    expect(Arrays.search(array, '3')).toEqual([{id: 3, name: 'debian'}])
+    expect(Arrays.search(array, 'li mi')).toEqual([{id: 4, name: 'linux mint'}])
+  })
+
 })

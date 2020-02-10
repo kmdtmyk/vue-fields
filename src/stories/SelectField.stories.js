@@ -121,17 +121,11 @@ const story = storiesOf('SelectField', module)
       data(){
         return {
           value,
-          records: (query) => {
-            const records = [
-              {id: 1, name: 'foo'},
-              {id: 2, name: 'bar'},
-              {id: 3, name: 'hoge'},
-            ]
-            if(!query){
-              return records
-            }
-            return records.filter(record => record.name.startsWith(query))
-          },
+          records: [
+            {id: 1, name: 'foo'},
+            {id: 2, name: 'bar'},
+            {id: 3, name: 'hoge'},
+          ],
         }
       },
     }
@@ -154,17 +148,11 @@ const story = storiesOf('SelectField', module)
         return {
           value,
           record: null,
-          records: (query) => {
-            const records = [
-              {id: 1, name: 'foo'},
-              {id: 2, name: 'bar'},
-              {id: 3, name: 'hoge'},
-            ]
-            if(!query){
-              return records
-            }
-            return records.filter(record => record.name.startsWith(query))
-          },
+          records: [
+            {id: 1, name: 'foo'},
+            {id: 2, name: 'bar'},
+            {id: 3, name: 'hoge'},
+          ],
         }
       },
     }

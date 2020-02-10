@@ -28,10 +28,15 @@ export default class{
     const words = query.split(/\s/)
     return array.filter(value => {
       return words.every(word => {
-        return value.toString().toLowerCase().includes(word.toLowerCase())
+        if(value instanceof Object){
+          return Object.values(value).find(value => {
+            return value.toString().toLowerCase().includes(word.toLowerCase())
+          }) != null
+        }else{
+          return value.toString().toLowerCase().includes(word.toLowerCase())
+        }
       })
     })
-
   }
 
 }
