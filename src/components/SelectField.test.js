@@ -77,16 +77,6 @@ describe('value', () => {
     expect(wrapper.emitted().input).toBeUndefined()
   })
 
-  it('object and record key', () => {
-    const wrapper = mount(Component, {
-      propsData: {
-        value: {id: 1, name: 'foo'},
-        recordKey: 'id',
-      },
-    })
-    expect(wrapper.emitted().input[0]).toEqual([1])
-  })
-
 })
 
 describe('placeholder', () => {
@@ -151,6 +141,20 @@ describe('placeholder', () => {
 
     expect(subject(1)).toBe('1. foo')
     expect(subject(2, 100)).toBe('2')
+  })
+
+  it('set props record', () => {
+    const wrapper = mount(Component, {
+      propsData: {
+        recordKey: 'id',
+      },
+      scopedSlots: {
+        default: '<div>{{props.record.id}}. {{props.record.name}}</div>'
+      },
+    })
+    wrapper.setProps({record: {id: 1, name: 'foo'}})
+    const input = wrapper.find('input')
+    expect((input.attributes().placeholder)).toEqual('1. foo')
   })
 
 })
@@ -227,55 +231,6 @@ describe('key event', () => {
       expect(wrapper.emitted().input).toBeUndefined()
     })
 
-  })
-
-})
-
-describe('record key', () => {
-
-  it('emit when value is object', () => {
-
-    const subject = value => {
-
-      const records = [
-        {id: 1, name: 'foo'}
-      ]
-
-      const wrapper = mount(Component, {
-        propsData: {
-          records,
-          value,
-          recordKey: 'id',
-        },
-      })
-
-      return wrapper.emitted('input')
-    }
-
-    expect(subject(1)).toBeUndefined()
-    expect(subject(null)).toBeUndefined()
-    expect(subject({id: 2, name: 'bar'})[0]).toEqual([2])
-  })
-
-  it('emit when set object value', () => {
-
-    const records = [
-      {id: 1, name: 'foo'}
-    ]
-
-    const wrapper = mount(Component, {
-      propsData: {
-        records,
-        value: '',
-        recordKey: 'id',
-      },
-    })
-
-    wrapper.setProps({value: 1})
-    wrapper.setProps({value: null})
-    wrapper.setProps({value: {id: 2}})
-    expect(wrapper.emitted('input').length).toEqual(1)
-    expect(wrapper.emitted('input')[0]).toEqual([2])
   })
 
 })
@@ -395,6 +350,17 @@ describe('select', () => {
     })
     wrapper.vm.select('foo')
     expect(wrapper.emitted('input')[0]).toEqual(['foo'])
+  })
+
+  it('emit update:record if record key exists', () => {
+    const wrapper = mount(Component, {
+      propsData: {
+        recordKey: 'id',
+      },
+    })
+    wrapper.vm.select({id: 1, name: 'foo'})
+    expect(wrapper.emitted('input')[0]).toEqual([1])
+    expect(wrapper.emitted('update:record')[0]).toEqual([{id: 1, name: 'foo'}])
   })
 
 })

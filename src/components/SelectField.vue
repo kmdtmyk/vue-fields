@@ -62,27 +62,22 @@ export default {
     asyncWait: {
       type: [Number, Function],
     },
+    record: {
+      type: Object,
+    },
   },
   data(){
     return {
       loading: false,
       asyncRecords: null,
-      selectedRecord: null,
       inputValue: '',
+      selectedRecord: null,
     }
   },
   watch: {
     value: {
       handler(value){
         const {recordKey} = this
-
-        if(value instanceof Object){
-          this.selectedRecord = value
-          const {recordKey} = this
-          if(recordKey != null){
-            this.$emit('input', value[recordKey])
-          }
-        }
 
         if(recordKey != null && this.isAsync === false){
           const record = Arrays.from(this.records).find(record => {
@@ -95,6 +90,13 @@ export default {
 
       },
       immediate: true,
+    },
+    record: {
+      handler(record){
+        if(this.recordKey != null){
+          this.selectedRecord = record
+        }
+      },
     },
   },
   computed: {
@@ -199,6 +201,7 @@ export default {
     clear(){
       this.selectedRecord = null
       this.$emit('input', null)
+      this.$emit('update:record', null)
     },
     select(record){
       if(record instanceof Object){
@@ -207,19 +210,24 @@ export default {
       this.inputValue = this.recordText(record)
       const {recordKey} = this
       if(recordKey != null){
+        this.selectedRecord = record
         this.$emit('input', record[recordKey])
+        this.$emit('update:record', record)
       }else{
         this.$emit('input', record)
       }
     },
     recordText(record){
+      if(record == null){
+        return ''
+      }
       const slot = this.$scopedSlots.default
       if(slot != null){
         const vnode = slot({record})
         const text = vnode[0].text || vnode[0].children[0].text
         return text.trim()
       }
-      return record
+      return record.toString()
     },
   }
 }

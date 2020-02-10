@@ -142,17 +142,18 @@ const story = storiesOf('SelectField', module)
       components: {SelectField},
       template: `
         <div>
-          <select-field v-model='value' :records='records' record-key='id'>
+          <select-field v-model='value' :record.sync='record' :records='records' record-key='id'>
             <template v-slot='{record}'>
               <span>{{record.id}}. {{record.name}}</span>
             </template>
           </select-field>
-          {{value}}
+          {{value}} {{record}}
         </div>
       `,
       data(){
         return {
           value,
+          record: null,
           records: (query) => {
             const records = [
               {id: 1, name: 'foo'},
