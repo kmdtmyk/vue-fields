@@ -30,10 +30,10 @@ export default class{
       return words.every(word => {
         if(value instanceof Object){
           return Object.values(value).find(value => {
-            return value.toString().toLowerCase().includes(word.toLowerCase())
+            return Strings.includes(value, word, {ignoreCase: true})
           }) != null
         }else{
-          return value.toString().toLowerCase().includes(word.toLowerCase())
+          return Strings.includes(value, word, {ignoreCase: true})
         }
       })
     })

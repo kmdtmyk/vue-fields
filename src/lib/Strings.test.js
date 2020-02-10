@@ -1,5 +1,28 @@
 import Strings from './Strings'
 
+describe('includes', () => {
+
+  it('basic', () => {
+    expect(Strings.includes('abcdef', 'ab')).toEqual(true)
+    expect(Strings.includes('abcdef', 'AB')).toEqual(false)
+    expect(Strings.includes('abcdef', '')).toEqual(false)
+    expect(Strings.includes('abcdef', null)).toEqual(false)
+    expect(Strings.includes('abcdef', undefined)).toEqual(false)
+    expect(Strings.includes('123', 1)).toEqual(true)
+    expect(Strings.includes(123, '1')).toEqual(true)
+    expect(Strings.includes(null, 'u')).toEqual(false)
+    expect(Strings.includes(undefined, 'u')).toEqual(false)
+    expect(Strings.includes('', '')).toEqual(false)
+  })
+
+  it('ignoreCase: true', () => {
+    const option = {ignoreCase: true}
+    expect(Strings.includes('abcdef', 'ab', option)).toEqual(true)
+    expect(Strings.includes('abcdef', 'AB', option)).toEqual(true)
+  })
+
+})
+
 describe('isEmpty', () => {
 
   it('true', () => {
