@@ -177,6 +177,32 @@ describe('placeholder', () => {
 
 })
 
+describe('required', () => {
+
+  it('input attribute', () => {
+
+    const subject = (required, value) => {
+
+      const wrapper = mount(Component, {
+        propsData: {
+          required,
+          value,
+        },
+      })
+      const input = wrapper.find('input')
+      return input.attributes().required
+    }
+
+    expect(subject(true, null)).toEqual('required')
+    expect(subject(true, 'foo')).toBeUndefined()
+    expect(subject(false, null)).toBeUndefined()
+    expect(subject(false, 'foo')).toBeUndefined()
+    expect(subject('required', null)).toEqual('required')
+    expect(subject('required', 'foo')).toBeUndefined()
+  })
+
+})
+
 describe('clear button', () => {
 
   const subject = (records, value) => {

@@ -5,6 +5,7 @@ dropdown-input(
   v-model='inputValue'
   v-bind='$attrs'
   :placeholder='placeholder'
+  :required='required !== false && isEmpty === true'
   :clear='isEmpty === false'
   :style='wrapperStyle'
   :inputClass='[inputClass, {empty: isEmpty}]'
@@ -51,6 +52,7 @@ export default {
   props: {
     value: [Number, String, Object],
     name: String,
+    required: [Boolean, String],
     inputClass: [String, Array, Object],
     records: {
       type: [Array, Function],
