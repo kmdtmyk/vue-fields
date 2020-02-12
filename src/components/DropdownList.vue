@@ -9,6 +9,7 @@
     v-for='(record, index) in records'
     :class='{selected: selectedIndex === index}'
     :key='index'
+    @mouseenter='selectedIndex = index'
     @mousemove='selectedIndex = index'
     @mousedown='select'
   )
