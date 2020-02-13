@@ -1,6 +1,8 @@
 import {mount} from '@vue/test-utils'
 import Component from './SelectField'
 
+import flushPromises from 'flush-promises'
+
 describe('name', () => {
 
   it('has hidden field', () => {
@@ -158,21 +160,29 @@ describe('placeholder', () => {
     expect((input.attributes().placeholder)).toEqual('1. foo')
   })
 
-  it('set props record', () => {
+  it('update props value', async () => {
     const wrapper = mount(Component, {
       propsData: {
         recordKey: 'id',
+        records: [
+          {id: 1, name: 'foo'},
+        ],
       },
       scopedSlots: {
         default: '<div>{{props.record.id}}. {{props.record.name}}</div>'
       },
     })
 
-    const input = wrapper.find('input')
+    await flushPromises()
 
-    expect((input.attributes().placeholder)).toBeUndefined()
-    wrapper.setProps({record: {id: 1, name: 'foo'}})
-    expect((input.attributes().placeholder)).toEqual('1. foo')
+    const input = wrapper.find('input')
+    expect(input.attributes().placeholder).toBeUndefined()
+    wrapper.setProps({value: 1})
+    expect(input.attributes().placeholder).toEqual('1. foo')
+    wrapper.setProps({value: 0})
+    expect(input.attributes().placeholder).toEqual('0')
+    wrapper.setProps({value: null})
+    expect(input.attributes().placeholder).toBeUndefined()
   })
 
 })

@@ -40,6 +40,7 @@
     "babel-preset-vue": "^2.0.2",
     "big.js": "^5.2.2",
     "dateformat": "^3.0.3",
+    "flush-promises": "^1.0.2",
     "node-sass": "^4.13.1",
     "pug": "^2.0.4",
     "pug-plain-loader": "^1.0.0",

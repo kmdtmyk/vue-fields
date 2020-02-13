@@ -82,12 +82,13 @@ export default {
         const {recordKey} = this
 
         if(recordKey != null && this.isAsync === false){
-          const record = Arrays.from(this.records).find(record => {
+          if(value == null){
+            this.selectedRecord = null
+            return
+          }
+          this.selectedRecord = Arrays.from(this.records).find(record => {
             return record[recordKey] === value
           })
-          if(record != null){
-            this.selectedRecord = record
-          }
         }
 
       },
