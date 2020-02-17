@@ -306,11 +306,12 @@ describe('dropdown list', () => {
 
     it('array', () => {
       const records = [
+        '',
         'foo',
         'bar',
         'hoge',
       ]
-      expect(subject(records)).toBe(3)
+      expect(subject(records)).toBe(4)
     })
 
     it('function', () => {
@@ -383,6 +384,21 @@ describe('dropdown list', () => {
       expect(subject('f').exists()).toEqual(false)
       expect(subject('zzz').exists()).toEqual(false)
     })
+
+  })
+
+  it('use &nbsp; if text is empty', () => {
+
+    const wrapper = mount(Component, {
+      propsData: {
+        records: [
+          '',
+        ],
+      },
+    })
+    const input = wrapper.find('input[type=text]')
+    input.trigger('focus')
+    expect(wrapper.find('.dropdown-list-item').element.innerHTML).toEqual('&nbsp;')
 
   })
 

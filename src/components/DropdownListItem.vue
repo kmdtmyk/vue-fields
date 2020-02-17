@@ -10,9 +10,9 @@ div(
 <script>
 export default {
   data(){
-    return {
-      textSlot: this.$slots.default[0].children == null
-    }
+    const defaultSlot = this.$slots.default
+    const textSlot = defaultSlot != null && defaultSlot[0].children == null
+    return {textSlot}
   },
 }
 </script>
