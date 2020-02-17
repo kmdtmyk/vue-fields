@@ -11,6 +11,18 @@ export default class{
     }
   }
 
+  static isBlank(value){
+    if(value == null){
+      return true
+    }
+
+    return /^\s*$/.test(value)
+  }
+
+  static isNotBlank(value){
+    return this.isBlank(value) === false
+  }
+
   static isEmpty(value){
     if(value == null){
       return true

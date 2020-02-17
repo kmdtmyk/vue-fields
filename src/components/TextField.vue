@@ -84,10 +84,17 @@ export default {
     dropdownRecords(){
       if(this.isAsync){
         return this.asyncRecords
-      }else if(this.autocomplete instanceof Function){
-        return this.autocomplete(this.inputValue)
       }
-      return Arrays.search(this.autocomplete, this.inputValue)
+
+      let array
+      if(this.autocomplete instanceof Function){
+        array = this.autocomplete(this.inputValue)
+      }else{
+        array = Arrays.search(this.autocomplete, this.inputValue)
+      }
+      return array.filter(value => {
+        return Strings.isNotBlank(value)
+      })
     },
     isAsync(){
       if(this.asyncWait != null){

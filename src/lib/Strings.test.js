@@ -23,6 +23,26 @@ describe('includes', () => {
 
 })
 
+describe('isBlank', () => {
+
+  it('true', () => {
+    expect(Strings.isBlank('')).toEqual(true)
+    expect(Strings.isBlank(' ')).toEqual(true)
+    expect(Strings.isBlank('　')).toEqual(true)
+    expect(Strings.isBlank('\n')).toEqual(true)
+    expect(Strings.isBlank('\r\n')).toEqual(true)
+    expect(Strings.isBlank('\r')).toEqual(true)
+    expect(Strings.isBlank(null)).toEqual(true)
+    expect(Strings.isBlank(undefined)).toEqual(true)
+  })
+
+  it('false', () => {
+    expect(Strings.isBlank('foo')).toEqual(false)
+    expect(Strings.isBlank('0')).toEqual(false)
+  })
+
+})
+
 describe('isEmpty', () => {
 
   it('true', () => {

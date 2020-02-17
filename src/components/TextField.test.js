@@ -134,7 +134,7 @@ describe('autocomplete', () => {
 
   describe('dropdown', () => {
 
-    it('array', (done) => {
+    it('array', () => {
       const array = ['foo', 'bar']
       const wrapper = mount(Component, {
         propsData: {
@@ -144,11 +144,23 @@ describe('autocomplete', () => {
       const input = wrapper.find('input')
       input.trigger('focus')
 
-      Vue.nextTick(() => {
-        const dropdownListTexts = wrapper.findAll('.dropdown-list-item').wrappers.map(wrapper => wrapper.text())
-        expect(dropdownListTexts).toEqual(array)
-        done()
+      const dropdown = wrapper.findAll('.dropdown-list-item')
+      const dropdwonTexts = dropdown.wrappers.map(wrapper => wrapper.text())
+      expect(dropdwonTexts).toEqual(['foo', 'bar'])
+    })
+
+    it('remove blank text', () => {
+      const array = ['', ' ', '\r', '\n', '\r\n']
+      const wrapper = mount(Component, {
+        propsData: {
+          autocomplete: array,
+        }
       })
+      const input = wrapper.find('input')
+      input.trigger('focus')
+
+      const dropdown = wrapper.findAll('.dropdown-list-item')
+      expect(dropdown.length).toEqual(0)
     })
 
   })
