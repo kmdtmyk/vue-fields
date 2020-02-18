@@ -6,21 +6,27 @@
       label {{year}}
       button(type='button' @click='nextYear' tabindex='-1') &gt;
     div
-      button(type='button' @click='currentYear' tabindex='-1') 今年
+      button(type='button' @click='currentYear' tabindex='-1') {{l.thisYear}}
   .picker(:class='animation')
     table
-      transition-group(tag='tbody' @beforeEnter='transitionBeforeEnter' @afterLeave='transitionAfterLeave')
+      transition-group(
+        tag='tbody'
+        @beforeEnter='transitionBeforeEnter'
+        @afterLeave='transitionAfterLeave'
+      )
         tr(v-for='(_, y) in 3' :key='`${year}:${y}`')
           td(v-for='(_, x) in 4')
-            button(type='button' @click='select(year, x + y * 4 + 1)') {{x + y * 4 + 1}}月
+            button(type='button' @click='select(year, x + y * 4 + 1)')
+              |{{l.monthNames[x + y * 4 + 1]}}
   footer
-    button(type='button' @click='currentMonth' tabindex='-1') 今月
-    button(type='button' @click='clear' tabindex='-1') クリア
+    button(type='button' @click='currentMonth' tabindex='-1') {{l.thisMonth}}
+    button(type='button' @click='clear' tabindex='-1') {{l.clear}}
 </template>
 
 <script>
 import dateformat from 'dateformat'
 import Midnight from '@kmdtmyk/midnight'
+import Locale from '../lib/Locale'
 
 export default {
   props: {
@@ -32,6 +38,7 @@ export default {
     const date = Midnight.parse(this.value)
     const year = date == null ? new Midnight().year() : date.year()
     return {
+      l: Locale.get(),
       year,
       animationCount: 0,
       animation: '',

@@ -28,36 +28,7 @@
 <script>
 import dateformat from 'dateformat'
 import Midnight from '@kmdtmyk/midnight'
-
-const japanese = {
-  thisMonth: '今月',
-  today: '今日',
-  clear: 'クリア',
-  dayNames: [
-    '日',
-    '月',
-    '火',
-    '水',
-    '木',
-    '金',
-    '土',
-  ],
-}
-
-const english = {
-  thisMonth: 'This month',
-  today: 'Today',
-  clear: 'Clear',
-  dayNames: [
-    'Sun',
-    'Mon',
-    'Tue',
-    'Wed',
-    'Thu',
-    'Fri',
-    'Sat',
-  ],
-}
+import Locale from '../lib/Locale'
 
 export default {
   props: {
@@ -70,14 +41,8 @@ export default {
     const year = date.year()
     const month = date.month()
 
-    let locale
-    if(navigator.language === 'ja'){
-      locale = japanese
-    }else{
-      locale = english
-    }
     return {
-      l: locale,
+      l: Locale.get(),
       year,
       month,
       animationCount: 0,
