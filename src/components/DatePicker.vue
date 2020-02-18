@@ -6,12 +6,12 @@
       label {{calendarDates[7] | period}}
       button(type='button' @click='nextMonth' tabindex='-1') &gt;
     div
-      button(type='button' @click='currentMonth' tabindex='-1') 今月
+      button(type='button' @click='currentMonth' tabindex='-1') {{l.thisMonth}}
   .calendar(:class='animation')
     table
       thead
         tr
-          th(v-for='dayName in dayNames') {{dayName}}
+          th(v-for='dayName in l.dayNames') {{dayName}}
       transition-group(tag='tbody' @beforeEnter='transitionBeforeEnter' @afterLeave='transitionAfterLeave')
         tr(v-for='(n, y) in 6' :key='`${year}/${month}:${n}`')
           td(v-for='(_, x) in 7' :class='tdClass(calendarDates[x + y * 7])')
@@ -21,13 +21,43 @@
               tabindex='-1'
             ) {{calendarDates[x + y * 7] | day}}
   footer
-    button(type='button' @click='today' tabindex='-1') 今日
-    button(type='button' @click='clear' tabindex='-1') クリア
+    button(type='button' @click='today' tabindex='-1') {{l.today}}
+    button(type='button' @click='clear' tabindex='-1') {{l.clear}}
 </template>
 
 <script>
 import dateformat from 'dateformat'
 import Midnight from '@kmdtmyk/midnight'
+
+const japanese = {
+  thisMonth: '今月',
+  today: '今日',
+  clear: 'クリア',
+  dayNames: [
+    '日',
+    '月',
+    '火',
+    '水',
+    '木',
+    '金',
+    '土',
+  ],
+}
+
+const english = {
+  thisMonth: 'This month',
+  today: 'Today',
+  clear: 'Clear',
+  dayNames: [
+    'Sun',
+    'Mon',
+    'Tue',
+    'Wed',
+    'Thu',
+    'Fri',
+    'Sat',
+  ],
+}
 
 export default {
   props: {
@@ -39,10 +69,17 @@ export default {
     const date = Midnight.parse(this.value) || new Midnight()
     const year = date.year()
     const month = date.month()
+
+    let locale
+    if(navigator.language === 'ja'){
+      locale = japanese
+    }else{
+      locale = english
+    }
     return {
+      l: locale,
       year,
       month,
-      dayNames: ['日', '月', '火', '水', '木', '金', '土'],
       animationCount: 0,
       animation: '',
     }
