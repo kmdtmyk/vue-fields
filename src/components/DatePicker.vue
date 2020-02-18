@@ -227,6 +227,8 @@ export default {
       }
       thead th{
         text-align: center;
+        padding: 2px;
+        border: 0;
         background-color: white;
       }
       tbody{
@@ -235,6 +237,8 @@ export default {
         }
         td{
           padding: 0;
+          border: 0;
+          background-color: white;
           &.current-month{
             color: black;
           }
