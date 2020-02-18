@@ -12,12 +12,13 @@
           td(v-for='(_, x) in 5')
             button(type='button' @click='select(startYear + x + y * 5)') {{startYear + x + y * 5}}
   footer
-    button(type='button' @click='currentYear' tabindex='-1') 今年
-    button(type='button' @click='clear' tabindex='-1') クリア
+    button(type='button' @click='currentYear' tabindex='-1') {{l.thisYear}}
+    button(type='button' @click='clear' tabindex='-1') {{l.clear}}
 </template>
 
 <script>
 import Midnight from '@kmdtmyk/midnight'
+import Locale from '../lib/Locale'
 
 const duration = 20
 
@@ -37,6 +38,7 @@ export default {
     }
     const startYear = Math.floor(year / duration) * duration
     return {
+      l: Locale.get(),
       animationCount: 0,
       animation: '',
       startYear,
