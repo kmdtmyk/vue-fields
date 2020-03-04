@@ -130,6 +130,12 @@ describe('autocomplete', () => {
       expect(subject(undefined)).toBeUndefined()
     })
 
+    it('without props', () => {
+      const wrapper = mount(Component)
+      const input = wrapper.find('input')
+      expect(input.attributes().autocomplete).toBeUndefined()
+    })
+
   })
 
   describe('dropdown', () => {

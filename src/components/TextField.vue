@@ -41,7 +41,12 @@ export default {
   props: {
     value: String,
     inputClass: [String, Array, Object],
-    autocomplete: [String, Boolean, Array, Function],
+    autocomplete: {
+      type: [String, Boolean, Array, Function],
+      default(){
+        return null
+      },
+    },
     asyncWait: {
       type: [Number, Function],
     },
