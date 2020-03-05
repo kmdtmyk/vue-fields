@@ -6,7 +6,7 @@ import DateField from '../components/DateField'
 storiesOf('DateField', module)
   .addDecorator(withKnobs)
   .add('basic', () => {
-    const value = text('value', '2018-12-15')
+    const value = text('value', '')
     const size = number('size', 10)
     const readonly = boolean('readonly', false)
     const disabled = boolean('disabled', false)
@@ -24,7 +24,7 @@ storiesOf('DateField', module)
     }
   }, {info: true})
   .add('style', () => {
-    const value = text('value', '2018-12-15')
+    const value = text('value', '')
     const size = number('size', 24)
     const colour = color('color', 'red')
     return {

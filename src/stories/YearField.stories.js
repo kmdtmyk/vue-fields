@@ -1,12 +1,12 @@
 import {storiesOf} from '@storybook/vue'
-import {withKnobs, number, boolean, color} from '@storybook/addon-knobs'
+import {withKnobs, text, number, boolean, color} from '@storybook/addon-knobs'
 
 import YearField from '../components/YearField'
 
 storiesOf('YearField', module)
   .addDecorator(withKnobs)
   .add('basic', () => {
-    const value = number('value', 2018)
+    const value = text('value', '')
     const size = number('size', 10)
     const readonly = boolean('readonly', false)
     const disabled = boolean('disabled', false)
@@ -24,7 +24,7 @@ storiesOf('YearField', module)
     }
   }, {info: true})
   .add('style', () => {
-    const value = number('value', 2018)
+    const value = text('value', '')
     const size = number('size', 24)
     const colour = color('color', 'red')
     return {
