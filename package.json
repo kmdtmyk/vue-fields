@@ -35,6 +35,7 @@
     "@vue/cli-plugin-unit-jest": "^4.2.3",
     "@vue/cli-service": "^4.2.3",
     "@vue/test-utils": "^1.0.0-beta.29",
+    "babel-preset-vue": "^2.0.2",
     "big.js": "^5.2.2",
     "core-js": "^3.6.4",
     "dateformat": "^3.0.3",
