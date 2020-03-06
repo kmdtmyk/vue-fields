@@ -4,22 +4,22 @@
     ref='input'
     type='text'
     autocomplete='off'
+    v-model='inputValue'
     v-on='listeners'
     v-bind='$attrs'
-    :value='inputValue'
     :class='inputClass'
     :style='wrapperStyle'
-    @change='change'
-    @click='click'
-    @focus='focus'
-    @blur='blur'
-    @keydown.esc='keydownEsc'
+    @change='onChange'
+    @click='onClick'
+    @focus='onFocus'
+    @blur='onBlur'
+    @keydown.esc='onEscKeyDown'
   )
   date-picker.date-picker(
     v-if='open && !readOnly'
     v-model='inputValue'
     @input='select')
-  input(v-if='$props.name != null' :name='$props.name' :value='value' type='hidden')
+  input(v-if='$props.name != null' :name='$props.name' :value='localValue' type='hidden')
 </template>
 
 <script>
@@ -45,6 +45,7 @@ export default {
     return {
       open: false,
       isMounted: false,
+      localValue: null,
       inputValue: this.value,
     }
   },
@@ -52,15 +53,19 @@ export default {
     this.isMounted = true
   },
   watch: {
-    value(){
-      this.inputValue = this.value
+    value: {
+      handler(value){
+        this.localValue = value
+        this.inputValue = value
+      },
+      immediate: true,
     },
   },
   computed: {
     listeners(){
       return {
         ...this.$listeners,
-        input: this.input,
+        input: this.onInput,
       }
     },
     readOnly(){
@@ -72,31 +77,37 @@ export default {
     },
   },
   methods: {
-    input(e){
+    onInput(e){
       // nothing
     },
-    change(e){
+    onChange(e){
       const date = Midnight.parse(e.target.value)
       if(date == null){
+        this.localValue = null
+        this.inputValue = null
         this.$emit('input', null)
       }else{
-        this.$emit('input', dateformat(date, 'yyyy-mm-dd'))
+        const text = dateformat(date, 'yyyy-mm-dd')
+        this.localValue = text
+        this.inputValue = text
+        this.$emit('input', text)
       }
     },
+    onClick(e){
+      this.open = true
+    },
+    onFocus(){
+      this.open = true
+    },
+    onBlur(){
+      this.open = false
+    },
+    onEscKeyDown(e){
+      this.open = false
+    },
     select(value){
+      this.localValue = value
       this.$emit('input', value)
-      this.open = false
-    },
-    click(e){
-      this.open = true
-    },
-    focus(){
-      this.open = true
-    },
-    blur(){
-      this.open = false
-    },
-    keydownEsc(e){
       this.open = false
     },
   },

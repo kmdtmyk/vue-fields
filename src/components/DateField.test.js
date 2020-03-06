@@ -3,18 +3,41 @@ import Component from './DateField'
 
 describe('name', () => {
 
-  it('has hidden field', () => {
+  it('with props value', () => {
     const wrapper = mount(Component, {
       propsData: {
         name: 'foo',
-        value: '2019-05-25',
+        value: '2019-05-01',
       }
     })
     const input = wrapper.find('input[type=text]')
     const hidden = wrapper.find('input[type=hidden]')
     expect(input.attributes().name).toBeUndefined()
     expect(hidden.attributes().name).toBe('foo')
-    expect(hidden.attributes().value).toBe('2019-05-25')
+    expect(hidden.attributes().value).toBe('2019-05-01')
+    input.setValue('2019-05-02')
+    input.trigger('change')
+    expect(hidden.attributes().value).toBe('2019-05-02')
+    wrapper.setProps({value: '2019-05-03'})
+    expect(hidden.attributes().value).toBe('2019-05-03')
+  })
+
+  it('without props value', () => {
+    const wrapper = mount(Component, {
+      propsData: {
+        name: 'foo',
+      }
+    })
+    const input = wrapper.find('input[type=text]')
+    const hidden = wrapper.find('input[type=hidden]')
+    expect(input.attributes().name).toBeUndefined()
+    expect(hidden.attributes().name).toBe('foo')
+    expect(hidden.attributes().value).toBeUndefined()
+    input.setValue('2019-05-02')
+    input.trigger('change')
+    expect(hidden.attributes().value).toBe('2019-05-02')
+    wrapper.setProps({value: '2019-05-03'})
+    expect(hidden.attributes().value).toBe('2019-05-03')
   })
 
 })
