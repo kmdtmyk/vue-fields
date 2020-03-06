@@ -32,7 +32,7 @@ dropdown-input(
     template(v-slot:empty='' v-if='$scopedSlots.empty && inputValue !== ""')
       slot(name='empty')
   template(v-slot:after='' v-if='$props.name != null')
-    input(:name='$props.name' :value='value' type='hidden')
+    input(:name='$props.name' :value='localValue' type='hidden')
 </template>
 
 <script>
@@ -51,7 +51,12 @@ export default {
     DropdownInput,
   },
   props: {
-    value: [Number, String, Object],
+    value: {
+      type: [Number, String, Object],
+      default(){
+        return null
+      },
+    },
     name: String,
     required: [Boolean, String],
     inputClass: [String, Array, Object],
@@ -73,6 +78,7 @@ export default {
     return {
       loading: false,
       asyncRecords: null,
+      localValue: null,
       inputValue: '',
       selectedRecord: null,
     }
@@ -80,6 +86,7 @@ export default {
   watch: {
     value: {
       handler(value){
+        this.localValue = value
         const {recordKey} = this
 
         if(recordKey != null && this.isAsync === false){
@@ -119,13 +126,13 @@ export default {
       if(this.selectedRecord){
         return this.recordText(this.selectedRecord)
       }
-      if(Strings.isNotEmpty(this.value)){
-        return this.value
+      if(Strings.isNotEmpty(this.localValue)){
+        return this.localValue
       }
       return this.$attrs.placeholder
     },
     isEmpty(){
-      return Strings.isEmpty(this.value)
+      return Strings.isEmpty(this.localValue)
     },
     asyncRecordsFunction(){
       return new DebounceFunction((query) => {
@@ -205,6 +212,8 @@ export default {
     },
     clear(){
       this.selectedRecord = null
+      this.inputValue = null
+      this.localValue = null
       this.$emit('update:record', null)
       this.$emit('input', null)
     },
@@ -218,8 +227,10 @@ export default {
         this.selectedRecord = record
         this.$emit('update:record', record)
         this.$emit('input', record[recordKey])
+        this.localValue = record[recordKey]
       }else{
         this.$emit('input', record)
+        this.localValue = record
       }
     },
     recordText(record){

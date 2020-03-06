@@ -5,7 +5,7 @@ import flushPromises from 'flush-promises'
 
 describe('name', () => {
 
-  it('has hidden field', () => {
+  it('with value', () => {
     const wrapper = mount(Component, {
       propsData: {
         name: 'foo',
@@ -17,6 +17,37 @@ describe('name', () => {
     expect(input.attributes().name).toBeUndefined()
     expect(hidden.attributes().name).toBe('foo')
     expect(hidden.attributes().value).toBe('bar')
+  })
+
+  it('without value', () => {
+    const wrapper = mount(Component, {
+      propsData: {
+        name: 'foo',
+      }
+    })
+    const input = wrapper.find('input[type=text]')
+    const hidden = wrapper.find('input[type=hidden]')
+    expect(input.attributes().name).toBeUndefined()
+    expect(hidden.attributes().name).toBe('foo')
+    expect(hidden.attributes().value).toBeUndefined()
+    wrapper.vm.select('abc')
+    expect(hidden.attributes().value).toBe('abc')
+  })
+
+  it('record-key', () => {
+    const wrapper = mount(Component, {
+      propsData: {
+        name: 'foo',
+        recordKey: 'id',
+      }
+    })
+    const input = wrapper.find('input[type=text]')
+    const hidden = wrapper.find('input[type=hidden]')
+    expect(input.attributes().name).toBeUndefined()
+    expect(hidden.attributes().name).toBe('foo')
+    expect(hidden.attributes().value).toBeUndefined()
+    wrapper.vm.select({id: 1, name: 'abc'})
+    expect(hidden.attributes().value).toBe('1')
   })
 
 })
