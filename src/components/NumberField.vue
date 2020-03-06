@@ -14,7 +14,7 @@ span
     @keydown.up.prevent='downKeyup'
     @keydown.down.prevent='downKeydown'
   )
-  input(v-if='$props.name != null' :name='$props.name' :value='value' type='hidden')
+  input(v-if='$props.name != null' :name='$props.name' :value='localValue' type='hidden')
 </template>
 
 <script>
@@ -39,14 +39,19 @@ export default {
   },
   data(){
     return {
-      inputValue: this.format(this.value)
+      localValue: '',
+      inputValue: '',
     }
   },
   watch: {
-    value(){
-      if(!this.isActive()){
-        this.inputValue = this.format(this.value)
-      }
+    value: {
+      handler(value){
+        this.localValue = value
+        if(!this.isActive()){
+          this.inputValue = this.format(value)
+        }
+      },
+      immediate: true,
     },
   },
   computed: {
@@ -60,34 +65,34 @@ export default {
       const number = NumberUtil.clamp(this.inputValue, this.min, this.max)
       return NumberUtil.round(number, this.precision)
     },
-    $input(){
-      return this.$refs.input
-    },
   },
   methods: {
     isActive(){
-      return this.$input === document.activeElement
+      return this.$refs.input === document.activeElement
     },
     input(e){
-      this.$emit('input', this.actualValue)
+      const value = this.actualValue
+      this.localValue = value
+      this.$emit('input', value)
     },
     focus(e){
-      const select = ElementUtil.selectedAll(this.$input)
+      const {input} = this.$refs
+      const select = ElementUtil.selectedAll(input)
       this.$nextTick(() => {
-        this.inputValue = this.value
+        this.inputValue = this.localValue
         if(select){
           this.$nextTick(() => {
-            this.$input.select()
+            input.select()
           })
         }else{
-          const start = this.$input.selectionStart
-          const leftText = this.$input.value.substr(0, start)
+          const start = input.selectionStart
+          const leftText = input.value.substr(0, start)
           if(!leftText){
             return
           }
           const offset = leftText.length - Parser.parseFloat(leftText).toString().length
           this.$nextTick(() => {
-            this.$input.setSelectionRange(start - offset, start - offset)
+            input.setSelectionRange(start - offset, start - offset)
           })
         }
       })
@@ -99,8 +104,8 @@ export default {
       const text = e.dataTransfer.getData('text')
       this.inputValue = this.value
       setTimeout(() => {
-        const start = this.$input.selectionStart
-        this.$input.setSelectionRange(start, start + text.length)
+        const start = this.$refs.input.selectionStart
+        this.$refs.input.setSelectionRange(start, start + text.length)
       })
     },
     format(value){
@@ -109,13 +114,15 @@ export default {
     },
     downKeyup(e){
       const nextValue = this.actualValue + 1
-      this.$emit('input', nextValue)
+      this.localValue = nextValue
       this.inputValue = nextValue
+      this.$emit('input', nextValue)
     },
     downKeydown(e){
       const nextValue = this.actualValue - 1
-      this.$emit('input', nextValue)
+      this.localValue = nextValue
       this.inputValue = nextValue
+      this.$emit('input', nextValue)
     },
   },
 }

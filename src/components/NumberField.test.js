@@ -16,6 +16,8 @@ describe('name', () => {
     expect(input.attributes().name).toBeUndefined()
     expect(hidden.attributes().name).toBe('foo')
     expect(hidden.attributes().value).toBe('123456789')
+    input.setValue('456')
+    expect(hidden.attributes().value).toBe('456')
   })
 
 })
@@ -76,25 +78,29 @@ describe('keydown', () => {
   it('up', () => {
     const wrapper = mount(Component, {
       propsData: {
-        value: '',
+        name: 'foo'
       }
     })
 
-    const input = wrapper.find('input')
+    const input = wrapper.find('input[type=text]')
+    const hidden = wrapper.find('input[type=hidden]')
     input.trigger('keydown.up')
     expect(wrapper.emitted('input')[0]).toEqual([1])
+    expect(hidden.attributes().value).toEqual('1')
   })
 
   it('down', () => {
     const wrapper = mount(Component, {
       propsData: {
-        value: '',
+        name: 'foo'
       }
     })
 
-    const input = wrapper.find('input')
+    const input = wrapper.find('input[type=text]')
+    const hidden = wrapper.find('input[type=hidden]')
     input.trigger('keydown.down')
     expect(wrapper.emitted('input')[0]).toEqual([-1])
+    expect(hidden.attributes().value).toEqual('-1')
   })
 
 })
