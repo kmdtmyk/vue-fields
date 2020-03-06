@@ -61,6 +61,27 @@ describe('input class', () => {
 
 })
 
+describe('input', () => {
+
+  it('set value', () => {
+    const wrapper = mount(Component, {
+      propsData: {
+        delimiter: true,
+      }
+    })
+    const input = wrapper.find('input[type=text]')
+    input.setValue('123.45')
+    expect(wrapper.emitted('input')[0]).toEqual([123])
+    input.setValue('123abc456')
+    expect(wrapper.emitted('input')[1]).toEqual([123456])
+    input.setValue('123,456,789')
+    expect(wrapper.emitted('input')[2]).toEqual([123456789])
+    input.setValue('invalid')
+    expect(wrapper.emitted('input')[3]).toEqual([null])
+  })
+
+})
+
 describe('keydown', () => {
 
   it('up', () => {
