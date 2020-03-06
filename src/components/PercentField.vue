@@ -8,13 +8,12 @@
     v-bind='$attrs'
     :class='inputClass'
     :style='style'
-    @input='input'
-    @blur='blur'
+    @blur='onBlur'
   )
   .suffix(
     :style='suffixStyle'
   ) {{suffix}}
-  input(v-if='$props.name != null' :name='$props.name' :value='value' type='hidden')
+  input(v-if='$props.name != null' :name='$props.name' :value='localValue' type='hidden')
 </template>
 
 <script>
@@ -42,7 +41,8 @@ export default {
   data(){
     return {
       isMounted: false,
-      inputValue: this.toInputValue(this.value),
+      localValue: null,
+      inputValue: '',
       suffixStyle: {},
     }
   },
@@ -53,27 +53,28 @@ export default {
     })
   },
   watch: {
-    value(){
-      if(!this.isActive()){
-        this.inputValue = this.toInputValue(this.value)
-      }
+    value: {
+      handler(value){
+        this.localValue = value
+        if(!this.isActive()){
+          this.inputValue = this.toInputValue(value)
+        }
+      },
+      immediate: true,
     },
   },
   computed: {
     listeners(){
       return {
         ...this.$listeners,
-        input: this.input,
+        input: this.onInput,
       }
-    },
-    $input(){
-      return this.$refs.input
     },
     style(){
       if(!this.isMounted){
         return this.wrapperStyle
       }
-      const input = this.$refs.input
+      const {input} = this.$refs
       const style = getComputedStyle(input)
       return this.wrapperStyle +
         `marginRight: calc(-1.5em + ${style.paddingRight});` +
@@ -81,14 +82,16 @@ export default {
     },
   },
   methods: {
+    onInput(e){
+      const value = this.toActualValue(e.target.value)
+      this.localValue = value
+      this.$emit('input', value)
+    },
+    onBlur(e){
+      this.inputValue = this.toInputValue(this.localValue)
+    },
     isActive(){
-      return this.$input === document.activeElement
-    },
-    input(e){
-      this.$emit('input', this.toActualValue(e.target.value))
-    },
-    blur(e){
-      this.inputValue = this.toInputValue(this.value)
+      return this.$refs.input === document.activeElement
     },
     toInputValue(value){
       try{
@@ -119,7 +122,7 @@ export default {
       }
     },
     updateSuffixStyle(){
-      const input = this.$input
+      const {input} = this.$refs
       if(!input){
         return
       }
