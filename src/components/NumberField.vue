@@ -8,11 +8,11 @@ span
     v-model='inputValue'
     :class='inputClass'
     :style='wrapperStyle'
-    @focus='focus'
-    @blur='blur'
-    @drop='drop'
-    @keydown.up.prevent='downKeyup'
-    @keydown.down.prevent='downKeydown'
+    @focus='onFocus'
+    @blur='onBlur'
+    @drop='onDrop'
+    @keydown.up.prevent='onUpKeyDown'
+    @keydown.down.prevent='onDownKeyDown'
   )
   input(v-if='$props.name != null' :name='$props.name' :value='localValue' type='hidden')
 </template>
@@ -58,7 +58,7 @@ export default {
     listeners(){
       return {
         ...this.$listeners,
-        input: this.input,
+        input: this.onInput,
       }
     },
     actualValue(){
@@ -67,15 +67,12 @@ export default {
     },
   },
   methods: {
-    isActive(){
-      return this.$refs.input === document.activeElement
-    },
-    input(e){
+    onInput(e){
       const value = this.actualValue
       this.localValue = value
       this.$emit('input', value)
     },
-    focus(e){
+    onFocus(e){
       const {input} = this.$refs
       const select = ElementUtil.selectedAll(input)
       this.$nextTick(() => {
@@ -97,10 +94,10 @@ export default {
         }
       })
     },
-    blur(e){
+    onBlur(e){
       this.inputValue = this.format(this.actualValue)
     },
-    drop(e){
+    onDrop(e){
       const text = e.dataTransfer.getData('text')
       this.inputValue = this.value
       setTimeout(() => {
@@ -108,21 +105,24 @@ export default {
         this.$refs.input.setSelectionRange(start, start + text.length)
       })
     },
-    format(value){
-      const {precision, delimiter} = this
-      return NumberUtil.format(value, {precision, delimiter})
-    },
-    downKeyup(e){
+    onUpKeyDown(e){
       const nextValue = this.actualValue + 1
       this.localValue = nextValue
       this.inputValue = nextValue
       this.$emit('input', nextValue)
     },
-    downKeydown(e){
+    onDownKeyDown(e){
       const nextValue = this.actualValue - 1
       this.localValue = nextValue
       this.inputValue = nextValue
       this.$emit('input', nextValue)
+    },
+    isActive(){
+      return this.$refs.input === document.activeElement
+    },
+    format(value){
+      const {precision, delimiter} = this
+      return NumberUtil.format(value, {precision, delimiter})
     },
   },
 }
