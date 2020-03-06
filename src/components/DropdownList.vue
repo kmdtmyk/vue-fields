@@ -94,6 +94,9 @@ export default {
 
 <style lang='scss' scoped>
 .dropdown-list{
+  position: static !important;
+  border: none !important;
+  border-radius: 0 !important;
   max-height: 15.1em;
   overflow-y: auto;
   word-break: break-all;
