@@ -178,7 +178,7 @@ export default {
 
 input{
   box-sizing: border-box;
-  width: 100%;
+  width: 100% !important;
 }
 
 .dropdown{
