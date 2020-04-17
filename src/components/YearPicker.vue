@@ -1,7 +1,7 @@
 <template lang='pug'>
 .year-picker(@mousedown.prevent='' @wheel.prevent='wheel')
   header
-    div
+    .header-selector
       button(type='button' @click='previous' tabindex='-1') &lt;
       label {{startYear}} 〜 {{endYear}}
       button(type='button' @click='next' tabindex='-1') &gt;
@@ -126,6 +126,13 @@ export default {
     border-bottom: 1px solid $border-color;
     display: flex;
     justify-content: space-between;
+
+    .header-selector{
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+    }
+
     label{
       margin: 0 0.4rem;
     }

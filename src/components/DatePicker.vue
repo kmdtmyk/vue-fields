@@ -1,7 +1,7 @@
 <template lang='pug'>
 .date-picker(@mousedown.prevent='' @wheel.prevent='wheel')
   header
-    div
+    .header-selector
       button(type='button' @click='previousMonth' tabindex='-1') &lt;
       label {{calendarDates[7] | period}}
       button(type='button' @click='nextMonth' tabindex='-1') &gt;
@@ -168,6 +168,13 @@ export default {
     border-bottom: 1px solid $border-color;
     display: flex;
     justify-content: space-between;
+
+    .header-selector{
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+    }
+
     button{
       min-width: 1.5rem;
     }

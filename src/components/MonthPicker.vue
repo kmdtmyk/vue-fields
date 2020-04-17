@@ -1,7 +1,7 @@
 <template lang='pug'>
 .month-picker(@mousedown.prevent='' @wheel.prevent='wheel')
   header
-    div
+    .header-selector
       button(type='button' @click='previousYear' tabindex='-1') &lt;
       label {{year}}
       button(type='button' @click='nextYear' tabindex='-1') &gt;
@@ -128,6 +128,13 @@ export default {
     border-bottom: 1px solid $border-color;
     display: flex;
     justify-content: space-between;
+
+    .header-selector{
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+    }
+
     label{
       margin: 0 0.4rem;
     }
