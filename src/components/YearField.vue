@@ -59,14 +59,12 @@ export default {
         input: this.input,
       }
     },
-    $input(){
-      return this.$refs.input.$input
-    },
     readOnly(){
       if(!this.isMounted){
         return false
       }
-      return this.$input.readOnly
+      const {input} = this.$refs
+      return input.readOnly
     },
   },
   methods: {
