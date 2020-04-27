@@ -22,7 +22,7 @@
   .clear(v-else-if='clearable' @click='_clickClear')
   .dropdown(
     v-if='editable && dropdownOpen'
-    :style='dropdownStyle'
+    :style='dropdown.style'
     ref='dropdown'
   )
     slot
@@ -32,6 +32,7 @@
 <script>
 import wrapper from './mixins/wrapper'
 import ElementUtil from '../lib/ElementUtil'
+import CssString from '../lib/CssString'
 import LoadingSpinner from './LoadingSpinner'
 
 export default {
@@ -49,13 +50,16 @@ export default {
     inputClass: [String, Array, Object],
     readonly: [Boolean, String],
     disabled: [Boolean, String],
+    dropdownStyle: [String, Object],
   },
   data(){
     return {
       isMounted: false,
       dropdownOpen: false,
-      dropdownStyle: {},
       inputValue: this.value,
+      dropdown: {
+        style: {},
+      },
     }
   },
   computed: {
@@ -161,7 +165,15 @@ export default {
       const left = `${rect.x}px`
       const top = `${rect.height + rect.y}px`
       const width = `${rect.width}px`
-      this.dropdownStyle = {fontSize, width, left, top}
+      const style = {fontSize, width, left, top}
+      if(this.dropdownStyle != null){
+        if(this.dropdownStyle instanceof Object){
+          Object.assign(style, this.dropdownStyle)
+        }else{
+          Object.assign(style, CssString.parse(this.dropdownStyle))
+        }
+      }
+      this.dropdown.style = style
     },
     _clickClear(){
       this.$emit('clear', null)

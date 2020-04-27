@@ -8,6 +8,7 @@ dropdown-input(
   :required='required !== false && isEmpty === true'
   :clear='isEmpty === false'
   :style='wrapperStyle'
+  :dropdown-style='dropdownStyle'
   :inputClass='[inputClass, {empty: isEmpty}]'
   :loading='loading || $attrs.loading'
   @input.native='onInputNative'
@@ -72,6 +73,9 @@ export default {
     },
     record: {
       type: Object,
+    },
+    dropdownStyle: {
+      type: [String, Object],
     },
   },
   data(){

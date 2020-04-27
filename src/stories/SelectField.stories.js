@@ -177,6 +177,24 @@ const story = storiesOf('SelectField', module)
       },
     }
   }, {info: true})
+  .add('dropdown style', () => {
+    const value = text('value', '')
+    return {
+      components: {SelectField},
+      template: `
+        <div>
+          <select-field v-model='value' :records='records' dropdown-style='border: 1px solid red;' />
+          {{value}}
+        </div>
+      `,
+      data(){
+        return {
+          value,
+          records: ['foo', 'bar', 'baz', 'hoge', 'piyo'],
+        }
+      },
+    }
+  }, {info: true})
 
 if(process.env.NODE_ENV === 'development'){
 
