@@ -156,8 +156,8 @@ export default {
       this.dropdownOpen = false
     },
     _updateDropdownStyle(){
-      const input = this.$refs.input
-      if(!input){
+      const {input} = this.$refs
+      if(input == null){
         return
       }
       const {fontSize} = getComputedStyle(input)
@@ -166,18 +166,22 @@ export default {
       const top = `${rect.height + rect.y}px`
       const width = `${rect.width}px`
       const style = {fontSize, width, left, top}
-      if(this.dropdownStyle != null){
-        if(this.dropdownStyle instanceof Object){
-          Object.assign(style, this.dropdownStyle)
-        }else{
-          Object.assign(style, CssString.parse(this.dropdownStyle))
-        }
-      }
+      Object.assign(style, this.getDropdownStyle())
       this.dropdown.style = style
     },
     _clickClear(){
       this.$emit('clear', null)
     },
+    getDropdownStyle(){
+      const {dropdownStyle} = this
+      if(dropdownStyle == null){
+        return {}
+      }
+      if(dropdownStyle instanceof Object){
+        return dropdownStyle
+      }
+      return CssString.parse(dropdownStyle)
+    }
   }
 }
 </script>
