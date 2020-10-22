@@ -114,6 +114,11 @@ export default {
       },
       immediate: true,
     },
+    records(value){
+      if(this.isAsync){
+        this.asyncRecords = null
+      }
+    },
   },
   computed: {
     dropdownRecords(){

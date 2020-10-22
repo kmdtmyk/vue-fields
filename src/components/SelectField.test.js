@@ -465,3 +465,33 @@ describe('select', () => {
   })
 
 })
+
+describe('asyncRecords', () => {
+
+  it('store async records result, and clear it when props changed', done => {
+    const wrapper = mount(Component, {
+      propsData: {
+        records: async () => {
+          return ['foo', 'bar']
+        },
+        asyncWait: 0,
+      }
+    })
+
+    const input = wrapper.find('input[type=text]')
+    input.trigger('focus')
+
+    wrapper.vm.$nextTick(() => {
+      expect(wrapper.vm.$data.asyncRecords).toEqual(['foo', 'bar'])
+      wrapper.setProps({
+        records: async () => {
+          return ['hoge']
+        }
+      })
+      expect(wrapper.vm.$data.asyncRecords).toBeNull()
+      done()
+    })
+
+  })
+
+})
