@@ -42,6 +42,7 @@ import DropdownInput from './DropdownInput'
 import DropdownList from './DropdownList'
 import Arrays from '../lib/Arrays'
 import Strings from '../lib/Strings'
+import VueAttrs from '../lib/VueAttrs'
 import VueProps from '../lib/VueProps'
 import DebounceFunction from '../lib/DebounceFunction'
 
@@ -170,7 +171,10 @@ export default {
   },
   methods: {
     onFocus(e){
-      if(this.isAsync === true && Arrays.isNullOrEmpty(this.asyncRecords)){
+      if(VueAttrs.readonly(this.$attrs)){
+        // TODO: test code
+        this.inputValue = this.placeholder
+      }else if(this.isAsync === true && Arrays.isNullOrEmpty(this.asyncRecords)){
         this.callAsyncRecords()
       }
     },
