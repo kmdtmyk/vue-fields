@@ -147,7 +147,10 @@ export default {
       this.dropdownOpen = false
     },
     _onKeydownEsc(e){
-      this.dropdownOpen = false
+      if(this.dropdownOpen === true){
+        this.dropdownOpen = false
+        e.preventDefault()
+      }
     },
     _onParentScroll(e){
       this.dropdownOpen = false
