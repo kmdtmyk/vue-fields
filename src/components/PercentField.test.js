@@ -19,10 +19,11 @@ describe('name', () => {
     await wrapper.vm.$nextTick()
     expect(hidden.attributes().value).toBe('0.15')
     wrapper.setProps({value: '0.3'})
+    await wrapper.vm.$nextTick()
     expect(hidden.attributes().value).toBe('0.3')
   })
 
-  it('without props value', () => {
+  it('without props value', async () => {
     const wrapper = mount(Component, {
       propsData: {
         name: 'foo',
@@ -34,8 +35,10 @@ describe('name', () => {
     expect(hidden.attributes().name).toBe('foo')
     expect(hidden.attributes().value).toBeUndefined()
     input.setValue('11')
+    await wrapper.vm.$nextTick()
     expect(hidden.attributes().value).toBe('0.11')
     wrapper.setProps({value: '0.3'})
+    await wrapper.vm.$nextTick()
     expect(hidden.attributes().value).toBe('0.3')
   })
 

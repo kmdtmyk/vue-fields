@@ -3,7 +3,7 @@ import Component from './DateField'
 
 describe('name', () => {
 
-  it('with props value', () => {
+  it('with props value', async () => {
     const wrapper = mount(Component, {
       propsData: {
         name: 'foo',
@@ -17,12 +17,14 @@ describe('name', () => {
     expect(hidden.attributes().value).toBe('2019-05-01')
     input.setValue('2019-05-02')
     input.trigger('change')
+    await wrapper.vm.$nextTick()
     expect(hidden.attributes().value).toBe('2019-05-02')
     wrapper.setProps({value: '2019-05-03'})
+    await wrapper.vm.$nextTick()
     expect(hidden.attributes().value).toBe('2019-05-03')
   })
 
-  it('without props value', () => {
+  it('without props value', async () => {
     const wrapper = mount(Component, {
       propsData: {
         name: 'foo',
@@ -35,8 +37,10 @@ describe('name', () => {
     expect(hidden.attributes().value).toBeUndefined()
     input.setValue('2019-05-02')
     input.trigger('change')
+    await wrapper.vm.$nextTick()
     expect(hidden.attributes().value).toBe('2019-05-02')
     wrapper.setProps({value: '2019-05-03'})
+    await wrapper.vm.$nextTick()
     expect(hidden.attributes().value).toBe('2019-05-03')
   })
 

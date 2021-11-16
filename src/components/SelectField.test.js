@@ -19,7 +19,7 @@ describe('name', () => {
     expect(hidden.attributes().value).toBe('bar')
   })
 
-  it('without value', () => {
+  it('without value', async () => {
     const wrapper = mount(Component, {
       propsData: {
         name: 'foo',
@@ -31,10 +31,11 @@ describe('name', () => {
     expect(hidden.attributes().name).toBe('foo')
     expect(hidden.attributes().value).toBeUndefined()
     wrapper.vm.select('abc')
+    await wrapper.vm.$nextTick()
     expect(hidden.attributes().value).toBe('abc')
   })
 
-  it('record-key', () => {
+  it('record-key', async () => {
     const wrapper = mount(Component, {
       propsData: {
         name: 'foo',
@@ -47,6 +48,7 @@ describe('name', () => {
     expect(hidden.attributes().name).toBe('foo')
     expect(hidden.attributes().value).toBeUndefined()
     wrapper.vm.select({id: 1, name: 'abc'})
+    await wrapper.vm.$nextTick()
     expect(hidden.attributes().value).toBe('1')
   })
 
@@ -209,10 +211,13 @@ describe('placeholder', () => {
     const input = wrapper.find('input')
     expect(input.attributes().placeholder).toBeUndefined()
     wrapper.setProps({value: 1})
+    await wrapper.vm.$nextTick()
     expect(input.attributes().placeholder).toEqual('1. foo')
     wrapper.setProps({value: 0})
+    await wrapper.vm.$nextTick()
     expect(input.attributes().placeholder).toEqual('0')
     wrapper.setProps({value: null})
+    await wrapper.vm.$nextTick()
     expect(input.attributes().placeholder).toBeUndefined()
   })
 
@@ -246,27 +251,28 @@ describe('required', () => {
 
 describe('clear button', () => {
 
-  const subject = (records, value) => {
+  const subject = async (records, value) => {
     const wrapper = mount(Component, {
       propsData: {
         records,
         value,
       },
     })
+    await wrapper.vm.$nextTick()
     const clear = wrapper.find('.clear')
     return clear.exists()
   }
 
-  it('exists', () => {
-    expect(subject([], 0)).toBe(true)
-    expect(subject([], 1)).toBe(true)
-    expect(subject([], 'foo')).toBe(true)
+  it('exists', async () => {
+    expect(await subject([], 0)).toBe(true)
+    expect(await subject([], 1)).toBe(true)
+    expect(await subject([], 'foo')).toBe(true)
   })
 
-  it('not exists', () => {
-    expect(subject([], '')).toBe(false)
-    expect(subject([], null)).toBe(false)
-    expect(subject([], undefined)).toBe(false)
+  it('not exists', async () => {
+    expect(await subject([], '')).toBe(false)
+    expect(await subject([], null)).toBe(false)
+    expect(await subject([], undefined)).toBe(false)
   })
 
 })
@@ -275,7 +281,7 @@ describe('key event', () => {
 
   describe('delete', () => {
 
-    it('emit null when value is present', () => {
+    it('emit null when value is present', async () => {
       const records = [
         {id: 1, name: 'foo'}
       ]
@@ -293,12 +299,13 @@ describe('key event', () => {
       const input = wrapper.find('input[type=text]')
       expect(input.attributes().placeholder).toEqual('1. foo')
       input.trigger('keydown.delete')
+      await wrapper.vm.$nextTick()
       expect(wrapper.emitted().input[0]).toEqual([null])
       wrapper.setProps({value: wrapper.emitted().input[0][0]})
       expect(input.attributes().placeholder).toBeUndefined()
     })
 
-    it('not emit when value is null', () => {
+    it('not emit when value is null', async () => {
       const records = [
         {id: 1, name: 'foo'}
       ]
@@ -312,6 +319,7 @@ describe('key event', () => {
       const input = wrapper.find('input[type=text]')
       expect(wrapper.vm.selectedRecord).toBeNull()
       input.trigger('keydown.delete')
+      await wrapper.vm.$nextTick()
       expect(wrapper.vm.selectedRecord).toBeNull()
       expect(wrapper.emitted().input).toBeUndefined()
     })
@@ -324,7 +332,7 @@ describe('dropdown list', () => {
 
   describe('length', () => {
 
-    const subject = (records) => {
+    const subject = async (records) => {
       const wrapper = mount(Component, {
         propsData: {
           records
@@ -332,20 +340,21 @@ describe('dropdown list', () => {
       })
       const input = wrapper.find('input')
       input.trigger('input')
+      await wrapper.vm.$nextTick()
       return wrapper.findAll('.dropdown-list-item').length
     }
 
-    it('array', () => {
+    it('array', async () => {
       const records = [
         '',
         'foo',
         'bar',
         'hoge',
       ]
-      expect(subject(records)).toBe(4)
+      expect(await subject(records)).toBe(4)
     })
 
-    it('function', () => {
+    it('function', async () => {
       const records = () => {
         return [
           'foo',
@@ -353,20 +362,20 @@ describe('dropdown list', () => {
           'hoge',
         ]
       }
-      expect(subject(records)).toBe(3)
+      expect(await subject(records)).toBe(3)
     })
 
-    it('null', () => {
+    it('null', async () => {
       const records = null
-      expect(subject(records)).toBe(0)
+      expect(await subject(records)).toBe(0)
     })
 
   })
 
   describe('empty', () => {
 
-    it('slot exists', () => {
-      const subject = (inputValue) => {
+    it('slot exists', async () => {
+      const subject = async (inputValue) => {
         const records = [
           'foo',
           'bar',
@@ -385,12 +394,13 @@ describe('dropdown list', () => {
         const input = wrapper.find('input[type=text]')
         input.trigger('focus')
         wrapper.setData({inputValue})
+        await wrapper.vm.$nextTick()
         return wrapper.find('.dropdown-list-item.empty')
       }
 
-      expect(subject('').exists()).toEqual(false)
-      expect(subject('f').exists()).toEqual(false)
-      expect(subject('zzz').exists()).toEqual(true)
+      expect((await subject('')).exists()).toEqual(false)
+      expect((await subject('f')).exists()).toEqual(false)
+      expect((await subject('zzz')).exists()).toEqual(true)
     })
 
     it('slot not exists', () => {
@@ -418,7 +428,7 @@ describe('dropdown list', () => {
 
   })
 
-  it('use &nbsp; if text is empty', () => {
+  it('use &nbsp; if text is empty', async () => {
 
     const wrapper = mount(Component, {
       propsData: {
@@ -429,6 +439,7 @@ describe('dropdown list', () => {
     })
     const input = wrapper.find('input[type=text]')
     input.trigger('focus')
+    await wrapper.vm.$nextTick()
     expect(wrapper.find('.dropdown-list-item').element.innerHTML).toEqual('&nbsp;')
 
   })
@@ -468,7 +479,7 @@ describe('select', () => {
 
 describe('asyncRecords', () => {
 
-  it('store async records result, and clear it when props changed', done => {
+  it('store async records result, and clear it when props changed', async () => {
     const wrapper = mount(Component, {
       propsData: {
         records: async () => {
@@ -480,18 +491,16 @@ describe('asyncRecords', () => {
 
     const input = wrapper.find('input[type=text]')
     input.trigger('focus')
+    await wrapper.vm.$nextTick()
+    expect(wrapper.vm.$data.asyncRecords).toEqual(['foo', 'bar'])
 
-    wrapper.vm.$nextTick(() => {
-      expect(wrapper.vm.$data.asyncRecords).toEqual(['foo', 'bar'])
-      wrapper.setProps({
-        records: async () => {
-          return ['hoge']
-        }
-      })
-      expect(wrapper.vm.$data.asyncRecords).toBeNull()
-      done()
+    wrapper.setProps({
+      records: async () => {
+        return ['hoge']
+      }
     })
-
+    await wrapper.vm.$nextTick()
+    expect(wrapper.vm.$data.asyncRecords).toBeNull()
   })
 
 })
