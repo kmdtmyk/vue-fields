@@ -156,7 +156,7 @@ describe('autocomplete', () => {
     })
 
     it('remove blank text', () => {
-      const array = ['', ' ', '\r', '\n', '\r\n']
+      const array = ['', ' ', 'foo', '\r', '\n', '\r\n']
       const wrapper = mount(Component, {
         propsData: {
           autocomplete: array,
@@ -166,7 +166,7 @@ describe('autocomplete', () => {
       input.trigger('focus')
 
       const dropdown = wrapper.findAll('.dropdown-list-item')
-      expect(dropdown.length).toEqual(0)
+      expect(dropdown.length).toEqual(1)
     })
 
   })
