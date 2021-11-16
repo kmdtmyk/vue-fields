@@ -15,11 +15,9 @@ describe('name', () => {
     expect(input.attributes().name).toBeUndefined()
     expect(hidden.attributes().name).toBe('foo')
     expect(hidden.attributes().value).toBe('123')
-    input.setValue('456')
-    await wrapper.vm.$nextTick()
+    await input.setValue('456')
     expect(hidden.attributes().value).toBe('456')
-    wrapper.setProps({value: '789'})
-    await wrapper.vm.$nextTick()
+    await wrapper.setProps({value: '789'})
     expect(hidden.attributes().value).toBe('789')
   })
 
@@ -34,11 +32,9 @@ describe('name', () => {
     expect(input.attributes().name).toBeUndefined()
     expect(hidden.attributes().name).toBe('foo')
     expect(hidden.attributes().value).toBeUndefined()
-    input.setValue('123')
-    await wrapper.vm.$nextTick()
+    await input.setValue('123')
     expect(hidden.attributes().value).toBe('123')
-    wrapper.setProps({value: '789'})
-    await wrapper.vm.$nextTick()
+    await wrapper.setProps({value: '789'})
     expect(hidden.attributes().value).toBe('789')
   })
 
@@ -75,9 +71,7 @@ describe('delimiter', () => {
       }
     })
     expect(wrapper.vm.inputValue).toBe('123,456,789')
-
-    wrapper.setProps({value: '987654321'})
-    await wrapper.vm.$nextTick()
+    await wrapper.setProps({value: '987654321'})
     expect(wrapper.vm.inputValue).toBe('987,654,321')
   })
 
@@ -89,9 +83,7 @@ describe('delimiter', () => {
       }
     })
     expect(wrapper.vm.inputValue).toBe('123456789')
-
-    wrapper.setProps({value: '987654321'})
-    await wrapper.vm.$nextTick()
+    await wrapper.setProps({value: '987654321'})
     expect(wrapper.vm.inputValue).toBe('987654321')
   })
 
@@ -108,8 +100,7 @@ describe('keydown', () => {
 
     const input = wrapper.find('input[type=text]')
     const hidden = wrapper.find('input[type=hidden]')
-    input.trigger('keydown.up')
-    await wrapper.vm.$nextTick()
+    await input.trigger('keydown.up')
     expect(wrapper.emitted('input')[0]).toEqual([1])
     expect(hidden.attributes().value).toEqual('1')
   })
@@ -123,8 +114,7 @@ describe('keydown', () => {
 
     const input = wrapper.find('input[type=text]')
     const hidden = wrapper.find('input[type=hidden]')
-    input.trigger('keydown.down')
-    await wrapper.vm.$nextTick()
+    await input.trigger('keydown.down')
     expect(wrapper.emitted('input')[0]).toEqual([-1])
     expect(hidden.attributes().value).toEqual('-1')
   })

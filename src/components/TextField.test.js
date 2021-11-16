@@ -148,8 +148,7 @@ describe('autocomplete', () => {
         }
       })
       const input = wrapper.find('input')
-      input.trigger('focus')
-      await wrapper.vm.$nextTick()
+      await input.trigger('focus')
       const dropdown = wrapper.findAll('.dropdown-list-item')
       const dropdwonTexts = dropdown.wrappers.map(wrapper => wrapper.text())
       expect(dropdwonTexts).toEqual(['foo', 'bar'])
@@ -163,8 +162,7 @@ describe('autocomplete', () => {
         }
       })
       const input = wrapper.find('input')
-      input.trigger('focus')
-      await wrapper.vm.$nextTick()
+      await input.trigger('focus')
       const dropdown = wrapper.findAll('.dropdown-list-item')
       expect(dropdown.length).toEqual(1)
     })

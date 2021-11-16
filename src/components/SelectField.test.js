@@ -30,8 +30,7 @@ describe('name', () => {
     expect(input.attributes().name).toBeUndefined()
     expect(hidden.attributes().name).toBe('foo')
     expect(hidden.attributes().value).toBeUndefined()
-    wrapper.vm.select('abc')
-    await wrapper.vm.$nextTick()
+    await wrapper.vm.select('abc')
     expect(hidden.attributes().value).toBe('abc')
   })
 
@@ -47,8 +46,7 @@ describe('name', () => {
     expect(input.attributes().name).toBeUndefined()
     expect(hidden.attributes().name).toBe('foo')
     expect(hidden.attributes().value).toBeUndefined()
-    wrapper.vm.select({id: 1, name: 'abc'})
-    await wrapper.vm.$nextTick()
+    await wrapper.vm.select({id: 1, name: 'abc'})
     expect(hidden.attributes().value).toBe('1')
   })
 
@@ -210,14 +208,11 @@ describe('placeholder', () => {
 
     const input = wrapper.find('input')
     expect(input.attributes().placeholder).toBeUndefined()
-    wrapper.setProps({value: 1})
-    await wrapper.vm.$nextTick()
+    await wrapper.setProps({value: 1})
     expect(input.attributes().placeholder).toEqual('1. foo')
-    wrapper.setProps({value: 0})
-    await wrapper.vm.$nextTick()
+    await wrapper.setProps({value: 0})
     expect(input.attributes().placeholder).toEqual('0')
-    wrapper.setProps({value: null})
-    await wrapper.vm.$nextTick()
+    await wrapper.setProps({value: null})
     expect(input.attributes().placeholder).toBeUndefined()
   })
 
@@ -298,10 +293,9 @@ describe('key event', () => {
       })
       const input = wrapper.find('input[type=text]')
       expect(input.attributes().placeholder).toEqual('1. foo')
-      input.trigger('keydown.delete')
-      await wrapper.vm.$nextTick()
+      await input.trigger('keydown.delete')
       expect(wrapper.emitted().input[0]).toEqual([null])
-      wrapper.setProps({value: wrapper.emitted().input[0][0]})
+      await wrapper.setProps({value: wrapper.emitted().input[0][0]})
       expect(input.attributes().placeholder).toBeUndefined()
     })
 
@@ -318,8 +312,7 @@ describe('key event', () => {
       })
       const input = wrapper.find('input[type=text]')
       expect(wrapper.vm.selectedRecord).toBeNull()
-      input.trigger('keydown.delete')
-      await wrapper.vm.$nextTick()
+      await input.trigger('keydown.delete')
       expect(wrapper.vm.selectedRecord).toBeNull()
       expect(wrapper.emitted().input).toBeUndefined()
     })
@@ -339,8 +332,7 @@ describe('dropdown list', () => {
         }
       })
       const input = wrapper.find('input')
-      input.trigger('input')
-      await wrapper.vm.$nextTick()
+      await input.trigger('input')
       return wrapper.findAll('.dropdown-list-item').length
     }
 
@@ -392,9 +384,8 @@ describe('dropdown list', () => {
           },
         })
         const input = wrapper.find('input[type=text]')
-        input.trigger('focus')
-        wrapper.setData({inputValue})
-        await wrapper.vm.$nextTick()
+        await input.trigger('focus')
+        await wrapper.setData({inputValue})
         return wrapper.find('.dropdown-list-item.empty')
       }
 
@@ -438,8 +429,7 @@ describe('dropdown list', () => {
       },
     })
     const input = wrapper.find('input[type=text]')
-    input.trigger('focus')
-    await wrapper.vm.$nextTick()
+    await input.trigger('focus')
     expect(wrapper.find('.dropdown-list-item').element.innerHTML).toEqual('&nbsp;')
 
   })
@@ -488,18 +478,14 @@ describe('asyncRecords', () => {
         asyncWait: 0,
       }
     })
-
     const input = wrapper.find('input[type=text]')
-    input.trigger('focus')
-    await wrapper.vm.$nextTick()
+    await input.trigger('focus')
     expect(wrapper.vm.$data.asyncRecords).toEqual(['foo', 'bar'])
-
-    wrapper.setProps({
+    await wrapper.setProps({
       records: async () => {
         return ['hoge']
       }
     })
-    await wrapper.vm.$nextTick()
     expect(wrapper.vm.$data.asyncRecords).toBeNull()
   })
 
