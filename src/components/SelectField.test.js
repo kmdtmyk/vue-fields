@@ -1,8 +1,6 @@
 import {mount} from '@vue/test-utils'
 import Component from './SelectField'
 
-import flushPromises from 'flush-promises'
-
 describe('name', () => {
 
   it('with value', () => {
@@ -203,8 +201,6 @@ describe('placeholder', () => {
         default: '<div>{{props.record.id}}. {{props.record.name}}</div>'
       },
     })
-
-    await flushPromises()
 
     const input = wrapper.find('input')
     expect(input.attributes().placeholder).toBeUndefined()
