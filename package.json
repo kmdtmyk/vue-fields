@@ -39,7 +39,7 @@
     "big.js": "^5.2.2",
     "core-js": "^3.6.4",
     "dateformat": "^3.0.3",
-    "node-sass": "^4.13.1",
+    "node-sass": "^7.0.3",
     "pug": "^3.0.1",
     "pug-plain-loader": "^1.0.0",
     "sass-loader": "^8.0.2",
