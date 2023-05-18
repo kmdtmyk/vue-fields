@@ -72,6 +72,7 @@ describe('format', () => {
   it('number', () => {
     expect(subject(123456789)).toBe('123,456,789')
     expect(subject(0.123456789)).toBe('0.123456789')
+    expect(subject(0.00123)).toBe('0.00123')
   })
 
   it('string', () => {

@@ -1,4 +1,5 @@
 import Parser from './Parser'
+import split from './number/split'
 
 export default class{
 
@@ -50,17 +51,10 @@ export default class{
 
 }
 
-const split = (number) => {
-  const [integer, decimal] = number.toString()
-    .split('.')
-    .map(it => it ? parseInt(it) : it)
-  return {integer, decimal}
-}
-
 const join = (integer, decimal, delimiter) => {
   const integerString = delimiter === true ? integer.toLocaleString() : integer.toString()
   if(decimal == null){
     return integerString
   }
-  return `${integerString}.${decimal}`
+  return `${integerString}.${decimal.toString().split('.')[1]}`
 }
