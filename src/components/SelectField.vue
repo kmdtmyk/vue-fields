@@ -262,20 +262,6 @@ export default {
 }
 </script>
 
-<!-- <style lang='scss' scoped>
-/deep/ {
-  input{
-    &::placeholder{
-      color: inherit;
-      opacity: 0.7;
-    }
-    &:not(:focus):not(.empty)::placeholder{
-      opacity: 1;
-    }
-  }
-}
-</style> -->
-
 <style lang='scss' scoped>
 :deep(input){
   &::placeholder{
