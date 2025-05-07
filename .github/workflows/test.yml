@@ -29,3 +29,4 @@ jobs:
         npm test
       env:
         CI: true
+        NODE_OPTIONS: openssl-legacy-provider
