@@ -8,51 +8,15 @@ https://kmdtmyk.github.io/vue-fields/
 ## Installation
 
 ```
-npm install @kmdtmyk/vue-fields
+npm install github:kmdtmyk/vue-fields#vue2
 ```
 
 Register as plugin.
 
 ```javascript
-import VueFields from '@kmdtmyk/vue-fields'
-
-Vue.use(VueFields)
+import SelectField from '@kmdtmyk/vue-fields/src/components/SelectField.vue'
+Vue.component('SelectField', SelectField)
 ```
-
-Register as component.
-
-```javascript
-import {NumberField} from '@kmdtmyk/vue-fields'
-
-Vue.component('number-field', NumberField)
-```
-
-### Plugin option
-
-inputClass
-
-```javascript
-Vue.use(VueFields, {inputClass: 'form-control'})
-```
-
-```html
-<text-field/> <!-- <input type='text' class='form-control'> -->
-```
-prefix, suffix
-
-```javascript
-Vue.use(VueFields, {prefix: 'v', suffix: ''})
-```
-
-```html
-<v-text/> <!-- <input type='text'> -->
-```
-
-|name|default value|
-|-|-|
-|inputClass|''|
-|prefix|''|
-|suffix|'Field'|
 
 ## License
 
