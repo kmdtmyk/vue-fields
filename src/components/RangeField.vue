@@ -109,7 +109,7 @@ export default {
 }
 </script>
 
-<style lang='scss' scoped>
+<style scoped>
 .range-field{
   position: relative;
   display: inline-block;

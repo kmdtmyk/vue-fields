@@ -103,12 +103,12 @@ export default {
 }
 </script>
 
-<style lang='scss' scoped>
+<style scoped>
 .year-picker{
-  $border-color: #ced4da;
+  --border-color: #ced4da;
 
   background-color: white;
-  border: 1px solid $border-color;
+  border: 1px solid var(--border-color);
 
   header, footer{
     padding: 2px;
@@ -123,7 +123,7 @@ export default {
   }
 
   header{
-    border-bottom: 1px solid $border-color;
+    border-bottom: 1px solid var(--border-color);
     display: flex;
     justify-content: space-between;
 
@@ -139,15 +139,15 @@ export default {
   }
 
   footer{
-    border-top: 1px solid $border-color;
+    border-top: 1px solid var(--border-color);
     display: flex;
     justify-content: space-between;
   }
 
   .picker{
-    $row-height: 32px;
-    $row-count: 4;
-    height: $row-height * $row-count;
+    --row-height: 32px;
+    --row-count: 4;
+    height: calc(var(--row-height) * var(--row-count));
     overflow: hidden;
 
     &.previous, &.next{
@@ -162,28 +162,28 @@ export default {
         transform: translateY(0);
       }
       .v-enter-to{
-        transform: translateY($row-height * -$row-count);
+        transform: translateY(calc(var(--row-height) * -1 * var(--row-count)));
       }
       .v-leave{
         transform: translateY(0);
       }
       .v-leave-to{
-        transform: translateY($row-height * -$row-count);
+        transform: translateY(calc(var(--row-height) * -1 * var(--row-count)));
       }
     }
 
     &.previous{
       .v-enter {
-        transform: translateY($row-height * -$row-count * 2);
+        transform: translateY(calc(var(--row-height) * -1 * var(--row-count) * 2));
       }
       .v-enter-to{
-        transform: translateY($row-height * -$row-count);
+        transform: translateY(calc(var(--row-height) * -1 * var(--row-count)));
       }
       .v-leave{
         transform: translateY(0);
       }
       .v-leave-to{
-        transform: translateY($row-height * $row-count);
+        transform: translateY(calc(var(--row-height) * var(--row-count)));
       }
     }
 
@@ -193,7 +193,7 @@ export default {
         padding: 0;
         width: 3em;
         button{
-          height: $row-height;
+          height: var(--row-height);
           text-align: center;
           border: 0;
           background: none;

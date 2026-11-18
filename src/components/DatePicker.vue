@@ -145,13 +145,13 @@ export default {
 }
 </script>
 
-<style lang='scss' scoped>
+<style scoped>
 .date-picker{
-  $border-color: #ced4da;
+  --border-color: #ced4da;
   font-size: 14px;
 
   background-color: white;
-  border: 1px solid $border-color;
+  border: 1px solid var(--border-color);
 
   header, footer{
     padding: 2px;
@@ -165,7 +165,7 @@ export default {
   }
 
   header{
-    border-bottom: 1px solid $border-color;
+    border-bottom: 1px solid var(--border-color);
     display: flex;
     justify-content: space-between;
 
@@ -184,9 +184,9 @@ export default {
   }
 
   .calendar{
-    $row-height: 28px;
-    $row-count: 6;
-    height: $row-height * $row-count + 23px;
+    --row-height: 28px;
+    --row-count: 6;
+    height: calc(var(--row-height) * var(--row-count) + 23px);
     overflow: hidden;
 
     &.previous, &.next{
@@ -201,28 +201,28 @@ export default {
         transform: translateY(0);
       }
       .v-enter-to{
-        transform: translateY($row-height * -$row-count);
+        transform: translateY(calc(var(--row-height) * -1 * var(--row-count)));
       }
       .v-leave{
         transform: translateY(0);
       }
       .v-leave-to{
-        transform: translateY($row-height * -$row-count);
+        transform: translateY(calc(var(--row-height) * -1 * var(--row-count)));
       }
     }
 
     &.previous{
       .v-enter {
-        transform: translateY($row-height * -$row-count * 2);
+        transform: translateY(calc(var(--row-height) * -1 * var(--row-count) * 2));
       }
       .v-enter-to{
-        transform: translateY($row-height * -$row-count);
+        transform: translateY(calc(var(--row-height) * -1 * var(--row-count)));
       }
       .v-leave{
         transform: translateY(0);
       }
       .v-leave-to{
-        transform: translateY($row-height * $row-count);
+        transform: translateY(calc(var(--row-height) * var(--row-count)));
       }
     }
 
@@ -240,7 +240,7 @@ export default {
       }
       tbody{
         tr{
-          height: $row-height;
+          height: var(--row-height);
         }
         td{
           padding: 0;
@@ -268,7 +268,7 @@ export default {
   }
 
   footer{
-    border-top: 1px solid $border-color;
+    border-top: 1px solid var(--border-color);
     display: flex;
     justify-content: space-between;
   }

@@ -98,7 +98,7 @@ export default {
 }
 </script>
 
-<style lang='scss' scoped>
+<style scoped>
 .time-field{
   display: inline-block;
 

@@ -114,7 +114,7 @@ export default {
 }
 </script>
 
-<style lang='scss' scoped>
+<style scoped>
 .date-field{
   display: inline-block;
 

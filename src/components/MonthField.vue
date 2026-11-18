@@ -103,7 +103,7 @@ export default {
 }
 </script>
 
-<style lang='scss' scoped>
+<style scoped>
 .month-field{
   display: inline-block;
 

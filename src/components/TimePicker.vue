@@ -99,12 +99,12 @@ export default {
 }
 </script>
 
-<style lang='scss' scoped>
+<style scoped>
 .time-picker{
-  $border-color: #ced4da;
+  --border-color: #ced4da;
 
   background-color: white;
-  border: 1px solid $border-color;
+  border: 1px solid var(--border-color);
 
   .picker table{
     font-size: 14px;
@@ -140,7 +140,7 @@ export default {
   }
 
   header{
-    border-bottom: 1px solid $border-color;
+    border-bottom: 1px solid var(--border-color);
     display: flex;
     justify-content: space-between;
     label{
@@ -149,7 +149,7 @@ export default {
   }
 
   footer{
-    border-top: 1px solid $border-color;
+    border-top: 1px solid var(--border-color);
     display: flex;
     justify-content: space-between;
   }

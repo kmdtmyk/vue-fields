@@ -1,5 +1,6 @@
 <template lang='pug'>
 dropdown-input(
+  class='select-field'
   type='text'
   autocomplete='off'
   v-model='inputValue'
@@ -262,16 +263,13 @@ export default {
 }
 </script>
 
-<style lang='scss' scoped>
-/deep/ {
-  input{
-    &::placeholder{
-      color: inherit;
-      opacity: 0.7;
-    }
-    &:not(:focus):not(.empty)::placeholder{
-      opacity: 1;
-    }
-  }
+<style>
+.select-field input::placeholder {
+  color: inherit;
+  opacity: 0.7;
+}
+
+.select-field input:not(:focus):not(.empty)::placeholder {
+  opacity: 1;
 }
 </style>

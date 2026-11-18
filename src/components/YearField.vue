@@ -94,7 +94,7 @@ export default {
 }
 </script>
 
-<style lang='scss' scoped>
+<style scoped>
 .year-field{
   display: inline-block;
 

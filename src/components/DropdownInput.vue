@@ -189,7 +189,7 @@ export default {
 }
 </script>
 
-<style lang='scss' scoped>
+<style scoped>
 .dropdown-input{
   display: inline-flex;
   position: relative;
