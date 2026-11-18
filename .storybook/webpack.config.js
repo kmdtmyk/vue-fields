@@ -6,10 +6,6 @@ module.exports = ({config, mode}) => {
       loader: 'pug-plain-loader',
     },
     {
-      test: /\.scss$/,
-      loader: ['style-loader', 'css-loader', 'sass-loader']
-    },
-    {
       test: /\.stories\.jsx?$/,
       loaders: [
         {
