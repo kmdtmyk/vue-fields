@@ -1,9 +1,9 @@
-import {storiesOf} from '@storybook/vue'
-import {withKnobs, number, boolean, color} from '@storybook/addon-knobs'
+import {storiesOf} from '../playground/story'
+import {withKnobs, number, boolean, color} from '../playground/story'
 
 import NumberField from '../components/NumberField'
 
-storiesOf('NumberField', module)
+storiesOf('NumberField')
   .addDecorator(withKnobs)
   .add('basic', () => {
     const value = number('value', 12345.67)

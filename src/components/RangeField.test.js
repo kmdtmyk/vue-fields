@@ -36,3 +36,23 @@ describe('input class', () => {
   })
 
 })
+
+describe('tooltip', () => {
+
+  it('shows while dragging', async () => {
+    const wrapper = mount(Component, {
+      propsData: {
+        value: 50,
+        tooltip: true,
+      },
+    })
+    const input = wrapper.find('input[type=range]')
+
+    expect(wrapper.find('.tooltip').exists()).toBe(false)
+    await input.trigger('mousedown')
+    expect(wrapper.find('.tooltip').exists()).toBe(true)
+    await input.trigger('mouseup')
+    expect(wrapper.find('.tooltip').exists()).toBe(false)
+  })
+
+})

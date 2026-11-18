@@ -1,5 +1,5 @@
-import {storiesOf} from '@storybook/vue'
-import {withKnobs, text, number, boolean, color} from '@storybook/addon-knobs'
+import {storiesOf} from '../playground/story'
+import {withKnobs, text, number, boolean, color} from '../playground/story'
 
 import TimeField from '../components/TimeField'
 
@@ -9,7 +9,7 @@ import TimeField from '../components/TimeField'
     return
   }
 
-  storiesOf('TimeField (WIP)', module)
+  storiesOf('TimeField (WIP)')
     .addDecorator(withKnobs)
     .add('basic', () => {
       const value = text('value', '')

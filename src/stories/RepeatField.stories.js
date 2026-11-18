@@ -1,10 +1,10 @@
-import {storiesOf} from '@storybook/vue'
-import {withKnobs, number} from '@storybook/addon-knobs'
+import {storiesOf} from '../playground/story'
+import {withKnobs, number} from '../playground/story'
 
 import RepeatField from '../components/RepeatField'
 import SelectField from '../components/SelectField'
 
-const story = storiesOf('RepeatField', module)
+const story = storiesOf('RepeatField')
   .addDecorator(withKnobs)
   .add('basic', () => {
     return {

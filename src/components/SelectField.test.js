@@ -378,10 +378,12 @@ describe('dropdown list', () => {
               return 'empty message'
             }
           },
+          attachTo: document.body,
         })
         const input = wrapper.find('input[type=text]')
         await input.trigger('focus')
         await wrapper.setData({inputValue})
+        await wrapper.vm.$nextTick()
         return wrapper.find('.dropdown-list-item.empty')
       }
 
@@ -423,9 +425,11 @@ describe('dropdown list', () => {
           '',
         ],
       },
+      attachTo: document.body,
     })
     const input = wrapper.find('input[type=text]')
     await input.trigger('focus')
+    await wrapper.vm.$nextTick()
     expect(wrapper.find('.dropdown-list-item').element.innerHTML).toEqual('&nbsp;')
 
   })
@@ -472,10 +476,13 @@ describe('asyncRecords', () => {
           return ['foo', 'bar']
         },
         asyncWait: 0,
-      }
+      },
+      attachTo: document.body,
     })
     const input = wrapper.find('input[type=text]')
     await input.trigger('focus')
+    await Promise.resolve()
+    await wrapper.vm.$nextTick()
     expect(wrapper.vm.$data.asyncRecords).toEqual(['foo', 'bar'])
     await wrapper.setProps({
       records: async () => {

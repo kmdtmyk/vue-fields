@@ -1,9 +1,9 @@
-import {storiesOf} from '@storybook/vue'
-import {withKnobs, text, number, boolean, color} from '@storybook/addon-knobs'
+import {storiesOf} from '../playground/story'
+import {withKnobs, text, number, boolean, color} from '../playground/story'
 
 import MonthField from '../components/MonthField'
 
-storiesOf('MonthField', module)
+storiesOf('MonthField')
   .addDecorator(withKnobs)
   .add('basic', () => {
     const value = text('value', '')

@@ -1,9 +1,9 @@
-import {storiesOf} from '@storybook/vue'
-import {withKnobs, text, number, boolean, color} from '@storybook/addon-knobs'
+import {storiesOf} from '../playground/story'
+import {withKnobs, text, number, boolean, color} from '../playground/story'
 
 import PercentField from '../components/PercentField'
 
-storiesOf('PercentField', module)
+storiesOf('PercentField')
   .addDecorator(withKnobs)
   .add('basic', () => {
     const value = text('value', '0.5')
