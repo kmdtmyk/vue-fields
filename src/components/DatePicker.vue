@@ -26,8 +26,7 @@
 </template>
 
 <script>
-import dateformat from 'dateformat'
-import Midnight from '@kmdtmyk/midnight'
+import RubyDate from '@kmdtmyk/ruby-date'
 import Locale from '../lib/Locale'
 
 export default {
@@ -37,7 +36,7 @@ export default {
     },
   },
   data(){
-    const date = Midnight.parse(this.value) || new Midnight()
+    const date = RubyDate.parse(this.value) || RubyDate.today()
     const year = date.year()
     const month = date.month()
 
@@ -51,15 +50,16 @@ export default {
   },
   filters: {
     period(date){
-      return dateformat(date, 'yyyy/mm')
+      return date.strftime('%Y/%m')
     },
     day(date){
-      return dateformat(date, 'd')
+      return date.strftime('%-d')
     },
   },
   computed: {
     calendarDates(){
-      const startDate = new Midnight(this.year, this.month, 1).nextSunday(-1)
+      const firstDate = new RubyDate(this.year, this.month, 1)
+      const startDate = firstDate.nextDay(-firstDate.wday())
       const result = []
       for(let i = 0; i < 42; i++){
         result.push(startDate.nextDay(i - 1))
@@ -84,7 +84,7 @@ export default {
       if(this.animating){
         return
       }
-      const date = new Midnight(this.year, this.month - 1, 1)
+      const date = new RubyDate(this.year, this.month - 1, 1)
       this.year = date.year()
       this.month = date.month()
     },
@@ -92,7 +92,7 @@ export default {
       if(this.animating){
         return
       }
-      const date = new Midnight(this.year, this.month + 1, 1)
+      const date = new RubyDate(this.year, this.month + 1, 1)
       this.year = date.year()
       this.month = date.month()
     },
@@ -100,7 +100,7 @@ export default {
       if(this.animating){
         return
       }
-      const date = new Midnight()
+      const date = RubyDate.today()
       this.year = date.year()
       this.month = date.month()
     },
@@ -108,11 +108,11 @@ export default {
       if(!date){
         this.$emit('input', date)
       }else{
-        this.$emit('input', dateformat(date, 'yyyy-mm-dd'))
+        this.$emit('input', date.strftime('%Y-%m-%d'))
       }
     },
     today(){
-      this.select(new Date())
+      this.select(RubyDate.today())
     },
     clear(){
       this.select('')

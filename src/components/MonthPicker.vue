@@ -24,8 +24,7 @@
 </template>
 
 <script>
-import dateformat from 'dateformat'
-import Midnight from '@kmdtmyk/midnight'
+import RubyDate from '@kmdtmyk/ruby-date'
 import Locale from '../lib/Locale'
 
 export default {
@@ -35,8 +34,8 @@ export default {
     },
   },
   data(){
-    const date = Midnight.parse(this.value)
-    const year = date == null ? new Midnight().year() : date.year()
+    const date = RubyDate.parse(this.value)
+    const year = date == null ? RubyDate.today().year() : date.year()
     return {
       l: Locale.get(),
       year,
@@ -84,18 +83,18 @@ export default {
       }
     },
     select(year, month){
-      const date = new Midnight(year, month)
-      this.$emit('input', dateformat(date, 'yyyy-mm'))
+      const date = new RubyDate(year, month)
+      this.$emit('input', date.strftime('%Y-%m'))
     },
     currentYear(){
       if(this.animating){
         return
       }
-      const today = new Midnight()
+      const today = RubyDate.today()
       this.year = today.year()
     },
     currentMonth(){
-      const today = new Midnight()
+      const today = RubyDate.today()
       this.select(today.year(), today.month())
     },
     clear(){

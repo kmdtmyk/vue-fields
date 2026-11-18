@@ -24,8 +24,6 @@
 </template>
 
 <script>
-import dateformat from 'dateformat'
-
 export default {
   props: {
     value: {

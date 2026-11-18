@@ -23,8 +23,6 @@
 </template>
 
 <script>
-import dateformat from 'dateformat'
-import Midnight from '@kmdtmyk/midnight'
 import wrapper from './mixins/wrapper'
 import TimePicker from './TimePicker'
 

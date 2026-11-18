@@ -23,8 +23,7 @@
 </template>
 
 <script>
-import dateformat from 'dateformat'
-import Midnight from '@kmdtmyk/midnight'
+import RubyDate from '@kmdtmyk/ruby-date'
 import wrapper from './mixins/wrapper'
 import MonthPicker from './MonthPicker'
 
@@ -76,11 +75,11 @@ export default {
       // nothing
     },
     change(e){
-      const date = Midnight.parse(e.target.value)
+      const date = RubyDate.parse(e.target.value)
       if(date == null){
         this.$emit('input', null)
       }else{
-        this.$emit('input', dateformat(date, 'yyyy-mm'))
+        this.$emit('input', date.strftime('%Y-%m'))
       }
     },
     click(e){

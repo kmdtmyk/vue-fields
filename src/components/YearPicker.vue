@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import Midnight from '@kmdtmyk/midnight'
+import RubyDate from '@kmdtmyk/ruby-date'
 import Locale from '../lib/Locale'
 
 const duration = 20
@@ -31,10 +31,10 @@ export default {
   data(){
     let year
     if(this.value == null || this.value === ''){
-      year = new Midnight().year()
+      year = RubyDate.today().year()
     }else{
-      const date = new Midnight(this.value, 1, 1)
-      year = date.year() || new Midnight().year()
+      const date = new RubyDate(this.value, 1, 1)
+      year = date.year() || RubyDate.today().year()
     }
     const startYear = Math.floor(year / duration) * duration
     return {
@@ -93,7 +93,7 @@ export default {
       if(this.animating){
         return
       }
-      const today = new Midnight()
+      const today = RubyDate.today()
       this.select(today.year())
     },
     clear(){
