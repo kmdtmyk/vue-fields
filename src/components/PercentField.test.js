@@ -60,3 +60,79 @@ describe('input class', () => {
   })
 
 })
+
+describe('conversion', () => {
+
+  it('converts the displayed percentage to the actual value', async () => {
+    const wrapper = mount(Component, {
+      propsData: {
+        name: 'foo',
+      }
+    })
+    const input = wrapper.find('input[type=text]')
+    const hidden = wrapper.find('input[type=hidden]')
+
+    await input.setValue('12.34')
+
+    expect(wrapper.emitted('input')[0]).toEqual(['0.1234'])
+    expect(hidden.attributes().value).toBe('0.1234')
+  })
+
+  it('converts the actual value to the displayed percentage', async () => {
+    const wrapper = mount(Component, {
+      propsData: {
+        value: '0.1234',
+      }
+    })
+
+    expect(wrapper.find('input[type=text]').element.value).toBe('12.34')
+  })
+
+  it('preserves decimal precision during conversion', async () => {
+    const wrapper = mount(Component)
+    const input = wrapper.find('input[type=text]')
+
+    await input.setValue('33.33')
+
+    expect(wrapper.emitted('input')[0]).toEqual(['0.3333'])
+  })
+
+})
+
+describe('unit', () => {
+
+  it('uses a custom unit for conversion', async () => {
+    const wrapper = mount(Component, {
+      propsData: {
+        unit: 1,
+      }
+    })
+    const input = wrapper.find('input[type=text]')
+
+    expect(input.element.value).toBe('')
+    await input.setValue('12.34')
+
+    expect(wrapper.emitted('input')[0]).toEqual(['12.34'])
+  })
+
+})
+
+describe('min and max', () => {
+
+  it('clamps the actual value to min and max', async () => {
+    const wrapper = mount(Component, {
+      propsData: {
+        min: '0.2',
+        max: '0.8',
+      }
+    })
+    const input = wrapper.find('input[type=text]')
+
+    await input.setValue('10')
+    await input.setValue('90')
+
+    expect(wrapper.emitted('input')[0]).toEqual(['0.2'])
+    expect(wrapper.emitted('input')[1]).toEqual(['0.8'])
+  })
+
+})
