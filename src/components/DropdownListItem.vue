@@ -19,6 +19,8 @@ export default {
 
 <style scoped>
 .dropdown-list-item{
+  text-wrap: wrap;
+
   --padding: 0.2em 0.4em;
 
   &.text{
