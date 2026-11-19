@@ -1,5 +1,5 @@
 import {mount} from '@vue/test-utils'
-import Component from './TextField'
+import Component from './TextField.vue'
 import Vue from 'vue'
 
 describe('name', () => {

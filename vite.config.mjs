@@ -6,7 +6,6 @@ import {resolve} from 'path'
 export default defineConfig({
   plugins: [vue(), cssInjectedByJs()],
   resolve: {
-    extensions: ['.js', '.json', '.vue'],
     alias: {
       // Stories are Vue 2 option objects with runtime `template` strings.
       // The compiler-included build is required when the Playground renders them.

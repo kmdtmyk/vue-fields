@@ -1,7 +1,7 @@
 import {storiesOf} from '../playground/story'
 import {withKnobs, number, boolean, color} from '../playground/story'
 
-import IntegerField from '../components/IntegerField'
+import IntegerField from '../components/IntegerField.vue'
 
 storiesOf('IntegerField')
   .addDecorator(withKnobs)

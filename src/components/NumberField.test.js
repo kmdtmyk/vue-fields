@@ -1,5 +1,5 @@
 import {mount} from '@vue/test-utils'
-import Component from './NumberField'
+import Component from './NumberField.vue'
 
 describe('name', () => {
 

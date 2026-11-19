@@ -1,8 +1,8 @@
 import {storiesOf} from '../playground/story'
 import {withKnobs, number} from '../playground/story'
 
-import RepeatField from '../components/RepeatField'
-import SelectField from '../components/SelectField'
+import RepeatField from '../components/RepeatField.vue'
+import SelectField from '../components/SelectField.vue'
 
 const story = storiesOf('RepeatField')
   .addDecorator(withKnobs)

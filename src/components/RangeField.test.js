@@ -1,5 +1,5 @@
 import {mount} from '@vue/test-utils'
-import Component from './RangeField'
+import Component from './RangeField.vue'
 
 describe('name', () => {
 

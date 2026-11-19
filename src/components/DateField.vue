@@ -25,7 +25,7 @@
 <script>
 import RubyDate from '@kmdtmyk/ruby-date'
 import wrapper from './mixins/wrapper'
-import DatePicker from './DatePicker'
+import DatePicker from './DatePicker.vue'
 
 export default {
   mixins: [wrapper],

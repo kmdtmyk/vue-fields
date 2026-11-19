@@ -1,5 +1,5 @@
 import {mount} from '@vue/test-utils'
-import Component from './SelectField'
+import Component from './SelectField.vue'
 
 describe('name', () => {
 

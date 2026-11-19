@@ -1,5 +1,5 @@
 import {mount} from '@vue/test-utils'
-import Component from './MonthField'
+import Component from './MonthField.vue'
 
 describe('name', () => {
 

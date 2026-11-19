@@ -22,8 +22,8 @@
 
 <script>
 import wrapper from './mixins/wrapper'
-import IntegerField from './IntegerField'
-import YearPicker from './YearPicker'
+import IntegerField from './IntegerField.vue'
+import YearPicker from './YearPicker.vue'
 
 export default {
   mixins: [wrapper],

@@ -1,7 +1,7 @@
 import {storiesOf} from '../playground/story'
 import {withKnobs, text, number, boolean, color} from '../playground/story'
 
-import PercentField from '../components/PercentField'
+import PercentField from '../components/PercentField.vue'
 
 storiesOf('PercentField')
   .addDecorator(withKnobs)

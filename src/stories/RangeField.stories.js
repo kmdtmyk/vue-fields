@@ -1,7 +1,7 @@
 import {storiesOf} from '../playground/story'
 import {withKnobs, number, boolean, select} from '../playground/story'
 
-import RangeField from '../components/RangeField'
+import RangeField from '../components/RangeField.vue'
 
 storiesOf('RangeField')
   .addDecorator(withKnobs)

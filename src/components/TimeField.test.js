@@ -1,5 +1,5 @@
 import {mount} from '@vue/test-utils'
-import Component from './TimeField'
+import Component from './TimeField.vue'
 
 describe('name', () => {
 

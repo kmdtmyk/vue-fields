@@ -1,7 +1,7 @@
 import {storiesOf} from '../playground/story'
 import {withKnobs, text, number, boolean, color} from '../playground/story'
 
-import YearField from '../components/YearField'
+import YearField from '../components/YearField.vue'
 
 storiesOf('YearField')
   .addDecorator(withKnobs)

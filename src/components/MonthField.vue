@@ -25,7 +25,7 @@
 <script>
 import RubyDate from '@kmdtmyk/ruby-date'
 import wrapper from './mixins/wrapper'
-import MonthPicker from './MonthPicker'
+import MonthPicker from './MonthPicker.vue'
 
 export default {
   mixins: [wrapper],

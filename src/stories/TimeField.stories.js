@@ -1,7 +1,7 @@
 import {storiesOf} from '../playground/story'
 import {withKnobs, text, number, boolean, color} from '../playground/story'
 
-import TimeField from '../components/TimeField'
+import TimeField from '../components/TimeField.vue'
 
 (() => {
 

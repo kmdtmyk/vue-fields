@@ -33,7 +33,7 @@
 import wrapper from './mixins/wrapper'
 import ElementUtil from '../lib/ElementUtil'
 import CssString from '../lib/CssString'
-import LoadingSpinner from './LoadingSpinner'
+import LoadingSpinner from './LoadingSpinner.vue'
 
 export default {
   mixins: [wrapper],

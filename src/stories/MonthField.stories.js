@@ -1,7 +1,7 @@
 import {storiesOf} from '../playground/story'
 import {withKnobs, text, number, boolean, color} from '../playground/story'
 
-import MonthField from '../components/MonthField'
+import MonthField from '../components/MonthField.vue'
 
 storiesOf('MonthField')
   .addDecorator(withKnobs)

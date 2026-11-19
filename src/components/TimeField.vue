@@ -24,7 +24,7 @@
 
 <script>
 import wrapper from './mixins/wrapper'
-import TimePicker from './TimePicker'
+import TimePicker from './TimePicker.vue'
 
 export default {
   mixins: [wrapper],

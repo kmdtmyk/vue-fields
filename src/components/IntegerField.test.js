@@ -1,5 +1,5 @@
 import {mount} from '@vue/test-utils'
-import Component from './IntegerField'
+import Component from './IntegerField.vue'
 
 describe('name', () => {
 
