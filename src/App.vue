@@ -1,140 +1,106 @@
-<template>
-  <div class="playground">
-    <aside class="sidebar">
-      <h1>Vue Fields</h1>
-      <p class="subtitle">Vue 2 component playground</p>
-      <nav>
-        <section v-for="group in groupedExamples" :key="group.name" class="story-group">
-          <h2>{{ group.name }}</h2>
-          <button v-for="example in group.examples" :key="example.id" class="nav-item" :class="{active: example.id === selected}" type="button" @click="selected = example.id">
-            {{ example.story }}
-          </button>
-        </section>
-      </nav>
-    </aside>
+<template lang='pug'>
+.playground
+  aside.sidebar
+    h1 Vue Fields
+    p.subtitle Vue 2 component playground
+    nav
+      section.story-group(v-for='group in groupedExamples' :key='group.name')
+        h2 {{group.name}}
+        button.nav-item(
+          v-for='example in group.examples'
+          :key='example.id'
+          :class='{active: example.id === selected}'
+          type='button'
+          @click='selected = example.id'
+        ) {{example.story}}
 
-    <main class="content">
-      <header class="page-header">
-        <div>
-          <p class="eyebrow">Component</p>
-          <h2>{{ currentExample.name }} / {{ currentExample.story }}</h2>
-          <p>{{ currentExample.description }}</p>
-        </div>
-        <code>&lt;{{ currentExample.tag }} /&gt;</code>
-      </header>
+  main.content
+    header.page-header
+      div
+        p.eyebrow Component
+        h2 {{currentExample.name}} / {{currentExample.story}}
+        p {{currentExample.description}}
+      code &lt;{{currentExample.tag}} /&gt;
 
-      <section class="workspace">
-        <div class="preview-card">
-          <h3>Preview</h3>
-          <div ref="previewStage" class="preview-stage">
-            <component :is="currentExample.component" v-model="values[selected]" v-bind="currentExample.props" />
-          </div>
-        </div>
+    section.workspace
+      div.preview-card
+        h3 Preview
+        div.preview-stage(ref='previewStage')
+          component(:is='currentExample.component' v-model='values[selected]' v-bind='currentExample.props')
 
-        <div class="controls-card">
-          <h3>Controls</h3>
-          <label class="control-row">
-            <span>value</span>
-            <input v-model="values[selected]" type="text">
-          </label>
-          <label class="control-row checkbox-row">
-            <span>disabled</span>
-            <input v-model="disabled" type="checkbox">
-          </label>
-          <label class="control-row checkbox-row">
-            <span>readonly</span>
-            <input v-model="readonly" type="checkbox">
-          </label>
-        </div>
-      </section>
+      div.controls-card
+        h3 Controls
+        label.control-row
+          span value
+          input(v-model='values[selected]' type='text')
+        label.control-row.checkbox-row
+          span disabled
+          input(v-model='disabled' type='checkbox')
+        label.control-row.checkbox-row
+          span readonly
+          input(v-model='readonly' type='checkbox')
 
-      <section class="source-card">
-        <h3>Story source</h3>
-        <pre><code>{{ currentExample.source }}</code></pre>
-      </section>
-    </main>
-  </div>
+    section.source-card
+      h3 Story source
+      pre
+        code {{currentExample.source}}
 </template>
 
-<script>
+<script setup>
+import {computed, nextTick, onMounted, reactive, ref, watch} from 'vue'
 import examples from './playground/stories'
 
-export default {
-  data(){
-    return {
-      selected: examples[0].id,
-      disabled: false,
-      readonly: false,
-      values: examples.reduce((values, example) => {
-        values[example.id] = example.value
-        return values
-      }, {}),
-      examples,
+const selected = ref(examples[0].id)
+const disabled = ref(false)
+const readonly = ref(false)
+const previewStage = ref(null)
+const values = reactive(examples.reduce((values, example) => {
+  values[example.id] = example.value
+  return values
+}, {}))
+
+const groupedExamples = computed(() => examples.reduce((groups, example) => {
+  let group = groups.find(item => item.name === example.name)
+  if(!group){
+    group = {name: example.name, tag: example.tag, examples: []}
+    groups.push(group)
+  }
+  group.examples.push(example)
+  return groups
+}, []))
+
+const currentExample = computed(() => {
+  const example = examples.find(item => item.id === selected.value)
+  return {
+    ...example,
+    props: {
+      disabled: disabled.value,
+      readonly: readonly.value,
+      ...(example.props || {}),
+    },
+  }
+})
+
+const syncPreviewControls = () => {
+  const stage = previewStage.value
+  if(!stage) return
+
+  const inputs = stage.querySelectorAll('input, textarea, select')
+  inputs.forEach(input => {
+    input.disabled = disabled.value
+    if('readOnly' in input) input.readOnly = readonly.value
+
+    const value = values[selected.value]
+    if(document.activeElement !== input && value != null && input.value !== String(value)){
+      input.value = value
+      input.dispatchEvent(new Event('input', {bubbles: true}))
     }
-  },
-  mounted(){
-    this.syncPreviewControls()
-  },
-  computed: {
-    groupedExamples(){
-      return this.examples.reduce((groups, example) => {
-        let group = groups.find(item => item.name === example.name)
-        if(!group){
-          group = {name: example.name, tag: example.tag, examples: []}
-          groups.push(group)
-        }
-        group.examples.push(example)
-        return groups
-      }, [])
-    },
-    currentExample(){
-      const example = this.examples.find(item => item.id === this.selected)
-      return {
-        ...example,
-        props: {
-          disabled: this.disabled,
-          readonly: this.readonly,
-          ...(example.props || {}),
-        },
-      }
-    },
-  },
-  watch: {
-    selected(){
-      this.$nextTick(this.syncPreviewControls)
-    },
-    disabled(){
-      this.$nextTick(this.syncPreviewControls)
-    },
-    readonly(){
-      this.$nextTick(this.syncPreviewControls)
-    },
-    values: {
-      deep: true,
-      handler(){
-        this.$nextTick(this.syncPreviewControls)
-      },
-    },
-  },
-  methods: {
-    syncPreviewControls(){
-      const stage = this.$refs.previewStage
-      if(!stage) return
-
-      const inputs = stage.querySelectorAll('input, textarea, select')
-      inputs.forEach(input => {
-        input.disabled = this.disabled
-        if('readOnly' in input) input.readOnly = this.readonly
-
-        const value = this.values[this.selected]
-        if(document.activeElement !== input && value != null && input.value !== String(value)){
-          input.value = value
-          input.dispatchEvent(new Event('input', {bubbles: true}))
-        }
-      })
-    },
-  },
+  })
 }
+
+onMounted(syncPreviewControls)
+watch([selected, disabled, readonly], () => nextTick(syncPreviewControls))
+watch(values, () => nextTick(syncPreviewControls), {deep: true})
 </script>
 
 <style>
