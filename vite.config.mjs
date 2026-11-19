@@ -21,11 +21,12 @@ export default defineConfig({
       fileName: () => 'index.umd.min.js',
     },
     rollupOptions: {
-      external: ['vue', 'big.js'],
+      external: ['vue', 'big.js', '@kmdtmyk/ruby-date'],
       output: {
         globals: {
           vue: 'Vue',
           'big.js': 'Big',
+          '@kmdtmyk/ruby-date': 'RubyDate',
         },
         // Keep the existing mixed default/named UMD API explicit.
         exports: 'named',
