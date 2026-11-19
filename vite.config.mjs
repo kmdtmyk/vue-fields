@@ -24,11 +24,8 @@ export default defineConfig({
       external: ['vue'],
       output: {
         globals: {vue: 'Vue'},
-      },
-      // Keep the existing mixed default/named UMD API intact.
-      onwarn(warning, warn){
-        if(warning.code === 'MIXED_EXPORTS') return
-        warn(warning)
+        // Keep the existing mixed default/named UMD API explicit.
+        exports: 'named',
       },
     },
     sourcemap: true,
