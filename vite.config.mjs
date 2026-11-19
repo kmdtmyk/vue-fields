@@ -21,9 +21,12 @@ export default defineConfig({
       fileName: () => 'index.umd.min.js',
     },
     rollupOptions: {
-      external: ['vue'],
+      external: ['vue', 'big.js'],
       output: {
-        globals: {vue: 'Vue'},
+        globals: {
+          vue: 'Vue',
+          'big.js': 'Big',
+        },
         // Keep the existing mixed default/named UMD API explicit.
         exports: 'named',
       },
