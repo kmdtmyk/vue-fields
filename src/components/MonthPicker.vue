@@ -24,8 +24,7 @@
 </template>
 
 <script>
-import dateformat from 'dateformat'
-import Midnight from '@kmdtmyk/midnight'
+import RubyDate from '@kmdtmyk/ruby-date'
 import Locale from '../lib/Locale'
 
 export default {
@@ -35,8 +34,8 @@ export default {
     },
   },
   data(){
-    const date = Midnight.parse(this.value)
-    const year = date == null ? new Midnight().year() : date.year()
+    const date = RubyDate.parse(this.value)
+    const year = date == null ? RubyDate.today().year() : date.year()
     return {
       l: Locale.get(),
       year,
@@ -84,18 +83,18 @@ export default {
       }
     },
     select(year, month){
-      const date = new Midnight(year, month)
-      this.$emit('input', dateformat(date, 'yyyy-mm'))
+      const date = new RubyDate(year, month)
+      this.$emit('input', date.strftime('%Y-%m'))
     },
     currentYear(){
       if(this.animating){
         return
       }
-      const today = new Midnight()
+      const today = RubyDate.today()
       this.year = today.year()
     },
     currentMonth(){
-      const today = new Midnight()
+      const today = RubyDate.today()
       this.select(today.year(), today.month())
     },
     clear(){
@@ -105,12 +104,12 @@ export default {
 }
 </script>
 
-<style lang='scss' scoped>
+<style scoped>
 .month-picker{
-  $border-color: #ced4da;
+  --border-color: #ced4da;
 
   background-color: white;
-  border: 1px solid $border-color;
+  border: 1px solid var(--border-color);
 
   header, footer{
     padding: 2px;
@@ -125,7 +124,7 @@ export default {
   }
 
   header{
-    border-bottom: 1px solid $border-color;
+    border-bottom: 1px solid var(--border-color);
     display: flex;
     justify-content: space-between;
 
@@ -141,15 +140,15 @@ export default {
   }
 
   footer{
-    border-top: 1px solid $border-color;
+    border-top: 1px solid var(--border-color);
     display: flex;
     justify-content: space-between;
   }
 
   .picker{
-    $row-height: 32px;
-    $row-count: 3;
-    height: $row-height * $row-count;
+    --row-height: 32px;
+    --row-count: 3;
+    height: calc(var(--row-height) * var(--row-count));
     overflow: hidden;
 
     &.previous, &.next{
@@ -164,28 +163,28 @@ export default {
         transform: translateY(0);
       }
       .v-enter-to{
-        transform: translateY($row-height * -$row-count);
+        transform: translateY(calc(var(--row-height) * -1 * var(--row-count)));
       }
       .v-leave{
         transform: translateY(0);
       }
       .v-leave-to{
-        transform: translateY($row-height * -$row-count);
+        transform: translateY(calc(var(--row-height) * -1 * var(--row-count)));
       }
     }
 
     &.previous{
       .v-enter {
-        transform: translateY($row-height * -$row-count * 2);
+        transform: translateY(calc(var(--row-height) * -1 * var(--row-count) * 2));
       }
       .v-enter-to{
-        transform: translateY($row-height * -$row-count);
+        transform: translateY(calc(var(--row-height) * -1 * var(--row-count)));
       }
       .v-leave{
         transform: translateY(0);
       }
       .v-leave-to{
-        transform: translateY($row-height * $row-count);
+        transform: translateY(calc(var(--row-height) * var(--row-count)));
       }
     }
 
@@ -195,7 +194,7 @@ export default {
         padding: 0;
         width: 3em;
         button{
-          height: $row-height;
+          height: var(--row-height);
           text-align: center;
           border: 0;
           background: none;

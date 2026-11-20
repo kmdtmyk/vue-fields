@@ -1,9 +1,9 @@
-import {storiesOf} from '@storybook/vue'
-import {withKnobs, text, number, boolean, color} from '@storybook/addon-knobs'
+import {storiesOf} from '../playground/story'
+import {withKnobs, text, number, boolean, color} from '../playground/story'
 
-import DateField from '../components/DateField'
+import DateField from '../components/DateField.vue'
 
-storiesOf('DateField', module)
+storiesOf('DateField')
   .addDecorator(withKnobs)
   .add('basic', () => {
     const value = text('value', '')

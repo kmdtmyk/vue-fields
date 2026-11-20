@@ -1,5 +1,6 @@
 <template lang='pug'>
 dropdown-input(
+  class='select-field'
   type='text'
   autocomplete='off'
   v-model='inputValue'
@@ -38,8 +39,8 @@ dropdown-input(
 
 <script>
 import wrapper from './mixins/wrapper'
-import DropdownInput from './DropdownInput'
-import DropdownList from './DropdownList'
+import DropdownInput from './DropdownInput.vue'
+import DropdownList from './DropdownList.vue'
 import Arrays from '../lib/Arrays'
 import Strings from '../lib/Strings'
 import VueAttrs from '../lib/VueAttrs'
@@ -262,16 +263,13 @@ export default {
 }
 </script>
 
-<style lang='scss' scoped>
-/deep/ {
-  input{
-    &::placeholder{
-      color: inherit;
-      opacity: 0.7;
-    }
-    &:not(:focus):not(.empty)::placeholder{
-      opacity: 1;
-    }
-  }
+<style>
+.select-field input::placeholder {
+  color: inherit;
+  opacity: 0.7;
+}
+
+.select-field input:not(:focus):not(.empty)::placeholder {
+  opacity: 1;
 }
 </style>

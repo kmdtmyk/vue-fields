@@ -6,7 +6,7 @@
     v-on='listeners'
     v-bind='$attrs'
     :class='inputClass'
-    :style='style'
+    :style='[style, anchorStyle]'
     :readonly='readonly'
     :disabled='disabled'
     @mousedown='_onMousedown'
@@ -33,7 +33,14 @@
 import wrapper from './mixins/wrapper'
 import ElementUtil from '../lib/ElementUtil'
 import CssString from '../lib/CssString'
-import LoadingSpinner from './LoadingSpinner'
+import LoadingSpinner from './LoadingSpinner.vue'
+
+let anchorSequence = 0
+
+function createAnchorName(){
+  const random = Array.from({length: 4}, () => Math.random().toString(36).slice(2)).join('')
+  return `--a${random}-${anchorSequence++}`
+}
 
 export default {
   mixins: [wrapper],
@@ -57,6 +64,7 @@ export default {
       isMounted: false,
       dropdownOpen: false,
       inputValue: this.value,
+      anchorName: createAnchorName(),
       dropdown: {
         style: {},
       },
@@ -80,6 +88,9 @@ export default {
         return false
       }
       return true
+    },
+    anchorStyle(){
+      return {anchorName: this.anchorName}
     },
     clearable(){
       if(!this.editable){
@@ -109,17 +120,19 @@ export default {
       this.inputValue = this.value
     },
     dropdownOpen(){
-      let elements = ElementUtil.getParents(this.$el)
+      const elements = ElementUtil.getParents(this.$el)
       if(this.dropdownOpen){
         this._updateDropdownStyle()
         elements.forEach(element => {
           element.addEventListener('scroll', this._onParentScroll)
         })
+        addEventListener('scroll', this._onParentScroll)
         addEventListener('resize', this._onWindowResize)
       }else{
         elements.forEach(element => {
           element.removeEventListener('scroll', this._onParentScroll)
         })
+        removeEventListener('scroll', this._onParentScroll)
         removeEventListener('resize', this._onWindowResize)
       }
     },
@@ -153,9 +166,11 @@ export default {
       }
     },
     _onParentScroll(e){
+      // Match the native select behavior: close the dropdown when scrolling.
       this.dropdownOpen = false
     },
     _onWindowResize(e){
+      // Match the native select behavior: close the dropdown when resizing.
       this.dropdownOpen = false
     },
     _updateDropdownStyle(){
@@ -164,11 +179,7 @@ export default {
         return
       }
       const {fontSize} = getComputedStyle(input)
-      const rect = input.getBoundingClientRect()
-      const left = `${rect.x}px`
-      const top = `${rect.height + rect.y}px`
-      const width = `${rect.width}px`
-      const style = {fontSize, width, left, top}
+      const style = {fontSize, positionAnchor: this.anchorName}
       Object.assign(style, this.getDropdownStyle())
       this.dropdown.style = style
     },
@@ -189,7 +200,7 @@ export default {
 }
 </script>
 
-<style lang='scss' scoped>
+<style scoped>
 .dropdown-input{
   display: inline-flex;
   position: relative;
@@ -211,6 +222,12 @@ input{
   &:empty{
     display: none;
   }
+}
+
+.dropdown{
+  position-area: block-end span-inline-end;
+  position-try-fallbacks: flip-block;
+  width: anchor-size(width);
 }
 
 .spinner, .clear{

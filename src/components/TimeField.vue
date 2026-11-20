@@ -23,10 +23,8 @@
 </template>
 
 <script>
-import dateformat from 'dateformat'
-import Midnight from '@kmdtmyk/midnight'
 import wrapper from './mixins/wrapper'
-import TimePicker from './TimePicker'
+import TimePicker from './TimePicker.vue'
 
 export default {
   mixins: [wrapper],
@@ -98,7 +96,7 @@ export default {
 }
 </script>
 
-<style lang='scss' scoped>
+<style scoped>
 .time-field{
   display: inline-block;
 

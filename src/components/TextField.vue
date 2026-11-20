@@ -25,8 +25,8 @@ dropdown-input(
 
 <script>
 import wrapper from './mixins/wrapper'
-import DropdownInput from './DropdownInput'
-import DropdownList from './DropdownList'
+import DropdownInput from './DropdownInput.vue'
+import DropdownList from './DropdownList.vue'
 import Arrays from '../lib/Arrays'
 import Strings from '../lib/Strings'
 import VueProps from '../lib/VueProps'
@@ -196,5 +196,5 @@ export default {
 }
 </script>
 
-<style lang='scss' scoped>
+<style scoped>
 </style>

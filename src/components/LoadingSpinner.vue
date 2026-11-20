@@ -9,7 +9,7 @@ export default {
 }
 </script>
 
-<style lang='scss' scoped>
+<style scoped>
 .loading-spinner{
   position: relative;
   display: inline-block;

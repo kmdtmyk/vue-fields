@@ -23,10 +23,9 @@
 </template>
 
 <script>
-import dateformat from 'dateformat'
-import Midnight from '@kmdtmyk/midnight'
+import RubyDate from '@kmdtmyk/ruby-date'
 import wrapper from './mixins/wrapper'
-import DatePicker from './DatePicker'
+import DatePicker from './DatePicker.vue'
 
 export default {
   mixins: [wrapper],
@@ -81,13 +80,13 @@ export default {
       // nothing
     },
     onChange(e){
-      const date = Midnight.parse(e.target.value)
+      const date = RubyDate.parse(e.target.value)
       if(date == null){
         this.localValue = null
         this.inputValue = null
         this.$emit('input', null)
       }else{
-        const text = dateformat(date, 'yyyy-mm-dd')
+        const text = date.strftime('%Y-%m-%d')
         this.localValue = text
         this.inputValue = text
         this.$emit('input', text)
@@ -114,7 +113,7 @@ export default {
 }
 </script>
 
-<style lang='scss' scoped>
+<style scoped>
 .date-field{
   display: inline-block;
 

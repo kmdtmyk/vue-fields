@@ -1,5 +1,5 @@
 import {mount} from '@vue/test-utils'
-import Component from './TextField'
+import Component from './TextField.vue'
 import Vue from 'vue'
 
 describe('name', () => {
@@ -145,10 +145,12 @@ describe('autocomplete', () => {
       const wrapper = mount(Component, {
         propsData: {
           autocomplete: array,
-        }
+        },
+        attachTo: document.body,
       })
       const input = wrapper.find('input')
       await input.trigger('focus')
+      await wrapper.vm.$nextTick()
       const dropdown = wrapper.findAll('.dropdown-list-item')
       const dropdwonTexts = dropdown.wrappers.map(wrapper => wrapper.text())
       expect(dropdwonTexts).toEqual(['foo', 'bar'])
@@ -159,10 +161,12 @@ describe('autocomplete', () => {
       const wrapper = mount(Component, {
         propsData: {
           autocomplete: array,
-        }
+        },
+        attachTo: document.body,
       })
       const input = wrapper.find('input')
       await input.trigger('focus')
+      await wrapper.vm.$nextTick()
       const dropdown = wrapper.findAll('.dropdown-list-item')
       expect(dropdown.length).toEqual(1)
     })

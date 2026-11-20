@@ -17,16 +17,18 @@ export default {
 }
 </script>
 
-<style lang='scss' scoped>
+<style scoped>
 .dropdown-list-item{
-  $padding: 0.2em 0.4em;
+  text-wrap: wrap;
+
+  --padding: 0.2em 0.4em;
 
   &.text{
-    padding: $padding;
+    padding: var(--padding);
   }
 
   > *{
-    padding: $padding;
+    padding: var(--padding);
     display: block;
   }
 
@@ -34,12 +36,12 @@ export default {
     cursor: pointer;
   }
 
-  $selected-color: #bedcf5;
+  --selected-color: #bedcf5;
 
   &.selected{
-    background-color: $selected-color;
+    background-color: var(--selected-color);
     > * {
-      background-color: $selected-color !important;
+      background-color: var(--selected-color) !important;
     }
   }
 

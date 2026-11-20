@@ -1,9 +1,9 @@
-import {storiesOf} from '@storybook/vue'
-import {withKnobs, number, boolean, select} from '@storybook/addon-knobs'
+import {storiesOf} from '../playground/story'
+import {withKnobs, number, boolean, select} from '../playground/story'
 
-import RangeField from '../components/RangeField'
+import RangeField from '../components/RangeField.vue'
 
-storiesOf('RangeField', module)
+storiesOf('RangeField')
   .addDecorator(withKnobs)
   .add('basic', () => {
     const value = number('value', 10)

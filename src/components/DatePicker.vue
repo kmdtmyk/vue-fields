@@ -26,8 +26,7 @@
 </template>
 
 <script>
-import dateformat from 'dateformat'
-import Midnight from '@kmdtmyk/midnight'
+import RubyDate from '@kmdtmyk/ruby-date'
 import Locale from '../lib/Locale'
 
 export default {
@@ -37,7 +36,7 @@ export default {
     },
   },
   data(){
-    const date = Midnight.parse(this.value) || new Midnight()
+    const date = RubyDate.parse(this.value) || RubyDate.today()
     const year = date.year()
     const month = date.month()
 
@@ -51,15 +50,16 @@ export default {
   },
   filters: {
     period(date){
-      return dateformat(date, 'yyyy/mm')
+      return date.strftime('%Y/%m')
     },
     day(date){
-      return dateformat(date, 'd')
+      return date.strftime('%-d')
     },
   },
   computed: {
     calendarDates(){
-      const startDate = new Midnight(this.year, this.month, 1).nextSunday(-1)
+      const firstDate = new RubyDate(this.year, this.month, 1)
+      const startDate = firstDate.nextDay(-firstDate.wday())
       const result = []
       for(let i = 0; i < 42; i++){
         result.push(startDate.nextDay(i - 1))
@@ -84,7 +84,7 @@ export default {
       if(this.animating){
         return
       }
-      const date = new Midnight(this.year, this.month - 1, 1)
+      const date = new RubyDate(this.year, this.month - 1, 1)
       this.year = date.year()
       this.month = date.month()
     },
@@ -92,7 +92,7 @@ export default {
       if(this.animating){
         return
       }
-      const date = new Midnight(this.year, this.month + 1, 1)
+      const date = new RubyDate(this.year, this.month + 1, 1)
       this.year = date.year()
       this.month = date.month()
     },
@@ -100,7 +100,7 @@ export default {
       if(this.animating){
         return
       }
-      const date = new Midnight()
+      const date = RubyDate.today()
       this.year = date.year()
       this.month = date.month()
     },
@@ -108,11 +108,11 @@ export default {
       if(!date){
         this.$emit('input', date)
       }else{
-        this.$emit('input', dateformat(date, 'yyyy-mm-dd'))
+        this.$emit('input', date.strftime('%Y-%m-%d'))
       }
     },
     today(){
-      this.select(new Date())
+      this.select(RubyDate.today())
     },
     clear(){
       this.select('')
@@ -145,13 +145,13 @@ export default {
 }
 </script>
 
-<style lang='scss' scoped>
+<style scoped>
 .date-picker{
-  $border-color: #ced4da;
+  --border-color: #ced4da;
   font-size: 14px;
 
   background-color: white;
-  border: 1px solid $border-color;
+  border: 1px solid var(--border-color);
 
   header, footer{
     padding: 2px;
@@ -165,7 +165,7 @@ export default {
   }
 
   header{
-    border-bottom: 1px solid $border-color;
+    border-bottom: 1px solid var(--border-color);
     display: flex;
     justify-content: space-between;
 
@@ -184,9 +184,9 @@ export default {
   }
 
   .calendar{
-    $row-height: 28px;
-    $row-count: 6;
-    height: $row-height * $row-count + 23px;
+    --row-height: 28px;
+    --row-count: 6;
+    height: calc(var(--row-height) * var(--row-count) + 23px);
     overflow: hidden;
 
     &.previous, &.next{
@@ -201,28 +201,28 @@ export default {
         transform: translateY(0);
       }
       .v-enter-to{
-        transform: translateY($row-height * -$row-count);
+        transform: translateY(calc(var(--row-height) * -1 * var(--row-count)));
       }
       .v-leave{
         transform: translateY(0);
       }
       .v-leave-to{
-        transform: translateY($row-height * -$row-count);
+        transform: translateY(calc(var(--row-height) * -1 * var(--row-count)));
       }
     }
 
     &.previous{
       .v-enter {
-        transform: translateY($row-height * -$row-count * 2);
+        transform: translateY(calc(var(--row-height) * -1 * var(--row-count) * 2));
       }
       .v-enter-to{
-        transform: translateY($row-height * -$row-count);
+        transform: translateY(calc(var(--row-height) * -1 * var(--row-count)));
       }
       .v-leave{
         transform: translateY(0);
       }
       .v-leave-to{
-        transform: translateY($row-height * $row-count);
+        transform: translateY(calc(var(--row-height) * var(--row-count)));
       }
     }
 
@@ -240,7 +240,7 @@ export default {
       }
       tbody{
         tr{
-          height: $row-height;
+          height: var(--row-height);
         }
         td{
           padding: 0;
@@ -268,7 +268,7 @@ export default {
   }
 
   footer{
-    border-top: 1px solid $border-color;
+    border-top: 1px solid var(--border-color);
     display: flex;
     justify-content: space-between;
   }

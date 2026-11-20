@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import DropdownListItem from './DropdownListItem'
+import DropdownListItem from './DropdownListItem.vue'
 
 export default {
   components: {
@@ -92,7 +92,7 @@ export default {
 }
 </script>
 
-<style lang='scss' scoped>
+<style scoped>
 .dropdown-list{
   position: static !important;
   border: none !important;
