@@ -6,7 +6,7 @@
     v-on='listeners'
     v-bind='$attrs'
     :class='inputClass'
-    :style='style'
+    :style='[style, anchorStyle]'
     :readonly='readonly'
     :disabled='disabled'
     @mousedown='_onMousedown'
@@ -81,6 +81,12 @@ export default {
       }
       return true
     },
+    anchorName(){
+      return `--dropdown-input-${this._uid}`
+    },
+    anchorStyle(){
+      return {anchorName: this.anchorName}
+    },
     clearable(){
       if(!this.editable){
         return false
@@ -109,17 +115,19 @@ export default {
       this.inputValue = this.value
     },
     dropdownOpen(){
-      let elements = ElementUtil.getParents(this.$el)
+      const elements = ElementUtil.getParents(this.$el)
       if(this.dropdownOpen){
         this._updateDropdownStyle()
         elements.forEach(element => {
           element.addEventListener('scroll', this._onParentScroll)
         })
+        addEventListener('scroll', this._onParentScroll)
         addEventListener('resize', this._onWindowResize)
       }else{
         elements.forEach(element => {
           element.removeEventListener('scroll', this._onParentScroll)
         })
+        removeEventListener('scroll', this._onParentScroll)
         removeEventListener('resize', this._onWindowResize)
       }
     },
@@ -153,9 +161,11 @@ export default {
       }
     },
     _onParentScroll(e){
+      // Match the native select behavior: close the dropdown when scrolling.
       this.dropdownOpen = false
     },
     _onWindowResize(e){
+      // Match the native select behavior: close the dropdown when resizing.
       this.dropdownOpen = false
     },
     _updateDropdownStyle(){
@@ -164,11 +174,7 @@ export default {
         return
       }
       const {fontSize} = getComputedStyle(input)
-      const rect = input.getBoundingClientRect()
-      const left = `${rect.x}px`
-      const top = `${rect.height + rect.y}px`
-      const width = `${rect.width}px`
-      const style = {fontSize, width, left, top}
+      const style = {fontSize, positionAnchor: this.anchorName}
       Object.assign(style, this.getDropdownStyle())
       this.dropdown.style = style
     },
@@ -211,6 +217,12 @@ input{
   &:empty{
     display: none;
   }
+}
+
+.dropdown{
+  position-area: block-end span-inline-end;
+  position-try-fallbacks: flip-block;
+  width: anchor-size(width);
 }
 
 .spinner, .clear{
