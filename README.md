@@ -1,5 +1,6 @@
-[![Publish](https://github.com/kmdtmyk/vue-fields/workflows/Publish/badge.svg)](https://github.com/kmdtmyk/vue-fields/actions)
-[![Test](https://github.com/kmdtmyk/vue-fields/workflows/Test/badge.svg)](https://github.com/kmdtmyk/vue-fields/actions)
+[![Publish to npm](https://github.com/kmdtmyk/vue-fields/actions/workflows/publish.yml/badge.svg)](https://github.com/kmdtmyk/vue-fields/actions/workflows/publish.yml)
+[![Test](https://github.com/kmdtmyk/vue-fields/actions/workflows/test.yml/badge.svg)](https://github.com/kmdtmyk/vue-fields/actions/workflows/test.yml)
+[![Deploy Playground](https://github.com/kmdtmyk/vue-fields/actions/workflows/deploy-playground.yml/badge.svg)](https://github.com/kmdtmyk/vue-fields/actions/workflows/deploy-playground.yml)
 
 ## Demo
 
@@ -53,6 +54,13 @@ Vue.use(VueFields, {prefix: 'v', suffix: ''})
 |inputClass|''|
 |prefix|''|
 |suffix|'Field'|
+
+## npm
+
+```bash
+npm version [major | minor | patch]
+git push origin main --follow-tags
+```
 
 ## License
 
