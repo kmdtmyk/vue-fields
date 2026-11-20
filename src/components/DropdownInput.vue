@@ -35,6 +35,13 @@ import ElementUtil from '../lib/ElementUtil'
 import CssString from '../lib/CssString'
 import LoadingSpinner from './LoadingSpinner.vue'
 
+let anchorSequence = 0
+
+function createAnchorName(){
+  const random = Array.from({length: 4}, () => Math.random().toString(36).slice(2)).join('')
+  return `--a${random}-${anchorSequence++}`
+}
+
 export default {
   mixins: [wrapper],
   components: {
@@ -57,6 +64,7 @@ export default {
       isMounted: false,
       dropdownOpen: false,
       inputValue: this.value,
+      anchorName: createAnchorName(),
       dropdown: {
         style: {},
       },
@@ -80,9 +88,6 @@ export default {
         return false
       }
       return true
-    },
-    anchorName(){
-      return `--dropdown-input-${this._uid}`
     },
     anchorStyle(){
       return {anchorName: this.anchorName}

@@ -15,6 +15,13 @@ const mountOpenDropdown = async () => {
 
 describe('anchor positioning', () => {
 
+  it('uses a unique anchor name per component', () => {
+    const first = mount(Component)
+    const second = mount(Component)
+
+    expect(first.vm.anchorName).not.toBe(second.vm.anchorName)
+  })
+
   it('connects the dropdown to the input anchor', async () => {
     const wrapper = await mountOpenDropdown()
     const anchorName = wrapper.vm.anchorName
