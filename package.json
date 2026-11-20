@@ -1,6 +1,6 @@
 {
   "name": "@kmdtmyk/vue-fields",
-  "version": "0.2.7",
+  "version": "0.3.0",
   "description": "Input components for vue.js",
   "scripts": {
     "start": "vite",
